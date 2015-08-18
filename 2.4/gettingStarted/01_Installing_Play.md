@@ -18,7 +18,7 @@
 
 创建一个基于`play-java`的模板`my-first-app`，就这么简单：
 
-```
+```shell
 activator new my-first-app play-java
 cd my-first-app
 activator run
@@ -34,16 +34,16 @@ activator run
 ###JDK 安装
 请确认你的系统中有 JDK (Java Development Kit) 1.8 或更高版本。使用以下命令来进行验证：
 
-```
+```shell
 java -version
 javac -version
 ```
 
 如果你还没有安装 JDK, 你需要安装它：
 
-* 1.MacOS系统，Java 是内置的, 但你可能需要[升级到最新版本](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
-* 2.Linux系统， 使用最新的Oracle JDK或OpenJDK(不要使用非gcj).
-* 3.Windows系统，只需要下载和安装[最新版的JDK安装包](http://www.oracle.com/technetwork/java/javase/downloads/index.html)。
+1. MacOS系统，Java 是内置的, 但你可能需要[升级到最新版本](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
+2. Linux系统， 使用最新的Oracle JDK或OpenJDK(不要使用非gcj).
+3. Windows系统，只需要下载和安装[最新版的JDK安装包](http://www.oracle.com/technetwork/java/javase/downloads/index.html)。
 
 ###将可执行文件添加到环境变量的Path中
 为方便起见，你应该添加 Activator 安装目录到系统环境变量的`PATH`中。

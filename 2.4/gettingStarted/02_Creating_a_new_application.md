@@ -7,13 +7,13 @@
 
 要创建一个普通的Play Scala 应用程序，运行:
 
-```
+```shell
 $ activator new my-first-app play-scala
 ```
 
 要创建一个普通的Play Java 应用程序，运行:
 
-```
+```shell
 $ activator new my-first-app play-java
 ```
 
@@ -25,7 +25,7 @@ $ activator new my-first-app play-java
 
 一旦应用程序被创建，你就可以再次使用`activator`命令进入[Play控制台](03_Using_the_Play_console.md)。
 
-```
+```shell
 $ cd my-first-app
 $ activator
 ```
@@ -33,7 +33,7 @@ $ activator
 ##用Activator UI创建一个新应用程序
 也可以使用Activator UI创建一个新Play应用程序。要使用 Activator UI, 运行：
 
-```
+```shell
 $ activator ui
 ```
 
@@ -63,7 +63,7 @@ resolvers += "Typesafe Snapshots" at "https://repo.typesafe.com/typesafe/snapsho
 
 2.要使用正确的sbt版本, 确保在`project/build.properties`中有以下内容:
 
-```
+```scala
 sbt.version=0.13.8
 ```
 
@@ -71,7 +71,7 @@ sbt.version=0.13.8
 
 在Java项目的中加入:
 
-```
+```scala
 name := "my-first-app"
 
 version := "1.0"
@@ -91,7 +91,7 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
 然后在这个目录启动 sbt控制台:
 
-```
+```shell
 $ cd my-first-app
 $ sbt
 ```
