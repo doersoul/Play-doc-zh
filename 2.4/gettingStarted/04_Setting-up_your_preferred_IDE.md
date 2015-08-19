@@ -1,115 +1,115 @@
-#ÉèÖÃÄãµÄÊ×Ñ¡IDE
+#è®¾ç½®ä½ çš„é¦–é€‰IDE
 
-Ê¹ÓÃPlayºÜÈİÒ×¡£ÄãÉõÖÁ²»ĞèÒª¸´ÔÓµÄIDE, ÒòÎªPlayÔÚÄãĞŞ¸ÄÔ´ÎÄ¼şÊÇ»á×Ô¶¯±àÒëºÍË¢ĞÂ£¬ËùÒÔÄã¿ÉÒÔÇáËÉµØÊ¹ÓÃÒ»¸ö¼òµ¥µÄÎÄ±¾±à¼­Æ÷¡£
+ä½¿ç”¨Playå¾ˆå®¹æ˜“ã€‚ä½ ç”šè‡³ä¸éœ€è¦å¤æ‚çš„IDE, å› ä¸ºPlayåœ¨ä½ ä¿®æ”¹æºæ–‡ä»¶æ˜¯ä¼šè‡ªåŠ¨ç¼–è¯‘å’Œåˆ·æ–°ï¼Œæ‰€ä»¥ä½ å¯ä»¥è½»æ¾åœ°ä½¿ç”¨ä¸€ä¸ªç®€å•çš„æ–‡æœ¬ç¼–è¾‘å™¨ã€‚
 
-µ«ÊÇÊ¹ÓÃÒ»¸öÏÖ´úJava»òScala IDE¿ÉÒÔÌá¹©Ç¿´óµÄ¹¦ÄÜ£¬Ïñ×Ô¶¯Íê³É,¼´Ê±±àÒë,ÖØ¹¹¸¨ÖúºÍµ÷ÊÔ¡£
+ä½†æ˜¯ä½¿ç”¨ä¸€ä¸ªç°ä»£Javaæˆ–Scala IDEå¯ä»¥æä¾›å¼ºå¤§çš„åŠŸèƒ½ï¼Œåƒè‡ªåŠ¨å®Œæˆ,å³æ—¶ç¼–è¯‘,é‡æ„è¾…åŠ©å’Œè°ƒè¯•ã€‚
 
 ##Eclipse
-###ÉèÖÃ sbteclipse
-PlayĞèÒª[sbteclipse](https://github.com/typesafehub/sbteclipse) 4.0.0 »ò¸üĞÂ°æ±¾¡£Ìí¼ÓÏÂÃæÄÚÈİµ½ÄãµÄ project/plugins.sbtÎÄ¼ş:
+###è®¾ç½® sbteclipse
+Playéœ€è¦[sbteclipse](https://github.com/typesafehub/sbteclipse) 4.0.0 æˆ–æ›´æ–°ç‰ˆæœ¬ã€‚æ·»åŠ ä¸‹é¢å†…å®¹åˆ°ä½ çš„ project/plugins.sbtæ–‡ä»¶:
 
 ```
 addSbtPlugin("com.typesafe.sbteclipse" % "sbteclipse-plugin" % "4.0.0")
 ```
 
-ÔÚÔËĞĞ`eclipse`ÃüÁîÖ®Ç°£¬Äã±ØĞëÏÈ`±àÒë`ÄãµÄ¹¤³Ì¡£Í¨¹ıÔÚ`build.sbt` Ìí¼ÓÒÔÏÂÉèÖÃ£¬Äã¿ÉÒÔÇ¿ÖÆµ±`eclipse`ÃüÁîÔËĞĞÊ±×Ô¶¯½øĞĞ±àÒë:
+åœ¨è¿è¡Œ`eclipse`å‘½ä»¤ä¹‹å‰ï¼Œä½ å¿…é¡»å…ˆ`ç¼–è¯‘`ä½ çš„å·¥ç¨‹ã€‚é€šè¿‡åœ¨`build.sbt` æ·»åŠ ä»¥ä¸‹è®¾ç½®ï¼Œä½ å¯ä»¥å¼ºåˆ¶å½“`eclipse`å‘½ä»¤è¿è¡Œæ—¶è‡ªåŠ¨è¿›è¡Œç¼–è¯‘:
 
 ```scala
-// Éú³ÉEclipseÎÄ¼şÇ°±àÒëÏîÄ¿, Òò´ËÉú³ÉµÄ .scala »ò .class ÎÄ¼şÎªµ±Ç° views ºÍ routes
+// ç”ŸæˆEclipseæ–‡ä»¶å‰ç¼–è¯‘é¡¹ç›®, å› æ­¤ç”Ÿæˆçš„ .scala æˆ– .class æ–‡ä»¶ä¸ºå½“å‰ views å’Œ routes
 EclipseKeys.preTasks := Seq(compile in Compile)
 ```
 
-Èç¹ûÄãµÄÏîÄ¿ÖĞÓĞScalaÔ´´úÂë, ÄãĞèÒª°²×°[Scala IDE](http://scala-ide.org/)¡£
+å¦‚æœä½ çš„é¡¹ç›®ä¸­æœ‰Scalaæºä»£ç , ä½ éœ€è¦å®‰è£…[Scala IDE](http://scala-ide.org/)ã€‚
 
-Èç¹ûÄã²»Ïë°²×°Scala IDEºÍÄãµÄÏîÄ¿ÖĞ½öÓĞJavaÔ´´úÂë, ÄÇÃ´Äã¿ÉÒÔ°´ÈçÏÂÉèÖÃ:
+å¦‚æœä½ ä¸æƒ³å®‰è£…Scala IDEå’Œä½ çš„é¡¹ç›®ä¸­ä»…æœ‰Javaæºä»£ç , é‚£ä¹ˆä½ å¯ä»¥æŒ‰å¦‚ä¸‹è®¾ç½®:
 
 ```scala
-EclipseKeys.projectFlavor := EclipseProjectFlavor.Java           // Java ÏîÄ¿. ²»ÓÃScala IDE
-EclipseKeys.createSrc := EclipseCreateSrc.ValueSet(EclipseCreateSrc.ManagedClasses, EclipseCreateSrc.ManagedResources)  // ÎªÊÓÍ¼ºÍÂ·ÓÉÊ¹ÓÃ .class ÎÄ¼ş¶ø·ÇÉú³É .scala ÎÄ¼ş£¬ 
+EclipseKeys.projectFlavor := EclipseProjectFlavor.Java           // Java é¡¹ç›®. ä¸ç”¨Scala IDE
+EclipseKeys.createSrc := EclipseCreateSrc.ValueSet(EclipseCreateSrc.ManagedClasses, EclipseCreateSrc.ManagedResources)  // ä¸ºè§†å›¾å’Œè·¯ç”±ä½¿ç”¨ .class æ–‡ä»¶è€Œéç”Ÿæˆ .scala æ–‡ä»¶ï¼Œ 
 ```
 
-###Éú³ÉÅäÖÃ
-PlayÌá¹©Ò»¸öÃüÁîÒÔ¼ò»¯[Eclipse](https://eclipse.org/)ÅäÖÃ¡£Òª×ª»»PlayÓ¦ÓÃ³ÌĞòµ½¿ÉÒÔ¹¤×÷µÄEclipse¹¤³Ì, Ê¹ÓÃ`eclipse`ÃüÁî£º
+###ç”Ÿæˆé…ç½®
+Playæä¾›ä¸€ä¸ªå‘½ä»¤ä»¥ç®€åŒ–[Eclipse](https://eclipse.org/)é…ç½®ã€‚è¦è½¬æ¢Playåº”ç”¨ç¨‹åºåˆ°å¯ä»¥å·¥ä½œçš„Eclipseå·¥ç¨‹, ä½¿ç”¨`eclipse`å‘½ä»¤ï¼š
 
 ```shell
 [my-first-app] $ eclipse
 ```
 
-Èç¹ûÄãÏë×¥È¡¿ÉÓÃµÄjarsÔ´ (Õâ»á»¨·ÑºÜ³¤Ê±¼ä²¢ÇÒÒ»Ğ©Ô´¿ÉÄÜ»á¶ªÊ§):
+å¦‚æœä½ æƒ³æŠ“å–å¯ç”¨çš„jarsæº (è¿™ä¼šèŠ±è´¹å¾ˆé•¿æ—¶é—´å¹¶ä¸”ä¸€äº›æºå¯èƒ½ä¼šä¸¢å¤±):
 
 ```shell
 [my-first-app] $ eclipse with-source=true
 ```
 
-> ×¢ÒâÈç¹ûÄãÊ¹ÓÃ¼¯³É×ÓÏîÄ¿, ÄãĞèÒªÔÚ`build.sbt`ÖĞÊÊµ±ÉèÖÃ`skipParents`:
+> æ³¨æ„å¦‚æœä½ ä½¿ç”¨é›†æˆå­é¡¹ç›®, ä½ éœ€è¦åœ¨`build.sbt`ä¸­é€‚å½“è®¾ç½®`skipParents`:
 
 ```scala
 EclipseKeys.skipParents in ThisBuild := false
 ```
 
-»ò´Óplay¿ØÖÆÌ¨, ¼üÈë:
+æˆ–ä»playæ§åˆ¶å°, é”®å…¥:
 
 ```scala
 [my-first-app] $ eclipse skip-parents=false
 ```
 
-È»ºóÄãĞèÒªÔÚ **File/Import/General/Existing project¡­** ²Ëµ¥½«Ó¦ÓÃ³ÌĞòµ¼Èëµ½ÄãµÄ¹¤×÷¿Õ¼ä(ĞèÒªÏÈ±àÒëÄãµÄÏîÄ¿)¡£
+ç„¶åä½ éœ€è¦åœ¨ **File/Import/General/Existing projectâ€¦** èœå•å°†åº”ç”¨ç¨‹åºå¯¼å…¥åˆ°ä½ çš„å·¥ä½œç©ºé—´(éœ€è¦å…ˆç¼–è¯‘ä½ çš„é¡¹ç›®)ã€‚
 
 ![](eclipse.png)
 
-Òªµ÷ÊÔ, ÓÃ `activator -jvm-debug 9999 run` Æô¶¯ÄãµÄÓ¦ÓÃ³ÌĞò£¬²¢ÔÚEclipseÖĞÓÒ»÷ÏîÄ¿£¬Ñ¡Ôñ **Debug As, Debug Configurations**¡£ÔÚ **Debug Configurations** ´°¿Ú, ÓÒ»÷ **Remote Java Application** ºÍÑ¡Ôñ **New**¡£½«¶Ë¿Ú¸ÄÎª9999ºÍµã»÷ **Apply**¡£´ÓÏÖÔÚÆğÄã¿ÉÒÔµã»÷ **Debug** À´Á¬½Óµ½ÕıÔÚÔËĞĞµÄÓ¦ÓÃ³ÌĞò¡£Í£Ö¹µ÷ÊÔ»á»°²»»áÍ£Ö¹·şÎñÆ÷¡£
+è¦è°ƒè¯•, ç”¨ `activator -jvm-debug 9999 run` å¯åŠ¨ä½ çš„åº”ç”¨ç¨‹åºï¼Œå¹¶åœ¨Eclipseä¸­å³å‡»é¡¹ç›®ï¼Œé€‰æ‹© **Debug As, Debug Configurations**ã€‚åœ¨ **Debug Configurations** çª—å£, å³å‡» **Remote Java Application** å’Œé€‰æ‹© **New**ã€‚å°†ç«¯å£æ”¹ä¸º9999å’Œç‚¹å‡» **Apply**ã€‚ä»ç°åœ¨èµ·ä½ å¯ä»¥ç‚¹å‡» **Debug** æ¥è¿æ¥åˆ°æ­£åœ¨è¿è¡Œçš„åº”ç”¨ç¨‹åºã€‚åœæ­¢è°ƒè¯•ä¼šè¯ä¸ä¼šåœæ­¢æœåŠ¡å™¨ã€‚
 
-> ÌáÊ¾: Äã¿ÉÒÔÊ¹ÓÃ `~run` À´ÔËĞĞÄãµÄÓ¦ÓÃ³ÌĞò£¬ÒÔÆôÓÃ¸ü¸ÄÎÄ¼şÊ±×Ô¶¯Ö±½Ó±àÒëµÄ¹¦ÄÜ¡£ÕâÑùµ±ÄãÔÚ`ÊÓÍ¼`Ä¿Â¼´´½¨Ò»¸öĞÂÄ£°åÊ±£¬scalaÄ£°åÎÄ¼ş»á±»×Ô¶¯·¢ÏÖ£¬¶øÇÒµ±ÎÄ¼ş¸ü¸ÄÊ±×Ô¶¯±àÒë¡£Èç¹ûÄãÊ¹ÓÃÆÕÍ¨µÄ`run`£¬ÄÇÃ´Ã¿´ÎÄã¶¼ÒªÊÖ¶¯ÔÚä¯ÀÀÆ÷µã»÷`Ë¢ĞÂ`¡£
+> æç¤º: ä½ å¯ä»¥ä½¿ç”¨ `~run` æ¥è¿è¡Œä½ çš„åº”ç”¨ç¨‹åºï¼Œä»¥å¯ç”¨æ›´æ”¹æ–‡ä»¶æ—¶è‡ªåŠ¨ç›´æ¥ç¼–è¯‘çš„åŠŸèƒ½ã€‚è¿™æ ·å½“ä½ åœ¨`è§†å›¾`ç›®å½•åˆ›å»ºä¸€ä¸ªæ–°æ¨¡æ¿æ—¶ï¼Œscalaæ¨¡æ¿æ–‡ä»¶ä¼šè¢«è‡ªåŠ¨å‘ç°ï¼Œè€Œä¸”å½“æ–‡ä»¶æ›´æ”¹æ—¶è‡ªåŠ¨ç¼–è¯‘ã€‚å¦‚æœä½ ä½¿ç”¨æ™®é€šçš„`run`ï¼Œé‚£ä¹ˆæ¯æ¬¡ä½ éƒ½è¦æ‰‹åŠ¨åœ¨æµè§ˆå™¨ç‚¹å‡»`åˆ·æ–°`ã€‚
 
-Èç¹ûÄãÔÚÓ¦ÓÃ³ÌĞòÖĞ×öÁËÖØÒªµÄ¸ü¸Ä, Èç¸Ä±äclasspath, ÒªÔÙ´ÎÊ¹ÓÃ`eclipse`ÒÔÖØĞÂÉú³ÉÅäÖÃÎÄ¼ş¡£
+å¦‚æœä½ åœ¨åº”ç”¨ç¨‹åºä¸­åšäº†é‡è¦çš„æ›´æ”¹, å¦‚æ”¹å˜classpath, è¦å†æ¬¡ä½¿ç”¨`eclipse`ä»¥é‡æ–°ç”Ÿæˆé…ç½®æ–‡ä»¶ã€‚
 
-> ÌáÊ¾: µ±ÄãÔÚÒ»¸öÍÅ¶ÓÖĞ¹¤×÷Ê±£¬²»ÒªÌá½»EclipseÅäÖÃÎÄ¼ş!
+> æç¤º: å½“ä½ åœ¨ä¸€ä¸ªå›¢é˜Ÿä¸­å·¥ä½œæ—¶ï¼Œä¸è¦æäº¤Eclipseé…ç½®æ–‡ä»¶!
 
-Éú³ÉµÄÅäÖÃÎÄ¼ş°üº¬µ½ÄãµÄ¿ò¼Ü°²×°Î»ÖÃµÄ¾ø¶ÔÒıÓÃ¡£ÕâĞ©ÌØ¶¨ÓÚÄã×Ô¼ºµÄ°²×°Î»ÖÃ¡£µ±Äã¹¤×÷ÔÚÒ»¸öÍÅ¶ÓÖĞÊ±, Ã¿¸ö¿ª·¢Õß±ØĞë±£³ÖËûµÄEclipseÅäÖÃÎÄ¼şÊÇË½ÓĞµÄ¡£
+ç”Ÿæˆçš„é…ç½®æ–‡ä»¶åŒ…å«åˆ°ä½ çš„æ¡†æ¶å®‰è£…ä½ç½®çš„ç»å¯¹å¼•ç”¨ã€‚è¿™äº›ç‰¹å®šäºä½ è‡ªå·±çš„å®‰è£…ä½ç½®ã€‚å½“ä½ å·¥ä½œåœ¨ä¸€ä¸ªå›¢é˜Ÿä¸­æ—¶, æ¯ä¸ªå¼€å‘è€…å¿…é¡»ä¿æŒä»–çš„Eclipseé…ç½®æ–‡ä»¶æ˜¯ç§æœ‰çš„ã€‚
 
 
 ##IntelliJ
-[Intellij IDEA](https://www.jetbrains.com/idea/)ÈÃÄãÎŞĞëÊ¹ÓÃÃüÁîÌáÊ¾·û¶¼¿ÉÒÔ¿ìËÙ´´½¨Ò»¸öPlayÓ¦ÓÃ³ÌĞò¡£Äã²»ĞèÒªÅäÖÃIDEÒÔÍâµÄÈÎºÎ¶«Î÷, SBT¹¹½¨¹¤¾ß»á°²ÅÅÏÂÔØÊÊµ±µÄ¿â, ½â¾öÒÀÀµÏîºÍ¹¹½¨ÏîÄ¿¡£
+[Intellij IDEA](https://www.jetbrains.com/idea/)è®©ä½ æ— é¡»ä½¿ç”¨å‘½ä»¤æç¤ºç¬¦éƒ½å¯ä»¥å¿«é€Ÿåˆ›å»ºä¸€ä¸ªPlayåº”ç”¨ç¨‹åºã€‚ä½ ä¸éœ€è¦é…ç½®IDEä»¥å¤–çš„ä»»ä½•ä¸œè¥¿, SBTæ„å»ºå·¥å…·ä¼šå®‰æ’ä¸‹è½½é€‚å½“çš„åº“, è§£å†³ä¾èµ–é¡¹å’Œæ„å»ºé¡¹ç›®ã€‚
 
-ÔÚIntelliJ IDEAÖĞ¿ªÊ¼´´½¨Ò»¸öPlayÓ¦ÓÃ³ÌĞòÖ®Ç°, ÇëÈ·±£ÒÑ°²×°×îĞÂScala²å¼ş²¢ÆôÓÃËü¡£¼´Ê¹Äã²»ÓÃScala¿ª·¢, ËüÒ²»á°ïÖúÄãÊ¹ÓÃÄ£°åÒıÇæºÍ½â¾öÒÀÀµÏî¡£
+åœ¨IntelliJ IDEAä¸­å¼€å§‹åˆ›å»ºä¸€ä¸ªPlayåº”ç”¨ç¨‹åºä¹‹å‰, è¯·ç¡®ä¿å·²å®‰è£…æœ€æ–°Scalaæ’ä»¶å¹¶å¯ç”¨å®ƒã€‚å³ä½¿ä½ ä¸ç”¨Scalaå¼€å‘, å®ƒä¹Ÿä¼šå¸®åŠ©ä½ ä½¿ç”¨æ¨¡æ¿å¼•æ“å’Œè§£å†³ä¾èµ–é¡¹ã€‚
 
-Òª´´½¨Ò»¸öPlayÓ¦ÓÃ³ÌĞò:
+è¦åˆ›å»ºä¸€ä¸ªPlayåº”ç”¨ç¨‹åº:
 
-1. ´ò¿ª **New Project** Ïòµ¼, Ñ¡ÔñÔÚ **Scala** ÏÂÃæµÄ **Play 2.x** £¬µã»÷ **Next**¡£
-2. ÊäÈëÄãµÄÏîÄ¿ĞÅÏ¢²¢µã»÷ **Finish**.
+1. æ‰“å¼€ **New Project** å‘å¯¼, é€‰æ‹©åœ¨ **Scala** ä¸‹é¢çš„ **Play 2.x** ï¼Œç‚¹å‡» **Next**ã€‚
+2. è¾“å…¥ä½ çš„é¡¹ç›®ä¿¡æ¯å¹¶ç‚¹å‡» **Finish**.
 
-IntelliJ IDEA ½«Ê¹ÓÃSBT´´½¨Ò»¸ö¿ÕÓ¦ÓÃ³ÌĞò¡£
+IntelliJ IDEA å°†ä½¿ç”¨SBTåˆ›å»ºä¸€ä¸ªç©ºåº”ç”¨ç¨‹åºã€‚
 
-ÄãÒ²¿ÉÒÔµ¼ÈëÒ»¸öÒÑ´æÔÚµÄPlayÏîÄ¿¡£
+ä½ ä¹Ÿå¯ä»¥å¯¼å…¥ä¸€ä¸ªå·²å­˜åœ¨çš„Playé¡¹ç›®ã€‚
 
-Òªµ¼ÈëÒ»¸öPlayÏîÄ¿:
+è¦å¯¼å…¥ä¸€ä¸ªPlayé¡¹ç›®:
 
-1. ´ò¿ª Project wizard, Ñ¡Ôñ **Import Project**¡£
-2. ÔÚ´ò¿ªµÄ´°¿Ú, Ñ¡ÔñÄãÏëµ¼ÈëµÄÏîÄ¿£¬²¢µã»÷ **OK**¡£
-3. ÔÚÏòµ¼µÄÏÂÒ»Ò³, Ñ¡Ôñ **Import project from external model** Ñ¡Ïî, Ñ¡Ôñ **SBT project** ºÍµã»÷ **Next**¡£
-4. ÔÚÏòµ¼µÄÏÂÒ»Ò³£¬Ñ¡Ôñ¸½¼Óµ¼ÈëÑ¡Ïî£¬²¢µã»÷ **Finish**¡£
+1. æ‰“å¼€ Project wizard, é€‰æ‹© **Import Project**ã€‚
+2. åœ¨æ‰“å¼€çš„çª—å£, é€‰æ‹©ä½ æƒ³å¯¼å…¥çš„é¡¹ç›®ï¼Œå¹¶ç‚¹å‡» **OK**ã€‚
+3. åœ¨å‘å¯¼çš„ä¸‹ä¸€é¡µ, é€‰æ‹© **Import project from external model** é€‰é¡¹, é€‰æ‹© **SBT project** å’Œç‚¹å‡» **Next**ã€‚
+4. åœ¨å‘å¯¼çš„ä¸‹ä¸€é¡µï¼Œé€‰æ‹©é™„åŠ å¯¼å…¥é€‰é¡¹ï¼Œå¹¶ç‚¹å‡» **Finish**ã€‚
 
-¼ì²éÏîÄ¿½á¹¹, È·±£ËùÓĞ±ØĞëµÄÒÀÀµ¶¼ÒÑÏÂÔØ¡£Äã¿ÉÒÔÊ¹ÓÃ´úÂë¸¨Öú, µ¼º½ºÍ¶¯Ì¬´úÂë·ÖÎö¹¦ÄÜ¡£
+æ£€æŸ¥é¡¹ç›®ç»“æ„, ç¡®ä¿æ‰€æœ‰å¿…é¡»çš„ä¾èµ–éƒ½å·²ä¸‹è½½ã€‚ä½ å¯ä»¥ä½¿ç”¨ä»£ç è¾…åŠ©, å¯¼èˆªå’ŒåŠ¨æ€ä»£ç åˆ†æåŠŸèƒ½ã€‚
 
-Äã¿ÉÒÔÔËĞĞ¸Õ´´½¨µÄÓ¦ÓÃ³ÌĞò£¬²¢ÇÒÓÃä¯ÀÀÆ÷ÔÚÄ¬ÈÏÎ»ÖÃ`http://localhost:9000`²é¿´½á¹û¡£ÒªÔËĞĞPlayÓ¦ÓÃ³ÌĞò:
+ä½ å¯ä»¥è¿è¡Œåˆšåˆ›å»ºçš„åº”ç”¨ç¨‹åºï¼Œå¹¶ä¸”ç”¨æµè§ˆå™¨åœ¨é»˜è®¤ä½ç½®`http://localhost:9000`æŸ¥çœ‹ç»“æœã€‚è¦è¿è¡ŒPlayåº”ç”¨ç¨‹åº:
 
-1. ´´½¨Ò»¸öĞÂµÄRunÅäÖÃ ¨C ´ÓÖ÷²Ëµ¥, Ñ¡Ôñ Run -> Edit Configurations
-2. µã»÷ + À´Ìí¼ÓÒ»¸öĞÂµÄÅäÖÃ
-3. ´ÓÅäÖÃÁĞ±í£¬Ñ¡Ôñ ¡°SBT Task¡±
-4. ÔÚ ¡°tasks¡± ÊäÈë¿ò, ¼òµ¥ÊäÈë ¡°run¡±
-5. Ó¦ÓÃ¸ü¸ÄºÍÑ¡Ôñ OK
-6. ÏÖÔÚÄã¿ÉÒÔ´ÓÖ÷²Ëµ¥µÄRun²Ëµ¥ÖĞÑ¡Ôñ ¡°Run¡±£¬ÔËĞĞÄãµÄÓ¦ÓÃ³ÌĞò
+1. åˆ›å»ºä¸€ä¸ªæ–°çš„Runé…ç½® â€“ ä»ä¸»èœå•, é€‰æ‹© Run -> Edit Configurations
+2. ç‚¹å‡» + æ¥æ·»åŠ ä¸€ä¸ªæ–°çš„é…ç½®
+3. ä»é…ç½®åˆ—è¡¨ï¼Œé€‰æ‹© â€œSBT Taskâ€
+4. åœ¨ â€œtasksâ€ è¾“å…¥æ¡†, ç®€å•è¾“å…¥ â€œrunâ€
+5. åº”ç”¨æ›´æ”¹å’Œé€‰æ‹© OK
+6. ç°åœ¨ä½ å¯ä»¥ä»ä¸»èœå•çš„Runèœå•ä¸­é€‰æ‹© â€œRunâ€ï¼Œè¿è¡Œä½ çš„åº”ç”¨ç¨‹åº
 
-Äã¿ÉÒÔÇáËÉÎªPlayÓ¦ÓÃ³ÌĞò¿ªÊ¼Ò»¸öµ÷ÊÔ»á»°£¬Ê¹ÓÃÄ¬ÈÏ Run/Debug ÅäÖÃÉè¶¨¡£
+ä½ å¯ä»¥è½»æ¾ä¸ºPlayåº”ç”¨ç¨‹åºå¼€å§‹ä¸€ä¸ªè°ƒè¯•ä¼šè¯ï¼Œä½¿ç”¨é»˜è®¤ Run/Debug é…ç½®è®¾å®šã€‚
 
-ÒªÁË½â¸üÏêÏ¸ĞÅÏ¢, ²ÎÔÄÏÂÃæµÄPlay Framework 2.x ½Ì³Ì:
+è¦äº†è§£æ›´è¯¦ç»†ä¿¡æ¯, å‚é˜…ä¸‹é¢çš„Play Framework 2.x æ•™ç¨‹:
 
 [https://confluence.jetbrains.com/display/IntelliJIDEA/Play+Framework+2.0](https://confluence.jetbrains.com/display/IntelliJIDEA/Play+Framework+2.0)
 
-###´Ó´íÎóÒ³Ãæµ¼º½µ½Ô´´úÂëÎ»ÖÃ
-Ê¹ÓÃ `play.editor` ÅäÖÃÑ¡Ïî, Äã¿ÉÒÔÉèÖÃPlayÌí¼Ó³¬Á´½Óµ½Ò»¸ö´íÎóÒ³Ãæ¡£Æäºó, Äã¿ÉÒÔ´Ó´íÎóÒ³ÃæÇáËÉµ¼º½µ½IntelliJ, Ö±½Ó½øÈëÔ´´úÂëÎ»ÖÃ(ÄãĞèÒªÊ×ÏÈ°²×° Remote Call [https://github.com/Zolotov/RemoteCall](https://github.com/Zolotov/RemoteCall) IntelliJ ²å¼ş)¡£
+###ä»é”™è¯¯é¡µé¢å¯¼èˆªåˆ°æºä»£ç ä½ç½®
+ä½¿ç”¨ `play.editor` é…ç½®é€‰é¡¹, ä½ å¯ä»¥è®¾ç½®Playæ·»åŠ è¶…é“¾æ¥åˆ°ä¸€ä¸ªé”™è¯¯é¡µé¢ã€‚å…¶å, ä½ å¯ä»¥ä»é”™è¯¯é¡µé¢è½»æ¾å¯¼èˆªåˆ°IntelliJ, ç›´æ¥è¿›å…¥æºä»£ç ä½ç½®(ä½ éœ€è¦é¦–å…ˆå®‰è£… Remote Call [https://github.com/Zolotov/RemoteCall](https://github.com/Zolotov/RemoteCall) IntelliJ æ’ä»¶)ã€‚
 
-Ö»Òª°²×°Remote Call ²å¼ş£¬²¢ÓÃÏÂÃæµÄÑ¡ÏîÔËĞĞÄãµÄÓ¦ÓÃ³ÌĞò:
+åªè¦å®‰è£…Remote Call æ’ä»¶ï¼Œå¹¶ç”¨ä¸‹é¢çš„é€‰é¡¹è¿è¡Œä½ çš„åº”ç”¨ç¨‹åº:
 
 ```
 -Dplay.editor=http://localhost:8091/?message=%s:%s -Dapplication.mode=dev
@@ -117,33 +117,33 @@ IntelliJ IDEA ½«Ê¹ÓÃSBT´´½¨Ò»¸ö¿ÕÓ¦ÓÃ³ÌĞò¡£
 
 
 ##Netbeans
-###Éú³ÉÅäÖÃ
-Ä¿Ç°PlayÃ»ÓĞÔ­ÉúµÄNetbeansÏîÄ¿Éú³ÉÖ§³Ö, µ«ÓĞÒ»¸öNetBeansµÄScala²å¼ş¿ÉÒÔ°ïÖúÊ¹ÓÃScalaÓïÑÔºÍSBT:
+###ç”Ÿæˆé…ç½®
+ç›®å‰Playæ²¡æœ‰åŸç”Ÿçš„Netbeansé¡¹ç›®ç”Ÿæˆæ”¯æŒ, ä½†æœ‰ä¸€ä¸ªNetBeansçš„Scalaæ’ä»¶å¯ä»¥å¸®åŠ©ä½¿ç”¨Scalaè¯­è¨€å’ŒSBT:
 
 [https://github.com/dcaoyuan/nbscala](https://github.com/dcaoyuan/nbscala)
 
-»¹ÓĞÒ»¸öSBT²å¼ş¿É´´½¨NetbeansÏîÄ¿¶¨Òå:
+è¿˜æœ‰ä¸€ä¸ªSBTæ’ä»¶å¯åˆ›å»ºNetbeansé¡¹ç›®å®šä¹‰:
 
 [https://github.com/dcaoyuan/nbsbt](https://github.com/dcaoyuan/nbsbt)
 
 ##ENSIME
-###°²×° ENSIME
-°´ÕÕ°²×°ËµÃ÷£¬ÔÚ [https://github.com/ensime/ensime-emacs](https://github.com/ensime/ensime-emacs)¡£
+###å®‰è£… ENSIME
+æŒ‰ç…§å®‰è£…è¯´æ˜ï¼Œåœ¨ [https://github.com/ensime/ensime-emacs](https://github.com/ensime/ensime-emacs)ã€‚
 
-###Éú³ÉÅäÖÃ
-±à¼­ project/plugins.sbt ÎÄ¼ş, ºÍÌí¼ÓÒÔÏÂĞĞ (ÄãÓ¦¸ÃÏÈ¼ì²é [https://github.com/ensime/ensime-sbt](https://github.com/ensime/ensime-sbt) »ñµÃ²å¼ş×îĞÂ°æ±¾):
+###ç”Ÿæˆé…ç½®
+ç¼–è¾‘ project/plugins.sbt æ–‡ä»¶, å’Œæ·»åŠ ä»¥ä¸‹è¡Œ (ä½ åº”è¯¥å…ˆæ£€æŸ¥ [https://github.com/ensime/ensime-sbt](https://github.com/ensime/ensime-sbt) è·å¾—æ’ä»¶æœ€æ–°ç‰ˆæœ¬):
 
 ```
 addSbtPlugin("org.ensime" % "ensime-sbt" % "0.1.5-SNAPSHOT")
 ```
 
-Æô¶¯ Play:
+å¯åŠ¨ Play:
 
 ```
 $ activator
 ```
 
-ÔÚplay¿ØÖÆÌ¨ÊäÈë ¡®ensime generate¡¯¡£²å¼ş»áÉú³ÉÒ»¸ö .ensime ÎÄ¼şµ½playÏîÄ¿µÄ¸ùÄ¿Â¼ÏÂ¡£
+åœ¨playæ§åˆ¶å°è¾“å…¥ â€˜ensime generateâ€™ã€‚æ’ä»¶ä¼šç”Ÿæˆä¸€ä¸ª .ensime æ–‡ä»¶åˆ°playé¡¹ç›®çš„æ ¹ç›®å½•ä¸‹ã€‚
 
 ```
 $ [MYPROJECT] ensime generate
@@ -177,22 +177,22 @@ $ [MYPROJECT] ensime generate
 [info] Wrote configuration to .ensime
 ```
 
-###Æô¶¯ ENSIME
-´ÓEmacs, Ö´ĞĞ M-x ensime ºÍ×ñ´ÓÆÁÄ»ÉÏµÄËµÃ÷¡£
+###å¯åŠ¨ ENSIME
+ä»Emacs, æ‰§è¡Œ M-x ensime å’Œéµä»å±å¹•ä¸Šçš„è¯´æ˜ã€‚
 
-¾ÍÕâÑù¡£ÏÖÔÚÄãµÄPlayÏîÄ¿Ó¦¸ÃÓĞÁËÀàĞÍ¼ì²é, ×Ô¶¯Íê³É£¬µÈµÈ¡£×¢Òâ, Èç¹ûÄãÌí¼ÓĞÂµÄ¿âÒÀÀµµ½ÄãµÄplayÏîÄ¿,ÄãĞèÒªÖØĞÂÔËĞĞ ¡°ensime generate¡± ºÍÖØÆôENSIME¡£
+å°±è¿™æ ·ã€‚ç°åœ¨ä½ çš„Playé¡¹ç›®åº”è¯¥æœ‰äº†ç±»å‹æ£€æŸ¥, è‡ªåŠ¨å®Œæˆï¼Œç­‰ç­‰ã€‚æ³¨æ„, å¦‚æœä½ æ·»åŠ æ–°çš„åº“ä¾èµ–åˆ°ä½ çš„playé¡¹ç›®,ä½ éœ€è¦é‡æ–°è¿è¡Œ â€œensime generateâ€ å’Œé‡å¯ENSIMEã€‚
 
-###¸ü¶àĞÅÏ¢
-¼ì³ö ENSIME README£¬ ÔÚ [https://github.com/ensime/ensime-emacs](https://github.com/ensime/ensime-emacs)¡£Èç¹ûÄãÓĞÊ²Ã´ÎÊÌâ, ¿ÉÒÔÁªÏµËûÃÇµÄensimeÓÃ»§×é£¬ ÔÚ [https://groups.google.com/forum/?fromgroups=#!forum/ensime](https://groups.google.com/forum/?fromgroups=#!forum/ensime)¡£
+###æ›´å¤šä¿¡æ¯
+æ£€å‡º ENSIME READMEï¼Œ åœ¨ [https://github.com/ensime/ensime-emacs](https://github.com/ensime/ensime-emacs)ã€‚å¦‚æœä½ æœ‰ä»€ä¹ˆé—®é¢˜, å¯ä»¥è”ç³»ä»–ä»¬çš„ensimeç”¨æˆ·ç»„ï¼Œ åœ¨ [https://groups.google.com/forum/?fromgroups=#!forum/ensime](https://groups.google.com/forum/?fromgroups=#!forum/ensime)ã€‚
 
-##ËùÓĞĞèÒªµÄ Scala²å¼ş
-ScalaÊÇÒ»¸ö±È½ÏĞÂµÄ±à³ÌÓïÑÔ, ËùÒÔ¹¦ÄÜÊÇÓÉ²å¼şÌá¹©£¬¶ø²»ÊÇIDEºËĞÄ¡£
+##æ‰€æœ‰éœ€è¦çš„ Scalaæ’ä»¶
+Scalaæ˜¯ä¸€ä¸ªæ¯”è¾ƒæ–°çš„ç¼–ç¨‹è¯­è¨€, æ‰€ä»¥åŠŸèƒ½æ˜¯ç”±æ’ä»¶æä¾›ï¼Œè€Œä¸æ˜¯IDEæ ¸å¿ƒã€‚
 
 1. Eclipse Scala IDE: [http://scala-ide.org/](http://scala-ide.org/)
-2. NetBeans Scala²å¼ş: [https://github.com/dcaoyuan/nbscala](https://github.com/dcaoyuan/nbscala)
-3. IntelliJ IDEA Scala²å¼ş: [http://confluence.jetbrains.net/display/SCA/Scala+Plugin+for+IntelliJ+IDEA](http://confluence.jetbrains.net/display/SCA/Scala+Plugin+for+IntelliJ+IDEA)
-4. IntelliJ IDEAµÄ²å¼şÕıÔÚ»ı¼«·¢Õ¹, ËùÒÔÊ¹ÓÃnightly¹¹½¨¿ÉÄÜ»á¸øÄã¸½¼Ó¹¦ÄÜ£¬Ö»ÊÇ¶à»¨Ò»µã³É±¾¡£
-5. Nika (11.x) ²å¼ş²Ö¿â: [https://www.jetbrains.com/idea/plugins/scala-nightly-nika.xml](https://www.jetbrains.com/idea/plugins/scala-nightly-nika.xml)
-6. Leda (12.x) ²å¼ş²Ö¿â: [https://www.jetbrains.com/idea/plugins/scala-nightly-leda.xml](https://www.jetbrains.com/idea/plugins/scala-nightly-leda.xml)
-7. IntelliJ IDEA Play ²å¼ş(½öÔÚLeda 12.x¿ÉÓÃ): [http://plugins.intellij.net/plugin/?idea&pluginId=7080](http://plugins.intellij.net/plugin/?idea&pluginId=7080)
-8. ENSIME - EmacsµÄScala IDEÄ£Ê½: [https://github.com/aemoncannon/ensime](https://github.com/aemoncannon/ensime)(²ÎÔÄÀïÃæµÄ ENSIME/PlayÊ¹ÓÃËµÃ÷)
+2. NetBeans Scalaæ’ä»¶: [https://github.com/dcaoyuan/nbscala](https://github.com/dcaoyuan/nbscala)
+3. IntelliJ IDEA Scalaæ’ä»¶: [http://confluence.jetbrains.net/display/SCA/Scala+Plugin+for+IntelliJ+IDEA](http://confluence.jetbrains.net/display/SCA/Scala+Plugin+for+IntelliJ+IDEA)
+4. IntelliJ IDEAçš„æ’ä»¶æ­£åœ¨ç§¯æå‘å±•, æ‰€ä»¥ä½¿ç”¨nightlyæ„å»ºå¯èƒ½ä¼šç»™ä½ é™„åŠ åŠŸèƒ½ï¼Œåªæ˜¯å¤šèŠ±ä¸€ç‚¹æˆæœ¬ã€‚
+5. Nika (11.x) æ’ä»¶ä»“åº“: [https://www.jetbrains.com/idea/plugins/scala-nightly-nika.xml](https://www.jetbrains.com/idea/plugins/scala-nightly-nika.xml)
+6. Leda (12.x) æ’ä»¶ä»“åº“: [https://www.jetbrains.com/idea/plugins/scala-nightly-leda.xml](https://www.jetbrains.com/idea/plugins/scala-nightly-leda.xml)
+7. IntelliJ IDEA Play æ’ä»¶(ä»…åœ¨Leda 12.xå¯ç”¨): [http://plugins.intellij.net/plugin/?idea&pluginId=7080](http://plugins.intellij.net/plugin/?idea&pluginId=7080)
+8. ENSIME - Emacsçš„Scala IDEæ¨¡å¼: [https://github.com/aemoncannon/ensime](https://github.com/aemoncannon/ensime)(å‚é˜…é‡Œé¢çš„ ENSIME/Playä½¿ç”¨è¯´æ˜)

@@ -1,23 +1,23 @@
-#Play ½Ì³Ì
+#Play æ•™ç¨‹
 
-Ğí¶àActivatorÄ£°åºÍ×ÛºÏ½Ì³ÌÒ»ÆğÌá¹©£¬Ö¸µ¼ÄãÊ¹ÓÃ¸ÃÄ£°åÍÆ¼öµÄ¼¼ÊõÀ´´´½¨Ò»¸öÓ¦ÓÃ³ÌĞò¡£
+è®¸å¤šActivatoræ¨¡æ¿å’Œç»¼åˆæ•™ç¨‹ä¸€èµ·æä¾›ï¼ŒæŒ‡å¯¼ä½ ä½¿ç”¨è¯¥æ¨¡æ¿æ¨èçš„æŠ€æœ¯æ¥åˆ›å»ºä¸€ä¸ªåº”ç”¨ç¨‹åºã€‚
 
-ÔÚActivator UIÖĞ¿ÉÒÔ·¢ÏÖËùÓĞÄ£°åµÄÍêÕûÁĞ±í¡£
+åœ¨Activator UIä¸­å¯ä»¥å‘ç°æ‰€æœ‰æ¨¡æ¿çš„å®Œæ•´åˆ—è¡¨ã€‚
 
-´ËÍâ, Ä£°åÒ²·¢²¼ÔÚTypesafe¹Ù·½ÍøÕ¾, ¹Ù·½ºÍÉçÇø¹±Ï×µÄPlayÄ£°åµÄÍêÕûÁĞ±í¿ÉÒÔÔÚ[ÕâÀï](https://typesafe.com/activator/templates#filter:play)ÕÒµ½¡£
+æ­¤å¤–, æ¨¡æ¿ä¹Ÿå‘å¸ƒåœ¨Typesafeå®˜æ–¹ç½‘ç«™, å®˜æ–¹å’Œç¤¾åŒºè´¡çŒ®çš„Playæ¨¡æ¿çš„å®Œæ•´åˆ—è¡¨å¯ä»¥åœ¨[è¿™é‡Œ](https://typesafe.com/activator/templates#filter:play)æ‰¾åˆ°ã€‚
 
-Ä£°åÄ¿Â¼ÔÊĞíÄãä¯ÀÀÄ£°å, Ô¤ÀÀÄ£°å¸½´øµÄ½Ì³Ì, ÉõÖÁÏÂÔØ¶ÀÁ¢µÄÄ£°å°ü£¬ÈÃÄã´ÓÒ»¸öÄ£°å¿ìËÙ¿ªÊ¼¡£
+æ¨¡æ¿ç›®å½•å…è®¸ä½ æµè§ˆæ¨¡æ¿, é¢„è§ˆæ¨¡æ¿é™„å¸¦çš„æ•™ç¨‹, ç”šè‡³ä¸‹è½½ç‹¬ç«‹çš„æ¨¡æ¿åŒ…ï¼Œè®©ä½ ä»ä¸€ä¸ªæ¨¡æ¿å¿«é€Ÿå¼€å§‹ã€‚
 
-ÎÒÃÇÍÆ¼öµÄÒ»Ğ©½Ì³Ì:
+æˆ‘ä»¬æ¨èçš„ä¸€äº›æ•™ç¨‹:
 
 ##Scala
-* [Play Scala Intro](https://typesafe.com/activator/template/play-scala-intro): ½éÉÜÓÃPlay ScalaÀ´´´½¨Ò»¸ö¼òµ¥µÄ CRUD Ó¦ÓÃ³ÌĞò¡£
-* [Reactive Maps](https://typesafe.com/activator/template/reactive-maps): Õâ¸öÄ£°åºÍ½Ì³ÌÕ¹Ê¾ÈçºÎTypesafe Reactive Platform ÓÃÀ´ÊµÏÖ¿ÉÀ©Õ¹µÄ, µ¯ĞÔµÄ, ÏìÓ¦Ê½ÊÂ¼şÇı¶¯Ó¦ÓÃ³ÌĞò¡£
-* [AngularJS Play Mongo](https://typesafe.com/activator/template/modern-web-template): Ó¦ÓÃ³ÌĞòÕ¹Ê¾ÈçºÎ¹¹½¨Ò»¸öÏÖ´úwebÓ¦ÓÃ³ÌĞò, ÆäÖĞ°üÀ¨Ò»¸ö¿Í»§¶ËÊ¹ÓÃAngularJS¹¹½¨£¬ÓÃCoffeeScript±àĞ´µÄJavaScript App, ÓÉPlay¿ò¼ÜÌá¹©·şÎñ£¬ÒÔ¼°ÓÃReactive MongoÀ´³Ö¾Ã»¯ÎÄµµ£¬Ò»¸öMongoDBµÄ·Ç×èÈûScala¿Í»§¶Ë¡£
-* [Super Slick Play](https://typesafe.com/activator/template/play-slick): Õâ¸öÄ£°å½áºÏPlay¿ò¼ÜºÍSlick£¬Îª¿ìËÙ¿ªÊ¼Ò»¸öÓÃSlick¼¯³ÉÊı¾İºó¶ËµÄwebÓ¦ÓÃ³ÌĞò¿ª·¢¡£
+* [Play Scala Intro](https://typesafe.com/activator/template/play-scala-intro): ä»‹ç»ç”¨Play Scalaæ¥åˆ›å»ºä¸€ä¸ªç®€å•çš„ CRUD åº”ç”¨ç¨‹åºã€‚
+* [Reactive Maps](https://typesafe.com/activator/template/reactive-maps): è¿™ä¸ªæ¨¡æ¿å’Œæ•™ç¨‹å±•ç¤ºå¦‚ä½•Typesafe Reactive Platform ç”¨æ¥å®ç°å¯æ‰©å±•çš„, å¼¹æ€§çš„, å“åº”å¼äº‹ä»¶é©±åŠ¨åº”ç”¨ç¨‹åºã€‚
+* [AngularJS Play Mongo](https://typesafe.com/activator/template/modern-web-template): åº”ç”¨ç¨‹åºå±•ç¤ºå¦‚ä½•æ„å»ºä¸€ä¸ªç°ä»£webåº”ç”¨ç¨‹åº, å…¶ä¸­åŒ…æ‹¬ä¸€ä¸ªå®¢æˆ·ç«¯ä½¿ç”¨AngularJSæ„å»ºï¼Œç”¨CoffeeScriptç¼–å†™çš„JavaScript App, ç”±Playæ¡†æ¶æä¾›æœåŠ¡ï¼Œä»¥åŠç”¨Reactive Mongoæ¥æŒä¹…åŒ–æ–‡æ¡£ï¼Œä¸€ä¸ªMongoDBçš„éé˜»å¡Scalaå®¢æˆ·ç«¯ã€‚
+* [Super Slick Play](https://typesafe.com/activator/template/play-slick): è¿™ä¸ªæ¨¡æ¿ç»“åˆPlayæ¡†æ¶å’ŒSlickï¼Œä¸ºå¿«é€Ÿå¼€å§‹ä¸€ä¸ªç”¨Slické›†æˆæ•°æ®åç«¯çš„webåº”ç”¨ç¨‹åºå¼€å‘ã€‚
 
 
 ##Java
-* [Play Java Intro](https://typesafe.com/activator/template/play-java-intro-reactive-platform-15v01): ½éÉÜÓÃPlay JavaÀ´´´½¨Ò»¸ö¼òµ¥µÄ CRUD Ó¦ÓÃ³ÌĞò¡£.
-* [Reactive Maps in Java](https://typesafe.com/activator/template/reactive-maps-java): Õâ¸öÄ£°åºÍ½Ì³ÌÕ¹Ê¾ÈçºÎTypesafe Reactive Platform ÓÃÀ´ÊµÏÖ¿ÉÀ©Õ¹µÄ, µ¯ĞÔµÄ, ÏìÓ¦Ê½ÊÂ¼şÇı¶¯Ó¦ÓÃ³ÌĞò¡£
-* [Play with Spring Data JPA](https://typesafe.com/activator/template/play-spring-data-jpa): ÕâÊÇÒ»¸öÊ¹ÓÃSpring Data JPAµÄPlayÊ¾Àı¡£ 
+* [Play Java Intro](https://typesafe.com/activator/template/play-java-intro-reactive-platform-15v01): ä»‹ç»ç”¨Play Javaæ¥åˆ›å»ºä¸€ä¸ªç®€å•çš„ CRUD åº”ç”¨ç¨‹åºã€‚.
+* [Reactive Maps in Java](https://typesafe.com/activator/template/reactive-maps-java): è¿™ä¸ªæ¨¡æ¿å’Œæ•™ç¨‹å±•ç¤ºå¦‚ä½•Typesafe Reactive Platform ç”¨æ¥å®ç°å¯æ‰©å±•çš„, å¼¹æ€§çš„, å“åº”å¼äº‹ä»¶é©±åŠ¨åº”ç”¨ç¨‹åºã€‚
+* [Play with Spring Data JPA](https://typesafe.com/activator/template/play-spring-data-jpa): è¿™æ˜¯ä¸€ä¸ªä½¿ç”¨Spring Data JPAçš„Playç¤ºä¾‹ã€‚ 

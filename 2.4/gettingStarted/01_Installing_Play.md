@@ -1,22 +1,22 @@
-#��װ Play
+#安装 Play
 
-##׼������
-����Ҫ�Ȱ�װ JDK 1.8 ����߰汾 (���� [һ�㰲װ����](#General-Installation-Tasks))��
+##准备工作
+你需要先安装 JDK 1.8 或更高版本 (参阅 [一般安装任务](#General-Installation-Tasks))。
 
-##��������
+##快速入门
 
-* 1.�������°� [Typesafe Activator](https://typesafe.com/get-started)��
-* 2.��ѹ����ѹ��������дȨ�޵�λ�á�
-* 3.���ն����� `cd activator*` �л������Ŀ¼ (��ʹ���ļ�������)
-* 4.���ն����� `activator ui` ����(��ʹ���ļ�������)
-* 5.���� [http://localhost:8888](http://localhost:8888/)
+* 1.下载最新版 [Typesafe Activator](https://typesafe.com/get-started)。
+* 2.将压缩包压缩到你有写权限的位置。
+* 3.用终端命令 `cd activator*` 切换到这个目录 (或使用文件管理器)
+* 4.用终端命令 `activator ui` 启动(或使用文件管理器)
+* 5.访问 [http://localhost:8888](http://localhost:8888/)
 
-��ᷢ�ֺܶ�Ӧ�ó����б����ĵ�������������ٿ�ʼ�������ȼ���һ�� play-java ���塣
+你会发现很多应用程序列表和文档，可以让你快速开始。可以先简单试一下 play-java 样板。
 
-###������
-Ҫ��������ļ�ϵͳ���κεط�������ֱ��ʹ�� play ����, ��Ҫ��activator����Ŀ¼���ӵ����ϵͳ������Path�� (���� [һ�㰲װ����](#General-Installation-Tasks)).
+###命令行
+要想在你的文件系统的任何地方都可以直接使用 play 命令, 需要将activator所在目录添加到你的系统变量的Path中 (查阅 [一般安装任务](#General-Installation-Tasks)).
 
-����һ������`play-java`��ģ��`my-first-app`������ô�򵥣�
+创建一个基于`play-java`的模板`my-first-app`，就这么简单：
 
 ```shell
 activator new my-first-app play-java
@@ -24,41 +24,41 @@ cd my-first-app
 activator run
 ```
 
-Ȼ����� http://localhost:9000��
+然后访问 http://localhost:9000。
 
-�������Ѿ�׼����ʹ��Play��!
+现在你已经准备好使用Play了!
 
-##<a name="General-Installation-Tasks"></a>һ�㰲װ����
-�������Ҫ����һЩһ�������Ա㰲װPlay!
+##<a name="General-Installation-Tasks"></a>一般安装任务
+你可能需要处理一些一般任务，以便安装Play!
 
-###JDK ��װ
-��ȷ�����ϵͳ���� JDK (Java Development Kit) 1.8 ����߰汾��ʹ������������������֤��
+###JDK 安装
+请确认你的系统中有 JDK (Java Development Kit) 1.8 或更高版本。使用以下命令来进行验证：
 
 ```shell
 java -version
 javac -version
 ```
 
-����㻹û�а�װ JDK, ����Ҫ��װ����
+如果你还没有安装 JDK, 你需要安装它：
 
-1. MacOSϵͳ��Java �����õ�, ���������Ҫ[���������°汾](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
-2. Linuxϵͳ�� ʹ�����µ�Oracle JDK��OpenJDK(��Ҫʹ�÷�gcj).
-3. Windowsϵͳ��ֻ��Ҫ���غͰ�װ[���°��JDK��װ��](http://www.oracle.com/technetwork/java/javase/downloads/index.html)��
+1. MacOS系统，Java 是内置的, 但你可能需要[升级到最新版本](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
+2. Linux系统， 使用最新的Oracle JDK或OpenJDK(不要使用非gcj).
+3. Windows系统，只需要下载和安装[最新版的JDK安装包](http://www.oracle.com/technetwork/java/javase/downloads/index.html)。
 
-###����ִ���ļ����ӵ�����������Path��
-Ϊ�����������Ӧ������ Activator ��װĿ¼��ϵͳ����������`PATH`�С�
+###将可执行文件添加到环境变量的Path中
+为方便起见，你应该添加 Activator 安装目录到系统环境变量的`PATH`中。
 
-��Unix��ϵͳ, ʹ�� `export PATH=/path/to/activator:$PATH`
+在Unix类系统, 使用 `export PATH=/path/to/activator:$PATH`
 
-��Windowsϵͳ, ���� `;C:\path\to\activator` ����Ļ��������� `PATH` �����С�·���в�Ҫʹ�ÿո�
+在Windows系统, 添加 `;C:\path\to\activator` 到你的环境变量的 `PATH` 变量中。路径中不要使用空格。
 
-###�ļ�Ȩ��
+###文件权限
 ####Unix
-�ڷ����������� activator��д��һЩ�ļ���Ŀ¼, ���Բ�Ҫ��װ�� /opt, /usr/local ���κ���������Ҫ���ⶨ��Ȩ�޵�λ�á�
+在发布版中运行 activator会写入一些文件到目录, 所以不要安装到 /opt, /usr/local 或任何其它你需要特殊定入权限的位置。
 
-ȷ�� activator �ű��ǿ�ִ�еġ��������, �����ն����� `chmod u+x /path/to/activator` ������Ȩ�ޡ�
+确保 activator 脚本是可执行的。如果不是, 运行终端命令 `chmod u+x /path/to/activator` 以添加权限。
 
-###��������
-�����������һ���������棬ȷ��������������ã�
-��Windows����`set HTTP_PROXY=http://<host>:<port>` ��
-������UNIX��ϵͳ��ʹ�� `export HTTP_PROXY=http://<host>:<port>` ��
+###代理设置
+如果你隐藏在一个代理后面，确保定义下面的设置：
+在Windows上用`set HTTP_PROXY=http://<host>:<port>` ，
+或者在UNIX类系统中使用 `export HTTP_PROXY=http://<host>:<port>` 。

@@ -1,9 +1,9 @@
-#Ê¹ÓÃPlay¿ØÖÆÌ¨
+#ä½¿ç”¨PlayæŽ§åˆ¶å°
 
-##Æô¶¯¿ØÖÆÌ¨
-Play¿ØÖÆÌ¨ÊÇÒ»¸ö»ùÓÚsbtµÄ¿ª·¢¿ØÖÆÌ¨£¬ÔÊÐíÄãÔÚPlayÓ¦ÓÃ³ÌÐòµÄÕû¸ö¿ª·¢ÖÜÆÚ½øÐÐ¹ÜÀí¡£
+##å¯åŠ¨æŽ§åˆ¶å°
+PlayæŽ§åˆ¶å°æ˜¯ä¸€ä¸ªåŸºäºŽsbtçš„å¼€å‘æŽ§åˆ¶å°ï¼Œå…è®¸ä½ åœ¨Playåº”ç”¨ç¨‹åºçš„æ•´ä¸ªå¼€å‘å‘¨æœŸè¿›è¡Œç®¡ç†ã€‚
 
-ÒªÆô¶¯Play¿ØÖÆÌ¨, ÇÐ»»µ½ÏîÄ¿ËùÔÚµÄÄ¿Â¼, È»ºóÔËÐÐActivator:
+è¦å¯åŠ¨PlayæŽ§åˆ¶å°, åˆ‡æ¢åˆ°é¡¹ç›®æ‰€åœ¨çš„ç›®å½•, ç„¶åŽè¿è¡ŒActivator:
 
 ```shell
 $ cd my-first-app
@@ -12,15 +12,15 @@ $ activator
 
 ![](console.png)
 
-##»ñµÃ°ïÖú
-Ê¹ÓÃ`help` ÃüÁî¿ÉÒÔ»ñµÃÓÐ¹Ø¿ÉÓÃÃüÁîµÄ»ù±¾°ïÖú¡£ÄãÒ²¿ÉÒÔÔÚºóÃæ¼ÓÉÏÒ»¸öÌØ¶¨µÄÃüÁîÃû³Æ£¬ÒÔ»ñµÃÕâ¸öÃüÁîµÄÏà¹Ø°ïÖúÐÅÏ¢£º
+##èŽ·å¾—å¸®åŠ©
+ä½¿ç”¨`help` å‘½ä»¤å¯ä»¥èŽ·å¾—æœ‰å…³å¯ç”¨å‘½ä»¤çš„åŸºæœ¬å¸®åŠ©ã€‚ä½ ä¹Ÿå¯ä»¥åœ¨åŽé¢åŠ ä¸Šä¸€ä¸ªç‰¹å®šçš„å‘½ä»¤åç§°ï¼Œä»¥èŽ·å¾—è¿™ä¸ªå‘½ä»¤çš„ç›¸å…³å¸®åŠ©ä¿¡æ¯ï¼š
 
 ```shell
 [my-first-app] $ help run
 ```
 
-##ÔÚ¿ª·¢Ä£Ê½ÏÂÔËÐÐ·þÎñ
-Òª½«µ±Ç°Ó¦ÓÃ³ÌÐòÔËÐÐÔÚ¿ª·¢Ä£Ê½ÏÂ, Ê¹ÓÃ`run`ÃüÁî:
+##åœ¨å¼€å‘æ¨¡å¼ä¸‹è¿è¡ŒæœåŠ¡
+è¦å°†å½“å‰åº”ç”¨ç¨‹åºè¿è¡Œåœ¨å¼€å‘æ¨¡å¼ä¸‹, ä½¿ç”¨`run`å‘½ä»¤:
 
 ```shell
 [my-first-app] $ run
@@ -28,16 +28,16 @@ $ activator
 
 ![](consoleRun.png)
 
-ÔÚÕâ¸öÄ£Ê½ÏÂ, ·þÎñÆ÷½«ÆôÓÃ×Ô¶¯Ë¢ÐÂ¹¦ÄÜ, ÕâÑù¶ÔÓÚÃ¿Ò»¸öÇëÇó£¬Play¶¼»á¼ì²éÄãµÄÏîÄ¿ºÍÖØÐÂ±àÒëÔ´´úÂë¡£ÈôÓÐÐèÒª£¬Ó¦ÓÃ³ÌÐòÒ²»á×Ô¶¯ÖØÆô¡£
+åœ¨è¿™ä¸ªæ¨¡å¼ä¸‹, æœåŠ¡å™¨å°†å¯ç”¨è‡ªåŠ¨åˆ·æ–°åŠŸèƒ½, è¿™æ ·å¯¹äºŽæ¯ä¸€ä¸ªè¯·æ±‚ï¼ŒPlayéƒ½ä¼šæ£€æŸ¥ä½ çš„é¡¹ç›®å’Œé‡æ–°ç¼–è¯‘æºä»£ç ã€‚è‹¥æœ‰éœ€è¦ï¼Œåº”ç”¨ç¨‹åºä¹Ÿä¼šè‡ªåŠ¨é‡å¯ã€‚
 
-Èç¹ûÓÐ±àÒë´íÎó£¬Äú½«¿´µ½ÔÚä¯ÀÀÆ÷ÖÐÖ±½Ó¿´µ½±àÒë´íÎóµÄ½á¹û:
+å¦‚æžœæœ‰ç¼–è¯‘é”™è¯¯ï¼Œæ‚¨å°†çœ‹åˆ°åœ¨æµè§ˆå™¨ä¸­ç›´æŽ¥çœ‹åˆ°ç¼–è¯‘é”™è¯¯çš„ç»“æžœ:
 
 ![](errorPage.png)
 
-ÒªÍ£Ö¹·þÎñÆ÷, °´ÏÂ Crtl+D ¼ü, È»ºó¾Í»á·µ»ØPlay¿ØÖÆÌ¨¡£
+è¦åœæ­¢æœåŠ¡å™¨, æŒ‰ä¸‹ Crtl+D é”®, ç„¶åŽå°±ä¼šè¿”å›žPlayæŽ§åˆ¶å°ã€‚
 
-##±àÒë
-ÔÚPlayÖÐÄãÒ²¿ÉÒÔÎÞÐëÆô¶¯·þÎñÆ÷µÄÇé¿öÏÂ±àÒëÄãµÄÓ¦ÓÃ³ÌÐò£¬Ö»ÐèÊ¹ÓÃ`compile`ÃüÁî£º
+##ç¼–è¯‘
+åœ¨Playä¸­ä½ ä¹Ÿå¯ä»¥æ— é¡»å¯åŠ¨æœåŠ¡å™¨çš„æƒ…å†µä¸‹ç¼–è¯‘ä½ çš„åº”ç”¨ç¨‹åºï¼Œåªéœ€ä½¿ç”¨`compile`å‘½ä»¤ï¼š
 
 ```shell
 [my-first-app] $ compile
@@ -45,64 +45,64 @@ $ activator
 
 ![](consoleCompile.png)
 
-##Ö´ÐÐ²âÊÔ
-ÕýÈçÉÏÃæµÄÃüÁî, ÄãÎÞÐëÆô¶¯·þÎñÆ÷£¬Ò²¿ÉÒÔÖ´ÐÐ²âÊÔ¡£Ö»ÐèÊ¹ÓÃ`test`ÃüÁî£º
+##æ‰§è¡Œæµ‹è¯•
+æ­£å¦‚ä¸Šé¢çš„å‘½ä»¤, ä½ æ— é¡»å¯åŠ¨æœåŠ¡å™¨ï¼Œä¹Ÿå¯ä»¥æ‰§è¡Œæµ‹è¯•ã€‚åªéœ€ä½¿ç”¨`test`å‘½ä»¤ï¼š
 
 ```shell
 [my-first-app] $ test
 ```
 
-##Æô¶¯½»»¥Ê½¿ØÖÆÌ¨
-ÊäÈë`console`£¬½øÈë½»»¥Ê½Scala¿ØÖÆÌ¨, ÕâÀï¿ÉÒÔ½»»¥Ê½µØ²âÊÔÄúµÄ´úÂë:
+##å¯åŠ¨äº¤äº’å¼æŽ§åˆ¶å°
+è¾“å…¥`console`ï¼Œè¿›å…¥äº¤äº’å¼ScalaæŽ§åˆ¶å°, è¿™é‡Œå¯ä»¥äº¤äº’å¼åœ°æµ‹è¯•æ‚¨çš„ä»£ç :
 
 ```shell
 [my-first-app] $ console
 ```
 
-ÒªÔÚscala¿ØÖÆÌ¨ÀïÃæÆô¶¯Ó¦ÓÃ(ÀýÈç·ÃÎÊÊý¾Ý¿â): `bash scala> new play.core.StaticApplication(new java.io.File("."))`
+è¦åœ¨scalaæŽ§åˆ¶å°é‡Œé¢å¯åŠ¨åº”ç”¨(ä¾‹å¦‚è®¿é—®æ•°æ®åº“): `bash scala> new play.core.StaticApplication(new java.io.File("."))`
 
 ![](consoleEval.png)
 
-##µ÷ÊÔ
-Äã¿ÉÒÔÔÚÆô¶¯¿ØÖÆÌ¨Ê±£¬ÈÃPlayÆô¶¯Ò»¸öJPDAµ÷ÊÔ¶Ë¿Ú¡£È»ºóÄã¿ÉÒÔÊ¹ÓÃJava debuggerÁ¬½Óµ÷ÊÔ¡£±ÈÈçÊ¹ÓÃÏÂÃæµÄ`activator -jvm-debug <port>`ÃüÁî:
+##è°ƒè¯•
+ä½ å¯ä»¥åœ¨å¯åŠ¨æŽ§åˆ¶å°æ—¶ï¼Œè®©Playå¯åŠ¨ä¸€ä¸ªJPDAè°ƒè¯•ç«¯å£ã€‚ç„¶åŽä½ å¯ä»¥ä½¿ç”¨Java debuggerè¿žæŽ¥è°ƒè¯•ã€‚æ¯”å¦‚ä½¿ç”¨ä¸‹é¢çš„`activator -jvm-debug <port>`å‘½ä»¤:
 
 ```shell
 $ activator -jvm-debug 9999
 ```
 
-µ±JPDA¶Ë¿Ú¿ÉÓÃ£¬JVM»áÔÚÓ¦ÓÃÆô¶¯Ê±´òÓ¡ÕâÐÐÈÕÖ¾£º
+å½“JPDAç«¯å£å¯ç”¨ï¼ŒJVMä¼šåœ¨åº”ç”¨å¯åŠ¨æ—¶æ‰“å°è¿™è¡Œæ—¥å¿—ï¼š
 
 ```
 Listening for transport dt_socket at address: 9999
 ```
 
-##Ê¹ÓÃsbtÌØÐÔ
-Play¿ØÖÆÌ¨¾ÍÊÇÒ»¸öÆÕÍ¨µÄsbt¿ØÖÆÌ¨, ËùÒÔÄã¿ÉÒÔÊ¹ÓÃsbtÌØÐÔ£¬Èç**triggered execution**.
+##ä½¿ç”¨sbtç‰¹æ€§
+PlayæŽ§åˆ¶å°å°±æ˜¯ä¸€ä¸ªæ™®é€šçš„sbtæŽ§åˆ¶å°, æ‰€ä»¥ä½ å¯ä»¥ä½¿ç”¨sbtç‰¹æ€§ï¼Œå¦‚**triggered execution**.
 
-¾ÙÀý, Ê¹ÓÃ `~ compile`:
+ä¸¾ä¾‹, ä½¿ç”¨ `~ compile`:
 
 ```
 [my-first-app] $ ~ compile
 ```
 
-Ã¿´ÎÄã¸ü¸ÄÔ´ÎÄ¼þÊ±£¬±àÒë¾Í»á±»´¥·¢¡£
+æ¯æ¬¡ä½ æ›´æ”¹æºæ–‡ä»¶æ—¶ï¼Œç¼–è¯‘å°±ä¼šè¢«è§¦å‘ã€‚
 
-Èç¹ûÄãÊ¹ÓÃ `~ run`:
+å¦‚æžœä½ ä½¿ç”¨ `~ run`:
 
 ```
 [my-first-app] $ ~ run
 ```
 
-µ±¿ª·¢Ä£Ê½·þÎñÆ÷ÔËÐÐÊ±£¬Õâ¸ö´¥·¢±àÒëÌØÐÔ¾Í»á±»ÆôÓÃ¡£
+å½“å¼€å‘æ¨¡å¼æœåŠ¡å™¨è¿è¡Œæ—¶ï¼Œè¿™ä¸ªè§¦å‘ç¼–è¯‘ç‰¹æ€§å°±ä¼šè¢«å¯ç”¨ã€‚
 
-Í¬ÑùÄãÒ²¿ÉÒÔÓÃ `~ test`, ÔÚÃ¿´ÎÄãÐÞ¸ÄÔ´ÎÄ¼þÊ±£¬²»Í£²âÊÔÄãµÄÏîÄ¿:
+åŒæ ·ä½ ä¹Ÿå¯ä»¥ç”¨ `~ test`, åœ¨æ¯æ¬¡ä½ ä¿®æ”¹æºæ–‡ä»¶æ—¶ï¼Œä¸åœæµ‹è¯•ä½ çš„é¡¹ç›®:
 
 ```
 [my-first-app] $ ~ test
 ```
 
-##Ö±½ÓÊ¹ÓÃplayÃüÁî
-ÄãÒ²¿ÉÒÔÖ±½ÓÔËÐÐÃüÁî¶øÎÞÐë½øÈëPlay¿ØÖÆÌ¨¡£¾ÙÀý, ÊäÈë`activator run`:
+##ç›´æŽ¥ä½¿ç”¨playå‘½ä»¤
+ä½ ä¹Ÿå¯ä»¥ç›´æŽ¥è¿è¡Œå‘½ä»¤è€Œæ— é¡»è¿›å…¥PlayæŽ§åˆ¶å°ã€‚ä¸¾ä¾‹, è¾“å…¥`activator run`:
 
 ```
 $ activator run
@@ -116,7 +116,7 @@ $ activator run
 (Server started, use Ctrl+D to stop and go back to the console...)
 ```
 
-Ó¦ÓÃ³ÌÐò»áÖ±½ÓÆô¶¯¡£µ±ÄãÒªÍË³ö·þÎñÆ÷£¬Ê¹ÓÃ `Ctrl+D`, Äã»á·µ»Øµ½²ÙÊ¾ÏµÍ³ÖÕ¶ËµÄÌáÊ¾·û½çÃæ¡£µ±È», **triggered execution**ÔÚÕâÀïÒ²ÊÇ¿ÉÓÃµÄ:
+åº”ç”¨ç¨‹åºä¼šç›´æŽ¥å¯åŠ¨ã€‚å½“ä½ è¦é€€å‡ºæœåŠ¡å™¨ï¼Œä½¿ç”¨ `Ctrl+D`, ä½ ä¼šè¿”å›žåˆ°æ“ç¤ºç³»ç»Ÿç»ˆç«¯çš„æç¤ºç¬¦ç•Œé¢ã€‚å½“ç„¶, **triggered execution**åœ¨è¿™é‡Œä¹Ÿæ˜¯å¯ç”¨çš„:
 
 ```shell
 $ activator ~run

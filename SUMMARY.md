@@ -1,7 +1,7 @@
 # Summary
 
 * [简介](README.md)
-* [入门]()
+* 入门
    * [安装Play](2.4/gettingStarted/01_Installing_Play.md)
    * [创建一个新应用程序](2.4/gettingStarted/02_Creating_a_new_application.md)
    * [使用Play控制台](2.4/gettingStarted/03_Using_the_Play_console.md)
@@ -9,7 +9,9 @@
    * [解析一个Play应用程序](2.4/gettingStarted/05_Anatomy_of_a_Play_application.md)
    * [Play教程](2.4/gettingStarted/06_Play_Tutorials.md)
    * [Play模块](2.4/gettingStarted/07_Play_Modules.md)
-* [用Play工作]()
-   * [Scala开发]()
-   * [Java开发]()
-* [详细主题]()
+* 用Play工作
+   * [Scala开发](2.4/workingWithPlay/Scala/Play_for_Scala_developers.md)
+     * 主要概念
+     * 高级应用
+   * [Java开发](#TODO)
+* 详细主题
