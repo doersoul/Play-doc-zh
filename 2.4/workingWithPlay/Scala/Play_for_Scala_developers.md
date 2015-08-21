@@ -8,9 +8,9 @@ Play应用程序开发的 Scala API 都放在 `play.api` 包中。
 1. HTTP编程
     1. [Actions, Controllers 和 Results](Main_concepts/01_HTTP_programming/01_Actions_Controllers_and_Results.md)
     2. [HTTP 路由](Main_concepts/01_HTTP_programming/02_HTTP_Routing.md)
-    3. [Manipulating results](Main_concepts/01_HTTP_programming/03_Manipulating_results.md)
+    3. [操纵results](Main_concepts/01_HTTP_programming/03_Manipulating_results.md)
     4. [Session 和 Flash scopes](Main_concepts/01_HTTP_programming/04_Session_and_Flash_scopes.md)
-    5. [Body解析器](Main_concepts/01_HTTP_programming/05_Body_parsers.md)
+    5. [请求体解析器](Main_concepts/01_HTTP_programming/05_Body_parsers.md)
     6. [Actions 构成](Main_concepts/01_HTTP_programming/06_Actions_composition.md)
     7. [内容协商](Main_concepts/01_HTTP_programming/07_Content_negotiation.md)
     8. [处理错误](Main_concepts/01_HTTP_programming/08_Handling_errors.md)
