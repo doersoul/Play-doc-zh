@@ -55,7 +55,7 @@ Action(parse.json) { implicit request =>
 
 
 ##Controllers 是 action 生成器
-一个`Controller` 只不过是一个生成`Action` 值的单例对象。
+一个`Controller` 只不过是一个生成`Action`值的单例对象。
 
 定义一个action生成器的最简单用法，是定义一个无参方法，让其返回一个`Action` 值:
 

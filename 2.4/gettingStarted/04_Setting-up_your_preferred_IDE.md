@@ -55,7 +55,7 @@ EclipseKeys.skipParents in ThisBuild := false
 
 然后你需要在 **File/Import/General/Existing project…** 菜单将应用程序导入到你的工作空间(需要先编译你的项目)。
 
-![](eclipse.png)
+![""](eclipse.png)
 
 要调试, 用 `activator -jvm-debug 9999 run` 启动你的应用程序，并在Eclipse中右击项目，选择 **Debug As, Debug Configurations**。在 **Debug Configurations** 窗口, 右击 **Remote Java Application** 和选择 **New**。将端口改为9999和点击 **Apply**。从现在起你可以点击 **Debug** 来连接到正在运行的应用程序。停止调试会话不会停止服务器。
 
@@ -145,7 +145,7 @@ $ activator
 
 在play控制台输入 ‘ensime generate’。插件会生成一个 .ensime 文件到play项目的根目录下。
 
-```
+```shell
 $ [MYPROJECT] ensime generate
 [info] Gathering project information...
 [info] Processing project: ProjectRef(file:/Users/aemon/projects/www/MYPROJECT/,MYPROJECT)...

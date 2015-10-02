@@ -44,7 +44,7 @@ $ activator ui
 
 > 首先你得先安装[sbt](http://www.scala-sbt.org/)。
 
-1.为你的应用程序创建一个新目录，然后配置你的sbt构建脚本和加上二个附加内容，在`project/plugins.sbt`中,加上:
+1.为你的应用程序创建一个新目录，然后配置你的sbt构建脚本和加上二个附加内容，在`project/plugins.sbt`中加上:
 
 ```
 // The Typesafe repository

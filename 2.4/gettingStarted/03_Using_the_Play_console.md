@@ -10,7 +10,7 @@ $ cd my-first-app
 $ activator
 ```
 
-![](console.png)
+![""](console.png)
 
 ##获得帮助
 使用`help` 命令可以获得有关可用命令的基本帮助。你也可以在后面加上一个特定的命令名称，以获得这个命令的相关帮助信息：
@@ -26,13 +26,13 @@ $ activator
 [my-first-app] $ run
 ```
 
-![](consoleRun.png)
+![""](consoleRun.png)
 
 在这个模式下, 服务器将启用自动刷新功能, 这样对于每一个请求，Play都会检查你的项目和重新编译源代码。若有需要，应用程序也会自动重启。
 
 如果有编译错误，您将看到在浏览器中直接看到编译错误的结果:
 
-![](errorPage.png)
+![""](errorPage.png)
 
 要停止服务器, 按下 Crtl+D 键, 然后就会返回Play控制台。
 
@@ -43,7 +43,7 @@ $ activator
 [my-first-app] $ compile
 ```
 
-![](consoleCompile.png)
+![""](consoleCompile.png)
 
 ##执行测试
 正如上面的命令, 你无须启动服务器，也可以执行测试。只需使用`test`命令：
@@ -61,7 +61,7 @@ $ activator
 
 要在scala控制台里面启动应用(例如访问数据库): `bash scala> new play.core.StaticApplication(new java.io.File("."))`
 
-![](consoleEval.png)
+![""](consoleEval.png)
 
 ##调试
 你可以在启动控制台时，让Play启动一个JPDA调试端口。然后你可以使用Java debugger连接调试。比如使用下面的`activator -jvm-debug <port>`命令:

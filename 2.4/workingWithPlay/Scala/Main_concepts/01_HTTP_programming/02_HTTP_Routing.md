@@ -10,7 +10,7 @@
 
 路由定义在`conf/routes` 文件中, 它会被编译。也即你会直接在浏览器中看到路由错误:
 
-![](routesError.png)
+![""](routesError.png)
 
 
 ##依赖注入

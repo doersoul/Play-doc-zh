@@ -28,8 +28,8 @@ activator run
 
 现在你已经准备好使用Play了!
 
-##<a name="General-Installation-Tasks"></a>一般安装任务
-你可能需要处理一些一般任务，以便安装Play!
+##<a name="General-Installation-Tasks"></a>常规安装任务
+你可能需要处理一些常规任务，以便安装Play!
 
 ###JDK 安装
 请确认你的系统中有 JDK (Java Development Kit) 1.8 或更高版本。使用以下命令来进行验证：
