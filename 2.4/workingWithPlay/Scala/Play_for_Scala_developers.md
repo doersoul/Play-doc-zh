@@ -17,7 +17,7 @@ Play应用程序开发的 Scala API 都放在 `play.api` 包中。
 2. 异步HTTP编程
     1. [异步results](Main_concepts/02_Asynchronous_HTTP_programming/01_Asynchronous_results.md)
     2. [Streaming HTTP 响应](Main_concepts/02_Asynchronous_HTTP_programming/02_Streaming_HTTP_responses.md)
-    3. [Comet 套接字](Main_concepts/02_Asynchronous_HTTP_programming/03_Comet_sockets.md)
+    3. [Comet sockets](Main_concepts/02_Asynchronous_HTTP_programming/03_Comet_sockets.md)
     4. [WebSockets](Main_concepts/02_Asynchronous_HTTP_programming/04_WebSockets.md)
 3. 模板引擎
     1. [Scala 模板语法](Main_concepts/03_The_template_engine/01_Scala_templates_syntax.md)
