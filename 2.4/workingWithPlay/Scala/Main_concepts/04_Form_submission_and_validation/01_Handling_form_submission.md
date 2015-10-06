@@ -76,8 +76,8 @@ val userData = userForm.bindFromRequest.get
 * **表单指定样例类功能强大**。元组易于使用，但不允许自定义apply 或 unapply 方法, 且只能通过元数引用包含的数据 (`_1`, `_2`, 等)
 * **表单指定样例类专门为表单设计**。重用模型样例类很方便, 但模型通常都含有一些额外的领域逻辑，基至一些持久化的细节，这会导致紧密的耦合。另外, 如果表单和模型不是严格 1:1 映射的话, 那么敏感的字段必须显式忽略，以防御[**参数篡改**](https://www.owasp.org/index.php/Web_Parameter_Tampering)攻击。
 
-###Defining constraints on the form
-The `text` constraint considers empty strings to be valid. This means that `name` could be empty here without an error, which is not what we want. A way to ensure that `name` has the appropriate value is to use the `nonEmptyText` constraint.
+###定义表单的约束
+`text` 约束认定空字符串依然有效。这意味着`name` 可为空并不会报错, 这可不是我们想要的。一个保证`name` 有值的方法是使用`nonEmptyText` 约束。
 
 ```scala
 val userFormConstraints2 = Form(
@@ -88,29 +88,29 @@ val userFormConstraints2 = Form(
 )
 ```
 
-Using this form will result in a form with errors if the input to the form does not match the constraints:
+如果表单的输入没有满足约束条件，则会报错:
 
 ```scala
 val boundForm = userFormConstraints2.bind(Map("bob" -> "", "age" -> "25"))
 boundForm.hasErrors must beTrue
 ```
 
-The out of the box constraints are defined on the [**Forms object**](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/Forms$.html):
+在[**Forms 对象**](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/Forms$.html)上定义了很多开箱即用的约束:
 
-* [`text`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/Forms$.html#text%3AMapping%5BString%5D): maps to `scala.String`, optionally takes `minLength` and `maxLength`.
-* [`nonEmptyText`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/Forms$.html#nonEmptyText%3AMapping%5BString%5D): maps to `scala.String`, optionally takes `minLength` and `maxLength`.
-* [`number`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/Forms$.html#number%3AMapping%5BInt%5D): maps to `scala.Int`, optionally takes `min`, `max`, and `strict`.
-* [`longNumber`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/Forms$.html#longNumber%3AMapping%5BLong%5D): maps to `scala.Long`, optionally takes `min`, `max`, and `strict`.
-* [`bigDecimal`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/Forms$.html#bigDecimal%3AMapping%5BBigDecimal%5D): takes `precision` and `scale`.
-* [`date`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/Forms$.html#date%3AMapping%5BDate%5D), [`sqlDate`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/Forms$.html#sqlDate%3AMapping%5BDate%5D), [`jodaDate`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/Forms$.html#jodaDate%3AMapping%5BDateTime%5D): maps to `java.util.Date`, `java.sql.Date` and `org.joda.time.DateTime`, optionally takes `pattern` and `timeZone`.
-* [`jodaLocalDate`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/Forms$.html#jodaLocalDate%3AMapping%5BLocalDate%5D): maps to `org.joda.time.LocalDate`, optionally takes `pattern`.
-* [`email`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/Forms$.html#email%3AMapping%5BString%5D): maps to `scala.String`, using an email regular expression.
-* [`boolean`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/Forms$.html#boolean%3AMapping%5BBoolean%5D): maps to `scala.Boolean`.
-* [`checked`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/Forms$.html#checked%3AMapping%5BBoolean%5D): maps to `scala.Boolean`.
-* [`optional`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/Forms$.html): maps to `scala.Option`.
+* [`text`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/Forms$.html#text%3AMapping%5BString%5D): 对应`scala.String`, 可选参数为`minLength` 和`maxLength`。
+* [`nonEmptyText`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/Forms$.html#nonEmptyText%3AMapping%5BString%5D): 对应`scala.String`, 可选参数为 `minLength` 和`maxLength`。
+* [`number`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/Forms$.html#number%3AMapping%5BInt%5D): 对应`scala.Int`, 可选参数为`min`, `max`, 和`strict`。
+* [`longNumber`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/Forms$.html#longNumber%3AMapping%5BLong%5D): 对应`scala.Long`, 可选参数为`min`, `max`, 和`strict`。
+* [`bigDecimal`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/Forms$.html#bigDecimal%3AMapping%5BBigDecimal%5D): 参数为`precision` 和`scale`。
+* [`date`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/Forms$.html#date%3AMapping%5BDate%5D), [`sqlDate`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/Forms$.html#sqlDate%3AMapping%5BDate%5D), [`jodaDate`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/Forms$.html#jodaDate%3AMapping%5BDateTime%5D): 对应`java.util.Date`, `java.sql.Date` 和`org.joda.time.DateTime`, 可选参数为`pattern` 和`timeZone`。
+* [`jodaLocalDate`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/Forms$.html#jodaLocalDate%3AMapping%5BLocalDate%5D): 对应`org.joda.time.LocalDate`, 可选参数为`pattern`。
+* [`email`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/Forms$.html#email%3AMapping%5BString%5D): 对应 `scala.String`, 使用email正则表达式。
+* [`boolean`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/Forms$.html#boolean%3AMapping%5BBoolean%5D): 对应`scala.Boolean`。
+* [`checked`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/Forms$.html#checked%3AMapping%5BBoolean%5D): 对应`scala.Boolean`。
+* [`optional`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/Forms$.html): 对应`scala.Option`。
 
-###Defining ad-hoc constraints
-You can define your own ad-hoc constraints on the case classes using the [validation package](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/validation/package.html).
+###定义特殊约束
+你可以使用[validation 包](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/validation/package.html)为样例类中定义你自己的特殊约束。
 
 ```scala
 val userFormConstraints = Form(
@@ -121,7 +121,7 @@ val userFormConstraints = Form(
 )
 ```
 
-You can also define ad-hoc constraints on the case classes themselves:
+你也可以直接在样例类中定义特殊约束:
 
 ```scala
 def validate(name: String, age: Int) = {
@@ -145,12 +145,12 @@ val userFormConstraintsAdHoc = Form(
 )
 ```
 
-You also have the option of constructing your own custom validations. Please see the [custom validations](https://www.playframework.com/documentation/2.4.x/ScalaCustomValidations) section for more details.
+你还可以构建你自己的自定义验证器。请查阅 [自定义验证器](03_Custom_Validations.md) 了解详情。
 
-###Validating a form in an Action
-Now that we have constraints, we can validate the form inside an action, and process the form with errors.
+###在 Action中验证表单
+现在我们有了约束，我们在action中验证表单, 并处理表单错误。
 
-We do this using the `fold` method, which takes two functions: the first is called if the binding fails, and the second is called if the binding succeeds.
+我们使用`fold` 方法来做, 它带有二个函数为参数: 如果绑定失败会调用第一个, 如果绑定成功会调用第二个。
 
 ```scala
 userForm.bindFromRequest.fold(
@@ -167,13 +167,13 @@ userForm.bindFromRequest.fold(
 )
 ```
 
-In the failure case, we render the page with BadRequest, and pass in the form with errors as a parameter to the page. If we use the view helpers (discussed below), then any errors that are bound to a field will be rendered in the page next to the field.
+绑定失败的情况下, 我们用 BadRequest渲染页面, 并将错误作为参数传递到页面。如果使用了视图助手方法(下面讨论), 那么任何绑定到任何字段的错误会被渲染到页面中该字段的旁边。
 
-In the success case, we’re sending a `Redirect` with a route to `routes.Application.home` here instead of rendering a view template. This pattern is called [Redirect after POST](https://en.wikipedia.org/wiki/Post/Redirect/Get) , and is an excellent way to prevent duplicate form submissions.
+绑定成功的情况下，我们发送一个`Redirect` ，路由到`routes.Application.home` ，而非渲染一个视图模板。这种模式称为 [POST后重定向](https://en.wikipedia.org/wiki/Post/Redirect/Get) , 这是一种很好的防止重复提交的方式。
 
-> **Note**: “Redirect after POST” is required when using `flashing` or other methods with [flash scope](https://www.playframework.com/documentation/2.4.x/ScalaSessionFlash), as new cookies will only be available after the redirected HTTP request.
+> **注意**: 当使用`flashing`或是在其它方法中用到[flash scope](../01_HTTP_programming/04_Session_and_Flash_scopes.md)时， “POST后重定向” 是必需的, 因为新的cookies 只能在重定向HTTP请求后获取。
 
-Alternatively, you can use the `parse.form` [body parser](https://www.playframework.com/documentation/2.4.x/ScalaBodyParsers) that binds the content of the request to your form.
+另外, 你可以使用`parse.form` [body parser](https://www.playframework.com/documentation/2.4.x/ScalaBodyParsers) ，它绑定请求的内容到你的表单。
 
 ```scala
 val userPost = Action(parse.form(userForm)) { implicit request =>
@@ -184,7 +184,7 @@ val userPost = Action(parse.form(userForm)) { implicit request =>
 }
 ```
 
-In the failure case, the default behaviour is to return an empty BadRequest response. You can override this behaviour with your own logic. For instance, the following code is completely equivalent to the preceding one using `bindFromRequest` and `fold`.
+在失败的情况下, 默认行为是返回一个空BadRequest响应。你可以用自己的逻辑重写这个行为。例如, 以下代码完全等效于前面使用的`bindFromRequest` 和`fold`。
 
 ```scala
 val userPostWithErrors = Action(parse.form(userForm, onErrors = (formWithErrors: Form[UserData]) => BadRequest(views.html.user(formWithErrors)))) { implicit request =>
@@ -195,14 +195,14 @@ val userPostWithErrors = Action(parse.form(userForm, onErrors = (formWithErrors:
 }
 ```
 
-###Showing forms in a view template
-Once you have a form, then you need to make it available to the template engine. You do this by including the form as a parameter to the view template. For `user.scala.html`, the header at the top of the page will look like this:
+###在视图模板中显示表单
+有了表单后, 你需要让它在模板引擎中可用。做法是在将表单作为模板参数。对于 `user.scala.html`, 页面顶部开头是这样的:
 
 ```scala
 @(userForm: Form[UserData])(implicit messages: Messages)
 ```
 
-Because `user.scala.html` needs a form passed in, you should pass the empty `userForm` initially when rendering `user.scala.html`:
+因为 `user.scala.html` 需要传入一个表单, 当渲染 `user.scala.html`时应先传入一个空的初始化`userForm`:
 
 ```scala
 def index = Action {
@@ -210,7 +210,7 @@ def index = Action {
 }
 ```
 
-The first thing is to be able to create the [form tag](https://www.playframework.com/documentation/2.4.x/api/scala/views/html/helper/form$.html). It is a simple view helper that creates a [form tag](http://www.w3.org/TR/html5/forms.html#the-form-element) and sets the `action` and `method` tag parameters according to the reverse route you pass in:
+首先要创建[form 标签](https://www.playframework.com/documentation/2.4.x/api/scala/views/html/helper/form$.html)。这是一个简单的视图助手法，创建一个 [form 标签](http://www.w3.org/TR/html5/forms.html#the-form-element) 并根据你传入的反向路由设置`action` 和`method` 标签参数。
 
 ```scala
 @helper.form(action = routes.Application.userPost()) {
@@ -219,30 +219,30 @@ The first thing is to be able to create the [form tag](https://www.playframework
 }
 ```
 
-You can find several input helpers in the [`views.html.helper`](https://www.playframework.com/documentation/2.4.x/api/scala/views/html/helper/package.html) package. You feed them with a form field, and they display the corresponding HTML input, setting the value, constraints and displaying errors when a form binding fails.
+你可以在[`views.html.helper`](https://www.playframework.com/documentation/2.4.x/api/scala/views/html/helper/package.html) 包中找到多个输入助手。你提供一个表单域, 他们就显示出相应的 HTML input, 设置值、约束和在表单绑定失败时显示错误。
 
-> **Note**: You can use `@import helper._` in the template to avoid prefixing helpers with `@helper`.
+> **注意**: 你可以在模板使用 `@import helper._` 来避免在调用助手时加`@helper`前缀。
 
-There are several input helpers, but the most helpful are:
+有多种input助手，但最有用的是:
 
-* [`form`](https://www.playframework.com/documentation/2.4.x/api/scala/views/html/helper/form$.html): renders a [form](http://www.w3.org/TR/html-markup/form.html#form) element.
-* [`inputText`](https://www.playframework.com/documentation/2.4.x/api/scala/views/html/helper/inputText$.html): renders a [text input](http://www.w3.org/TR/html-markup/input.text.html) element.
-* [`inputPassword`](https://www.playframework.com/documentation/2.4.x/api/scala/views/html/helper/inputPassword$.html): renders a [password input](http://www.w3.org/TR/html-markup/input.password.html#input.password) element.
-* [`inputDate`](https://www.playframework.com/documentation/2.4.x/api/scala/views/html/helper/inputDate$.html): renders a [date input](http://www.w3.org/TR/html-markup/input.date.html) element.
-* [`inputFile`](https://www.playframework.com/documentation/2.4.x/api/scala/views/html/helper/inputFile$.html): renders a [file input](http://www.w3.org/TR/html-markup/input.file.html)  element.
-* [`inputRadioGroup`](https://www.playframework.com/documentation/2.4.x/api/scala/views/html/helper/inputRadioGroup$.html): renders a [radio input](http://www.w3.org/TR/html-markup/input.radio.html#input.radio) element.
-* [`select`](https://www.playframework.com/documentation/2.4.x/api/scala/views/html/helper/select$.html): renders a [select](http://www.w3.org/TR/html-markup/select.html#select) element.
-* [`textarea`](https://www.playframework.com/documentation/2.4.x/api/scala/views/html/helper/textarea$.html): renders a [textarea](http://www.w3.org/TR/html-markup/textarea.html#textarea)  element.
-* [`checkbox`](https://www.playframework.com/documentation/2.4.x/api/scala/views/html/helper/checkbox$.html): renders a [checkbox](http://www.w3.org/TR/html-markup/input.checkbox.html#input.checkbox) element.
-* [`input`](https://www.playframework.com/documentation/2.4.x/api/scala/views/html/helper/input$.html): renders a generic input element (which requires explicit arguments).
+* [`form`](https://www.playframework.com/documentation/2.4.x/api/scala/views/html/helper/form$.html): 渲染一个[表单](http://www.w3.org/TR/html-markup/form.html#form) 元素。
+* [`inputText`](https://www.playframework.com/documentation/2.4.x/api/scala/views/html/helper/inputText$.html): 渲染一个[文本输入](http://www.w3.org/TR/html-markup/input.text.html) 元素。
+* [`inputPassword`](https://www.playframework.com/documentation/2.4.x/api/scala/views/html/helper/inputPassword$.html): 渲染一个[密码输入](http://www.w3.org/TR/html-markup/input.password.html#input.password) 元素。
+* [`inputDate`](https://www.playframework.com/documentation/2.4.x/api/scala/views/html/helper/inputDate$.html): 渲染一个[日期输入](http://www.w3.org/TR/html-markup/input.date.html) 元素。
+* [`inputFile`](https://www.playframework.com/documentation/2.4.x/api/scala/views/html/helper/inputFile$.html): 渲染一个[文件输入](http://www.w3.org/TR/html-markup/input.file.html) 元素。
+* [`inputRadioGroup`](https://www.playframework.com/documentation/2.4.x/api/scala/views/html/helper/inputRadioGroup$.html): 渲染一个[单选输入](http://www.w3.org/TR/html-markup/input.radio.html#input.radio) 元素。
+* [`select`](https://www.playframework.com/documentation/2.4.x/api/scala/views/html/helper/select$.html): 渲染一个[下拉列表](http://www.w3.org/TR/html-markup/select.html#select) 元素。
+* [`textarea`](https://www.playframework.com/documentation/2.4.x/api/scala/views/html/helper/textarea$.html): 渲染一个[文本域](http://www.w3.org/TR/html-markup/textarea.html#textarea) 元素。
+* [`checkbox`](https://www.playframework.com/documentation/2.4.x/api/scala/views/html/helper/checkbox$.html): 渲染一个[复选框](http://www.w3.org/TR/html-markup/input.checkbox.html#input.checkbox) 元素。
+* [`input`](https://www.playframework.com/documentation/2.4.x/api/scala/views/html/helper/input$.html): 渲染通用输入元素(需要显示参数)。
 
-As with the `form` helper, you can specify an extra set of parameters that will be added to the generated Html:
+在`form`助手中, 你可以指定额外的参数集，以添加到生成的Html中:
 
 ```scala
 @helper.inputText(userForm("name"), 'id -> "name", 'size -> 30)
 ```
 
-The generic `input` helper mentioned above will let you code the desired HTML result:
+上面提到的通用的`input` 助手能让你编写所需的 HTML result:
 
 ```scala
 @helper.input(userForm("name")) { (id, name, value, args) =>
@@ -250,11 +250,11 @@ The generic `input` helper mentioned above will let you code the desired HTML re
 }
 ```
 
-> **Note**: All extra parameters will be added to the generated Html, unless they start with the _ character. Arguments starting with _ are reserved for [field constructor arguments](https://www.playframework.com/documentation/2.4.x/ScalaCustomFieldConstructors).
+> **注意**: 所有额外的参数都会添加到生成的Html中, 除非他们用 _ 字符开始。以 _ 开头的参数是预留的[域构造器参数](04_Custom_Field_Constructors.md)。
 
-For complex form elements, you can also create your own custom view helpers (using scala classes in the `views` package) and [custom field constructors](https://www.playframework.com/documentation/2.4.x/ScalaCustomFieldConstructors).
+对于复杂表单元素, 你也可以创建自定义视图助手(在`views` 包中使用Scala类) 和 [自定义字段构造器](04_Custom_Field_Constructors.md)。
 
-###Displaying errors in a view template
+###在视图模板中显示错误
 The errors in a form take the form of `Map[String,FormError]` where [`FormError`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/FormError.html) has:
 
 * `key`: should be the same as the field.
