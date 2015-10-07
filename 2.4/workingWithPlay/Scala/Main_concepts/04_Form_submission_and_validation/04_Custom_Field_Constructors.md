@@ -1,7 +1,7 @@
-#Custom Field Constructors
-A field rendering is not only composed of the `<input>` tag, but it also needs a `<label>` and possibly other tags used by your CSS framework to decorate the field.
+#自定义表单域构造器
+一个表单域的渲染不仅仅由`<input>` 标签组成, 它也需要`<label>` 和其他一些可能被你的CSS框架用来装饰表单域的标签。
 
-All input helpers take an implicit [`FieldConstructor`](https://www.playframework.com/documentation/2.4.x/api/scala/views/html/helper/FieldConstructor.html) that handles this part. The [default one](https://www.playframework.com/documentation/2.4.x/api/scala/views/html/helper/defaultFieldConstructor$.html) (used if there are no other field constructors available in the scope), generates HTML like:
+所有input助手带有一个隐式的[`FieldConstructor`](https://www.playframework.com/documentation/2.4.x/api/scala/views/html/helper/FieldConstructor.html) 来处理这一部分。[默认构造器](https://www.playframework.com/documentation/2.4.x/api/scala/views/html/helper/defaultFieldConstructor$.html) (在作用域内没有指定其它表单域构造器时会被使用), 生成的HTML像这样:
 
 ```html
 <dl class="error" id="username_field">
@@ -14,7 +14,7 @@ All input helpers take an implicit [`FieldConstructor`](https://www.playframewor
 </dl>
 ```
 
-This default field constructor supports additional options you can pass in the input helper arguments:
+这个默认表单域构造器支持传入额外的选项到input助手参数:
 
 ```scala
 '_label -> "Custom label"
@@ -26,8 +26,8 @@ This default field constructor supports additional options you can pass in the i
 ```
 
 
-##Writing your own field constructor
-Often you will need to write your own field constructor. Start by writing a template like:
+##编写你的自定义表单域构造器
+你常常需要编写自定义的表单域构造器。首先要写一个模板，像这样:
 
 ```html
 @(elements: helper.FieldElements)
@@ -42,9 +42,9 @@ Often you will need to write your own field constructor. Start by writing a temp
 </div>
 ```
 
-> **Note**: This is just a sample. You can make it as complicated as you need. You also have access to the original field using `@elements.field`.
+> **注意**: 这只是一个例子。你想要实现复杂的功能都可以。你还可以使用`@elements.field`来获取原始的表单域。
 
-Now create a [`FieldConstructor`](https://www.playframework.com/documentation/2.4.x/api/scala/views/html/helper/FieldConstructor.html) using this template function:
+现在使用这个模板函数来创建一个[`FieldConstructor`](https://www.playframework.com/documentation/2.4.x/api/scala/views/html/helper/FieldConstructor.html):
 
 ```scala
 object MyHelpers {
@@ -53,16 +53,16 @@ object MyHelpers {
 }
 ```
 
-And to make the form helpers use it, just import it in your templates:
+然后让表单助手来使用它, 只需导入它到你的模板:
 
 ```scala
 @import MyHelpers._
 @helper.inputText(myForm("username"))
 ```
 
-It will then use your field constructor to render the input text.
+它会使用你的表单域构造器来渲染input文本。
 
-You can also set an implicit value for your [`FieldConstructor`](https://www.playframework.com/documentation/2.4.x/api/scala/views/html/helper/FieldConstructor.html) inline:
+你也可以为你的[`FieldConstructor`](https://www.playframework.com/documentation/2.4.x/api/scala/views/html/helper/FieldConstructor.html) 内联设置一个隐式值:
 
 ```scala
 @implicitField = @{ helper.FieldConstructor(myFieldConstructorTemplate.f) }

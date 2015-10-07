@@ -1,39 +1,39 @@
-#Protecting against Cross Site Request Forgery
-Cross Site Request Forgery (CSRF) is a security exploit where an attacker tricks a victims browser into making a request using the victims session. Since the session token is sent with every request, if an attacker can coerce the victims browser to make a request on their behalf, the attacker can make requests on the users behalf.
+#防范跨站请求伪造
+跨站请求伪造(CSRF)是一种安全漏洞。攻击者欺骗受害者浏览器，并使用受害者的会话发送请求。由于发送的每个请求中都有会话令牌, 如果攻击者能够强制受害者的浏览发送请求，也就相当于以受害者的名义发送请求。
 
-It is recommended that you familiarise yourself with CSRF, what the attack vectors are, and what the attack vectors are not. We recommend starting with [this information from OWASP](https://www.owasp.org/index.php/Cross-Site_Request_Forgery_%28CSRF%29) .
+建议先熟悉一下CSRF, 了解哪些攻击是CSRF，哪些不是。建议从[OWASP相关信息](https://www.owasp.org/index.php/Cross-Site_Request_Forgery_%28CSRF%29)开始。
 
-Simply put, an attacker can coerce a victims browser to make the following types of requests:
+简单来说, 攻击者能够强迫受害者的浏览器发送以下请求：
 
-* All `GET` requests
-* `POST` requests with bodies of type `application/x-www-form-urlencoded`, `multipart/form-data` and `text/plain`
+* 所有`GET` 请求
+* 带有`application/x-www-form-urlencoded`, `multipart/form-data` and `text/plain` 同容的 `POST` 请求 
 
-An attacker can not:
+攻击者不能做的:
 
-* Coerce the browser to use other request methods such as `PUT` and `DELETE`
-* Coerce the browser to post other content types, such as `application/json`
-* Coerce the browser to send new cookies, other than those that the server has already set
-* Coerce the browser to set arbitrary headers, other than the normal headers the browser adds to requests
+* 强迫浏览器使用其它请求方法，如`PUT` 和`DELETE`
+* 强迫浏览器发送其它内容类型（content types）, 如`application/json`
+* 强迫浏览器发送新cookies, 而不是服务器已经设置了的cookie
+* 强迫浏览器设置任意的标头, 而不是浏览器通常会在请求中添加的普通标头
 
-Since `GET` requests are not meant to be mutative, there is no danger to an application that follows this best practice. So the only requests that need CSRF protection are `POST` requests with the above mentioned content types.
+由于 `GET` 请求是不能更改的, 这对一个应用程序没有危险，这是最佳实践。所以防御CSRF仅需要注意上面提到的带有一些内容类型的`POST` 请求。
 
-###Play’s CSRF protection
-Play supports multiple methods for verifying that a request is not a CSRF request. The primary mechanism is a CSRF token. This token gets placed either in the query string or body of every form submitted, and also gets placed in the users session. Play then verifies that both tokens are present and match.
+###Play的CSRF防御
+Play 支持多种方法来验证一个请求是否非CSRF请求。主要机制是CSRF令牌。该令牌要放在查询字符串或每个表单提交的正文中, 并还要放在用户会话中。Play 然后会验证目前两个令牌是否存在匹配。
 
-To allow simple protection for non browser requests, such as requests made through AJAX, Play also supports the following:
+要允许简单的防御那些非浏览器请求，如通过AJAX发送的请求, Play也支持以下几种:
 
-* If an `X-Requested-With` header is present, Play will consider the request safe. `X-Requested-With` is added to requests by many popular Javascript libraries, such as jQuery.
-* If a `Csrf-Token` header with value `nocheck` is present, or with a valid CSRF token, Play will consider the request safe.
+* 如果出现`X-Requested-With` 标头, Play会认为请求安全。很多主流的Javascript库都会在请求中添加`X-Requested-With`, 如jQuery。
+* 如果`Csrf-Token` 标头的值为`nocheck` , 或带一个有效的CSRF令牌, Play会认为请求安全。
 
 
-##Applying a global CSRF filter
-Play provides a global CSRF filter that can be applied to all requests. This is the simplest way to add CSRF protection to an application. To enable the global filter, add the Play filters helpers dependency to your project in `build.sbt`:
+##应用全局CSRF过滤
+Play 提供了全局 CSRF 过滤，可以应用到所有请求。这是给应用程序添加CSRF防御最简单的方式。要启用全局过滤, 可添加Play 过滤助手依赖项到你的项目中的`build.sbt`文件:
 
 ```scala
 libraryDependencies += filters
 ```
 
-Now add them to your `Filters` class as described in [HTTP filters](https://www.playframework.com/documentation/2.4.x/ScalaHttpFilters):
+现在添加他们到[HTTP 过滤](https://www.playframework.com/documentation/2.4.x/ScalaHttpFilters)中描述的`Filters` 类中:
 
 ```scala
 import play.api.http.HttpFilters
@@ -45,14 +45,14 @@ class Filters @Inject() (csrfFilter: CSRFFilter) extends HttpFilters {
 }
 ```
 
-The `Filters` class can either be in the root package, or if it has another name or is in another package, needs to be configured using `play.http.filters` in `application.conf`:
+`Filters` 类可放在根包中、更改为其它名字、或放在其它包。改变名字和位置要在`application.conf`配置文件中使用`play.http.filters`： 
 
 ```scala
 play.http.filters = "filters.MyFilters"
 ```
 
-###Getting the current token
-The current CSRF token can be accessed using the `getToken` method. It takes an implicit `RequestHeader`, so ensure that one is in scope.
+###获得当前令牌
+当前CSRF令牌可通过`getToken` 方法获取。它带有一个隐式`RequestHeader`, 所以要确保它在作用域中。
 
 ```scala
 import play.filters.csrf.CSRF
@@ -60,7 +60,7 @@ import play.filters.csrf.CSRF
 val token = CSRF.getToken(request)
 ```
 
-To help in adding CSRF tokens to forms, Play provides some template helpers. The first one adds it to the query string of the action URL:
+Play提供了一些模板助手，以帮助添加CSRF令牌到表单中。第一个就是添加它到action URL的查询字符串中:
 
 ```scala
 @import helper._
@@ -70,7 +70,7 @@ To help in adding CSRF tokens to forms, Play provides some template helpers. The
 }
 ```
 
-This might render a form that looks like this:
+渲染的表单如下:
 
 ```html
 <form method="POST" action="/items?csrfToken=1234567890abcdef">
@@ -78,7 +78,7 @@ This might render a form that looks like this:
 </form>
 ```
 
-If it is undesirable to have the token in the query string, Play also provides a helper for adding the CSRF token as hidden field in the form:
+如果不想要在查询字符串中设置令牌, Play也提供一个助手，将CSRF令牌添加到表单隐藏域中:
 
 ```scala
 @form(routes.ItemsController.save()) {
@@ -87,7 +87,7 @@ If it is undesirable to have the token in the query string, Play also provides a
 }
 ```
 
-This might render a form that looks like this:
+渲染后的表单如下:
 
 ```html
 <form method="POST" action="/items">
@@ -96,18 +96,18 @@ This might render a form that looks like this:
 </form>
 ```
 
-The form helper methods all require an implicit token or request to be available in scope. This will typically be provided by adding an implicit `RequestHeader` parameter to your template, if it doesn’t have one already.
+所有表单助手方法都要在作用域中设置隐式令牌或请求。如果还没有的话，通常是由添加一个隐式`RequestHeader` 参数到你的模板来设置。
 
-###Adding a CSRF token to the session
-To ensure that a CSRF token is available to be rendered in forms, and sent back to the client, the global filter will generate a new token for all GET requests that accept HTML, if a token isn’t already available in the incoming request.
+###添加CSRF令牌到会话
+为确保CSRF令牌在表单中有效渲染, 并发送回客户端。如果在传入的请求中没有已经有效的令牌，全局过滤器会为所有接受HTML的GET请求生成一个新令牌, 
 
 
-##Applying CSRF filtering on a per action basis
-Sometimes global CSRF filtering may not be appropriate, for example in situations where an application might want to allow some cross origin form posts. Some non session based standards, such as OpenID 2.0, require the use of cross site form posting, or use form submission in server to server RPC communications.
+##在每个action上应用CSRF过滤
+有时全局CSRF 过滤并不合适, 比如应用可能要允许一些跨站表单提交的情况。一些非基于会话的标准, 如OpenID 2.0, 需要使用跨站表单提交, 或是在服务器到服务器的RPC通讯中使用表单提交。
 
-In these cases, Play provides two actions that can be composed with your applications actions.
+在这种情况下, Play 提供两个actions，可以组合到应用程序的actions中。
 
-The first action is the `CSRFCheck` action, and it performs the check. It should be added to all actions that accept session authenticated POST form submissions:
+第一个action是`CSRFCheck` action, 它执行检查，会添加到所有接受会话已验证POST表单提交的action中:
 
 ```scala
 import play.api.mvc._
@@ -121,7 +121,7 @@ def save = CSRFCheck {
 }
 ```
 
-The second action is the `CSRFAddToken` action, it generates a CSRF token if not already present on the incoming request. It should be added to all actions that render forms:
+第二个 action 是`CSRFAddToken` action, 在传入请求中还没有令牌的情况下会生成一个CSRF令牌。它应该添加到渲染表单的所有 actions 中:
 
 ```scala
 import play.api.mvc._
@@ -134,7 +134,7 @@ def form = CSRFAddToken {
 }
 ```
 
-A more convenient way to apply these actions is to use them in combination with Play’s [action composition](https://www.playframework.com/documentation/2.4.x/ScalaActionsComposition):
+更简便的方法是将这些 actions 和Play的[action composition](https://www.playframework.com/documentation/2.4.x/ScalaActionsComposition)一起组合使用:
 
 ```scala
 import play.api.mvc._
@@ -157,7 +157,7 @@ object GetAction extends ActionBuilder[Request] {
 }
 ```
 
-Then you can minimise the boiler plate code necessary to write actions:
+这样可以最小化编写actions所需的样板代码:
 
 ```scala
 def save = PostAction {
@@ -171,11 +171,11 @@ def form = GetAction { implicit req =>
 ```
 
 
-##CSRF configuration options
-The full range of CSRF configuration options can be found in the filters [reference.conf](https://www.playframework.com/documentation/2.4.x/resources/confs/filters-helpers/reference.conf). Some examples include:
+##CSRF 配置选项
+可以在 [reference.conf](https://www.playframework.com/documentation/2.4.x/resources/confs/filters-helpers/reference.conf)过滤器中找到所有 CSRF配置选项。一些例子包括:
 
-* `play.filters.csrf.token.name` - The name of the token to use both in the session and in the request body/query string. Defaults to `csrfToken`.
-* `play.filters.csrf.cookie.name` - If configured, Play will store the CSRF token in a cookie with the given name, instead of in the session.
-* `play.filters.csrf.cookie.secure` - If `play.filters.csrf.cookie.name` is set, whether the CSRF cookie should have the secure flag set. Defaults to the same value as `play.http.session.secure`.
-* `play.filters.csrf.body.bufferSize` - In order to read tokens out of the body, Play must first buffer the body and potentially parse it. This sets the maximum buffer size that will be used to buffer the body. Defaults to 100k.
-* `play.filters.csrf.token.sign` - Whether Play should use signed CSRF tokens. Signed CSRF tokens ensure that the token value is randomised per request, thus defeating BREACH style attacks.
+* `play.filters.csrf.token.name` - 应用于会话、请求体/查询字符串中的令牌名称。默认是`csrfToken` 。
+* `play.filters.csrf.cookie.name` - 如果配置了这个, Play 会保存CSRF令牌到给定名称的cookie，而非会话中。
+* `play.filters.csrf.cookie.secure` - 如果`play.filters.csrf.cookie.name` 已设置, CSRF cookie 要有安全标志设置。默认是和`play.http.session.secure` 的值相同。
+* `play.filters.csrf.body.bufferSize` - 为了在读取来自body的令牌, Play 必须首先缓存body和在可能的情况下进行解析。该选项设置了缓存body时最大缓存大小，默认为100k。
+* `play.filters.csrf.token.sign` - Play 是否使用签名的CSRF令牌。签名的CSRF令牌保证了每个请求的令牌值是随机的, 以防御BREACH 攻击。

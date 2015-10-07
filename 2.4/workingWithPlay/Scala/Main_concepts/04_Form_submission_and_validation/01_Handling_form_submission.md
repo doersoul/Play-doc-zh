@@ -53,7 +53,7 @@ val userForm = Form(
 [Forms](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/Forms$.html) 对象定义了 [`mapping`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/Forms$.html#mapping%5BR%2CA1%5D\(\(String%2CMapping%5BA1%5D\)\)\(\(A1\)%E2%87%92R\)\(\(R\)%E2%87%92Option%5BA1%5D\)%3AMapping%5BR%5D) 方法。这个方法带有表单的名字和约束做为参数, 也带有二个函数为参数: 一个`apply` 函数和一个`unapply` 函数。因为 UserData 是一个样例类, 我们可以将它的 `apply` 和`unapply` 方法直接插入到 mapping 方法中。
 
 
-> **注意**: 由于表单处理的实现问题，单个元组或mapping最多只能有22个字段元素。如果你的表单有超过22个字段， 你应该分开你的表单，使用列表或嵌套值。
+> **注意**: 由于表单处理的实现问题，单个元组或mapping最多只能有22个表单域元素。如果你的表单有超过22个表单域， 你应该分开你的表单，使用列表或嵌套值。
 
 当你用了Map，一个表单会创建带有绑定值的`UserData` 实例:
 
@@ -74,7 +74,7 @@ val userData = userForm.bindFromRequest.get
 
 * **表单指定样例类简单易用**。样例类本来就设计为数据的简单容器, 并提供开箱即用的功能，和`Form` 的功能天然匹配。
 * **表单指定样例类功能强大**。元组易于使用，但不允许自定义apply 或 unapply 方法, 且只能通过元数引用包含的数据 (`_1`, `_2`, 等)
-* **表单指定样例类专门为表单设计**。重用模型样例类很方便, 但模型通常都含有一些额外的领域逻辑，基至一些持久化的细节，这会导致紧密的耦合。另外, 如果表单和模型不是严格 1:1 映射的话, 那么敏感的字段必须显式忽略，以防御[**参数篡改**](https://www.owasp.org/index.php/Web_Parameter_Tampering)攻击。
+* **表单指定样例类专门为表单设计**。重用模型样例类很方便, 但模型通常都含有一些额外的领域逻辑，基至一些持久化的细节，这会导致紧密的耦合。另外, 如果表单和模型不是严格 1:1 映射的话, 那么敏感的表单域必须显式忽略，以防御[**参数篡改**](https://www.owasp.org/index.php/Web_Parameter_Tampering)攻击。
 
 ###定义表单的约束
 `text` 约束认定空字符串依然有效。这意味着`name` 可为空并不会报错, 这可不是我们想要的。一个保证`name` 有值的方法是使用`nonEmptyText` 约束。
@@ -167,7 +167,7 @@ userForm.bindFromRequest.fold(
 )
 ```
 
-绑定失败的情况下, 我们用 BadRequest渲染页面, 并将错误作为参数传递到页面。如果使用了视图助手方法(下面讨论), 那么任何绑定到任何字段的错误会被渲染到页面中该字段的旁边。
+绑定失败的情况下, 我们用 BadRequest渲染页面, 并将错误作为参数传递到页面。如果使用了视图助手方法(下面讨论), 那么任何绑定到任何表单域的错误会被渲染到页面中该表单域的旁边。
 
 绑定成功的情况下，我们发送一个`Redirect` ，路由到`routes.Application.home` ，而非渲染一个视图模板。这种模式称为 [POST后重定向](https://en.wikipedia.org/wiki/Post/Redirect/Get) , 这是一种很好的防止重复提交的方式。
 
@@ -252,23 +252,23 @@ def index = Action {
 
 > **注意**: 所有额外的参数都会添加到生成的Html中, 除非他们用 _ 字符开始。以 _ 开头的参数是预留的[域构造器参数](04_Custom_Field_Constructors.md)。
 
-对于复杂表单元素, 你也可以创建自定义视图助手(在`views` 包中使用Scala类) 和 [自定义字段构造器](04_Custom_Field_Constructors.md)。
+对于复杂表单元素, 你也可以创建自定义视图助手(在`views` 包中使用Scala类) 和 [自定义表单域构造器](04_Custom_Field_Constructors.md)。
 
 ###在视图模板中显示错误
-The errors in a form take the form of `Map[String,FormError]` where [`FormError`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/FormError.html) has:
+表单中的错误为 `Map[String,FormError]` ，其中 [`FormError`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/FormError.html) 中有:
 
-* `key`: should be the same as the field.
-* `message`: a message or a message key.
-* `args`: a list of arguments to the message.
+* `key`: 应该和表单域相同。
+* `message`: 提示消息或消息键。
+* `args`: 提示消息的参数列表。
 
-The form errors are accessed on the bound form instance as follows:
+绑定的表单实例的表单错误如下:
 
-* `errors`: returns all errors as `Seq[FormError]`.
-* `globalErrors`: returns errors without a key as `Seq[FormError]`.
-* `error("name")`: returns the first error bound to key as `Option[FormError]`.
-* `errors("name")`: returns all errors bound to key as `Seq[FormError]`.
+* `errors`: 返回所有错误，作为`Seq[FormError]`。
+* `globalErrors`: 返回没有键的错误，作为`Seq[FormError]`。
+* `error("name")`: 返回第一个绑定到键的错误，作为`Option[FormError]`。
+* `errors("name")`: 返回所有绑定到键的错误，作为`Seq[FormError]`。
 
-Errors attached to a field will render automatically using the form helpers, so `@helper.inputText` with errors can display as follows:
+使用表单助手，会自动渲染绑定于某表单域的错误, 为此 `@helper.inputText` 的错误显示如下:
 
 ```html
 <dl class="error" id="age_field">
@@ -281,7 +281,7 @@ Errors attached to a field will render automatically using the form helpers, so 
 </dl>
 ```
 
-Global errors that are not bound to a key do not have a helper and must be defined explicitly in the page:
+全局错误没有绑定到键，没有助手，必须在页面中显式定义:
 
 ```scala
 @if(userForm.hasGlobalErrors) {
@@ -293,27 +293,27 @@ Global errors that are not bound to a key do not have a helper and must be defin
 }
 ```
 
-###Mapping with tuples
-You can use tuples instead of case classes in your fields:
+###用元组做映射
+你可以在表单域用元组而非样例类:
 
 ```scala
 val userFormTuple = Form(
   tuple(
     "name" -> text,
     "age" -> number
-  ) // tuples come with built-in apply/unapply
+  ) // 元组自带内置的 apply/unapply
 )
 ```
 
-Using a tuple can be more convenient than defining a case class, especially for low arity tuples:
+有时使用元组比定义样例类更方便, 尤其在元数（arity）很小时:
 
 ```scala
 val anyData = Map("name" -> "bob", "age" -> "25")
 val (name, age) = userFormTuple.bind(anyData).get
 ```
 
-###Mapping with single
-Tuples are only possible when there are multiple values. If there is only one field in the form, use `Forms.single` to map to a single value without the overhead of a case class or tuple:
+###用single做映射
+元组只有在多个值时才有用。如果只有一个表单中只有一个域, 使用`Forms.single` 来映射单个值，无须使用样例类或元组的额外开销:
 
 ```scala
 val singleForm = Form(
@@ -325,23 +325,23 @@ val singleForm = Form(
 val emailValue = singleForm.bind(Map("email" -> "bob@example.com")).get
 ```
 
-###Fill values
-Sometimes you’ll want to populate a form with existing values, typically for editing data:
+###填充值
+有时候你想要在表单中预填充一些已存在的值，通常用于编辑数据:
 
 ```scala
 val filledForm = userForm.fill(UserData("Bob", 18))
 ```
 
-When you use this with a view helper, the value of the element will be filled with the value:
+当你和视图助手一起使用这个时, 元素会填上预置的值:
 
 ```scala
 @helper.inputText(filledForm("name")) @* will render value="Bob" *@
 ```
 
-Fill is especially helpful for helpers that need lists or maps of values, such as the [`select`](https://www.playframework.com/documentation/2.4.x/api/scala/views/html/helper/select$.html) and [`inputRadioGroup`](https://www.playframework.com/documentation/2.4.x/api/scala/views/html/helper/inputRadioGroup$.html) helpers. Use [`options`](https://www.playframework.com/documentation/2.4.x/api/scala/views/html/helper/options$.html) to value these helpers with lists, maps and pairs.
+填充在助手需要列表或映射类的值时尤其有用, 如[`select`](https://www.playframework.com/documentation/2.4.x/api/scala/views/html/helper/select$.html) 和[`inputRadioGroup`](https://www.playframework.com/documentation/2.4.x/api/scala/views/html/helper/inputRadioGroup$.html) 助手。使用[`options`](https://www.playframework.com/documentation/2.4.x/api/scala/views/html/helper/options$.html) 可以为助手填入列表、映射或键值对的值。
 
-###Nested values
-A form mapping can define nested values by using [`Forms.mapping`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/Forms$.html) inside an existing mapping:
+###嵌套值
+表单映射可以通过在已存在的映射中使用[`Forms.mapping`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/Forms$.html)定义嵌套值：
 
 ```scala
 case class AddressData(street: String, city: String)
@@ -358,7 +358,7 @@ val userFormNested: Form[UserAddressData] = Form(
 )
 ```
 
-> **Note**: When you are using nested data this way, the form values sent by the browser must be named like `address.street`, `address.city`, etc.
+> **注意**: 当你用这种方式嵌套数据时, 通过浏览器传来的表单值必须命名像`address.street`, `address.city`, 等等。
 
 ```scala
 @helper.inputText(userFormNested("name"))
@@ -366,8 +366,8 @@ val userFormNested: Form[UserAddressData] = Form(
 @helper.inputText(userFormNested("address.city"))
 ```
 
-###Repeated values
-A form mapping can define repeated values using [`Forms.list`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/Forms$.html) or [`Forms.seq`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/Forms$.html):
+###重复值
+表单映射可以使用[`Forms.list`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/Forms$.html) 或[`Forms.seq`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/Forms$.html)来定义重复值:
 
 ```scala
 case class UserListData(name: String, emails: List[String])
@@ -379,9 +379,9 @@ val userFormRepeated = Form(
 )
 ```
 
-When you are using repeated data like this, there are two alternatives for sending the form values in the HTTP request. First, you can suffix the parameter with an empty bracket pair, as in “emails[]”. This parameter can then be repeated in the standard way, as in `http://foo.com/request?emails[]=a@b.com&emails[]=c@d.com`. Alternatively, the client can explicitly name the parameters uniquely with array subscripts, as in `emails[0]`, `emails[1]`, `emails[2]`, and so on. This approach also allows you to maintain the order of a sequence of inputs. 
+当你使用重复数据时，在HTTP请求中发送表单值有两个方案。首先, 你可以在参数后加上空的中括号做后缀, 如 “emails[]”。这个参数可以按标准方式重复, 如在`http://foo.com/request?emails[]=a@b.com&emails[]=c@d.com`。或者, 客户端可以显式命名参数为唯一的数组下标, 如`emails[0]`, `emails[1]`, `emails[2]`, 如此等等。这个方法也允许你保持输入序列的顺序。 
 
-If you are using Play to generate your form HTML, you can generate as many inputs for the `emails` field as the form contains, using the [`repeat`](https://www.playframework.com/documentation/2.4.x/api/scala/views/html/helper/repeat$.html) helper:
+如果你使用Play来生成你的表单HTML, 可以使用[`repeat`](https://www.playframework.com/documentation/2.4.x/api/scala/views/html/helper/repeat$.html) 助手，生成和表单`emails` 域相同数目的input： 
 
 ```scala
 @helper.inputText(myForm("name"))
@@ -390,10 +390,10 @@ If you are using Play to generate your form HTML, you can generate as many input
 }
 ```
 
-The `min` parameter allows you to display a minimum number of fields even if the corresponding form data are empty.
+`min` 参数允许你最少显示多少个表单域，甚至在相关的表单数据为空时。
 
-###Optional values
-A form mapping can also define optional values using [`Forms.optional`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/Forms$.html):
+###可选值
+表单映射也可以使用[`Forms.optional`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/Forms$.html)定义可选值，:
 
 ```scala
 case class UserOptionalData(name: String, email: Option[String])
@@ -405,16 +405,16 @@ val userFormOptional = Form(
 )
 ```
 
-This maps to an `Option[A]` in output, which is `None` if no form value is found.
+这个在输出中映射到一个`Option[A]` 值, 如果找不到表单值则返回`None` 。
 
-###Default values
-You can populate a form with initial values using [`Form#fill`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/Form.html):
+###默认值
+你可以用[`Form#fill`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/Form.html)来初始化表单值:
 
 ```scala
 val filledForm = userForm.fill(UserData("Bob", 18))
 ```
 
-Or you can define a default mapping on the number using [`Forms.default`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/Forms$.html):
+或你也可以使用[`Forms.default`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/Forms$.html)定义一个默认值：
 
 ```scala
 Form(
@@ -425,8 +425,8 @@ Form(
 )
 ```
 
-###Ignored values
-If you want a form to have a static value for a field, use [`Forms.ignored`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/Forms$.html):
+###忽略值
+如果你想定义某个表单域为静态值，可使用[`Forms.ignored`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/Forms$.html):
 
 ```scala
 val userFormStatic = Form(
@@ -439,10 +439,10 @@ val userFormStatic = Form(
 ```
 
 
-##Putting it all together
-Here’s an example of what a model and controller would look like for managing an entity.
+##全部合并起来
+这个是一个用模型和控制器来映射实体的例子。
 
-Given the case class `Contact`:
+给定样例类`Contact`:
 
 ```scala
 case class Contact(firstname: String,
@@ -457,18 +457,16 @@ case class ContactInformation(label: String,
                               phones: List[String])
 ```
 
-Note that `Contact` contains a `Seq` with `ContactInformation` elements and a `List` of `String`. In this case, we can combine the nested mapping with repeated mappings (defined with `Forms.seq` and `Forms.list`, respectively).
+注意这个`Contact` 包含一个带`ContactInformation`元素的`Seq` 和`String` 的`List` 。在本例, 我们组合了嵌套映射和重复映射(分别由`Forms.seq` 和`Forms.list` 定义)。
 
 ```scala
 val contactForm: Form[Contact] = Form(
-
-  // Defines a mapping that will handle Contact values
+  // 定义处理Contact值的映射
   mapping(
     "firstname" -> nonEmptyText,
     "lastname" -> nonEmptyText,
     "company" -> optional(text),
-
-    // Defines a repeated mapping
+    // 定义重复映射
     "informations" -> seq(
       mapping(
         "label" -> nonEmptyText,
@@ -482,7 +480,7 @@ val contactForm: Form[Contact] = Form(
 )
 ```
 
-And this code shows how an existing contact is displayed in the form using filled data:
+这段代码演示了一条已存在的contact如何通过填入数据在表单中显示出来:
 
 ```scala
 def editContact = Action {
@@ -503,7 +501,7 @@ def editContact = Action {
 }
 ```
 
-Finally, this is what a form submission handler would look like:
+最后, 表单提交处理如下:
 
 ```scala
 def saveContact = Action { implicit request =>

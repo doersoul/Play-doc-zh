@@ -1,7 +1,7 @@
-#Using Custom Validations
-The [validation package](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/validation/package.html) allows you to create ad-hoc constraints using the `verifying` method. However, Play gives you the option of creating your own custom constraints, using the [`Constraint`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/validation/Constraint.html) case class.
+#使用自定义验证器
+[validation 包](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/validation/package.html) 允许你调用`verifying` 方法创建特殊的约束。但是, Play 还给你一个可选的创建自定义约束的方法，是使用[`Constraint`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/validation/Constraint.html) 样例类。
 
-Here, we’ll implement a simple password strength constraint that uses regular expressions to check the password is not all letters or all numbers. A [`Constraint`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/validation/Constraint.html) takes a function which returns a [`ValidationResult`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/validation/ValidationResult.html), and we use that function to return the results of the password check:
+这里, 我们会实现一个简单的密码强度约束，通过使用正则表达式来检查密码是不是全为字母或全为数字。一个[`Constraint`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/validation/Constraint.html) 接受一个返回[`ValidationResult`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/validation/ValidationResult.html)的函数为参数, 并且用这个函数来返回密码检查的结果:
 
 ```scala
 val allNumbers = """\d*""".r
@@ -22,9 +22,9 @@ val passwordCheckConstraint: Constraint[String] = Constraint("constraints.passwo
 })
 ```
 
-> **Note**: This is an intentionally trivial example. Please consider using the [OWASP guide](https://www.owasp.org/index.php/Authentication_Cheat_Sheet#Implement_Proper_Password_Strength_Controls)  for proper password security.
+> **注意**: 这只是一个特意演示的例子。对于正确的密码安全设计请使用[OWASP 指南](https://www.owasp.org/index.php/Authentication_Cheat_Sheet#Implement_Proper_Password_Strength_Controls) 。
 
-We can then use this constraint together with [`Constraints.min`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/validation/Constraints.html) to add additional checks on the password.
+我们可以使用[`Constraints.min`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/data/validation/Constraints.html)结合这个约束，来给密码添加额外的验证。
 
 ```scala
 val passwordCheck: Mapping[String] = nonEmptyText(minLength = 10)
