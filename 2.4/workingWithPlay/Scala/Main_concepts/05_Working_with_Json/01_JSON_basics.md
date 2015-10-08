@@ -282,7 +282,7 @@ val names = (json \\ "name").map(_.as[String])
 // Seq("Watership Down", "Fiver", "Bigwig")
 ```
 
-The `as` method will throw a `JsResultException` if the path is not found or the conversion is not possible. A safer method is `JsValue.asOpt[T](implicit fjs: Reads[T]): Option[T]`.
+如果路径不存在或者转换失败，`as` 方法会抛出一个`JsResultException` 。一个安全的方法是使用`JsValue.asOpt[T](implicit fjs: Reads[T]): Option[T]`。
 
 ```scala
 val nameOption = (json \ "name").asOpt[String]
@@ -292,22 +292,22 @@ val bogusOption = (json \ "bogus").asOpt[String]
 // None
 ```
 
-Although the `asOpt` method is safer, any error information is lost.
+虽然`asOpt` 方法更安全, 但是错误信息会丢失。
 
-###Using validation
-The preferred way to convert from a `JsValue` to another type is by using its `validate` method (which takes an argument of type `Reads`). This performs both validation and conversion, returning a type of [`JsResult`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/libs/json/JsResult.html). `JsResult` is implemented by two classes:
+###使用验证
+推荐使用`JsValue` 的`validate` 方法将其转换到另一个类型(这个方法带有一个`Reads` 类型的参数)。这个方法即执行验证也执行转换操作, 并返回一个[`JsResult`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/libs/json/JsResult.html)类型的结果。`JsResult` 通过两个类实现:
 
-* [`JsSuccess`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/libs/json/JsSuccess.html): Represents a successful validation/conversion and wraps the result.
-* [`JsError`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/libs/json/JsError.html): Represents unsuccessful validation/conversion and contains a list of validation errors.
+* [`JsSuccess`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/libs/json/JsSuccess.html): 表示成功验证/转换，并封装结果。
+* [`JsError`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/libs/json/JsError.html): 表示验证/转换不成功，并包含一个验证错误列表。
 
-You can apply various patterns for handling a validation result:
+你可以采用多种模式来处理验证结果:
 
 ```scala
 val json = { ... }
 
 val nameResult: JsResult[String] = (json \ "name").validate[String]
 
-// Pattern matching
+// 模式匹配
 nameResult match {
   case s: JsSuccess[String] => println("Name: " + s.get)
   case e: JsError => println("Errors: " + JsError.toFlatJson(e).toString())
@@ -333,10 +333,10 @@ val nameOption: Option[String] = nameResult.fold(
 )
 ```
 
-###JsValue to a model
-To convert from JsValue to a model, you must define implicit `Reads[T]` where `T` is the type of your model.
+###JsValue转换到模型
+要从JsValue转换到模型, 你必段定义一个隐式`Reads[T]` ，其中`T` 是你的模型的类型。
 
-> Note: The pattern used to implement `Reads` and custom validation are covered in detail in [JSON Reads/Writes/Formats Combinators](https://www.playframework.com/documentation/2.4.x/ScalaJsonCombinators).
+> 注意: 用于实现`Reads` 的模式和自定义验证的细节请查阅 [JSON Reads/Writes/Formats Combinators](https://www.playframework.com/documentation/2.4.x/ScalaJsonCombinators).
 
 ```scala
 case class Location(lat: Double, long: Double)
