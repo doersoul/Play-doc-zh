@@ -1,11 +1,11 @@
 #JSON transformers
 
-> Please note this documentation was initially published as an article by Pascal Voitot ([@mandubian](https://github.com/mandubian) ) on [mandubian.com](http://mandubian.com/2012/10/29/unveiling-play-2-dot-1-json-api-part3-json-transformers/) 
+> 请注意本文最初由Pascal Voitot([@mandubian](https://github.com/mandubian) ) 发表在[mandubian.com](http://mandubian.com/2012/10/29/unveiling-play-2-dot-1-json-api-part3-json-transformers/) 
 
-Now you should know how to validate JSON and convert into any structure you can write in Scala and back to JSON. But as soon as I’ve begun to use those combinators to write web applications, I almost immediately encountered a case : read JSON from network, validate it and convert it into… JSON. 
+现在你应该知道如何验证JSON，以及转换到任何可以在Scala中写并返回JSON的结构。但当我开始使用这些组合子来写web应用程序, 我立即遇到了这种情况: 从网络读取JSON, 验证它并转换为JSON。 
 
 
-##Introducing JSON coast-to-coast design
+##JSON coast-to-coast 设计介绍
 
 
 ###Are we doomed to convert JSON to OO?

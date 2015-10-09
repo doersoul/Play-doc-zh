@@ -1,26 +1,23 @@
-#Handling file upload
+#处理文件上传
 
 
-##Uploading files in a form using multipart/form-data
-The standard way to upload files in a web application is to use a form with a special `multipart/form-data` encoding, which lets you mix standard form data with file attachment data. 
+##在表单中使用multipart/form-data上传文件
+在web应用程序中上传文件的标准方式是使用指定`multipart/form-data` 编码的表单, 这样让你能混合标准表单数据和附件数据。 
 
-> **Note**: The HTTP method used to submit the form must be `POST` (not `GET`). 
+> **注意**: 表单提交必须用`POST` HTTP方法(不能用`GET`)。 
 
-Start by writing an HTML form:
+我们从写一个HTML表单开始:
 
 ```scala
 @helper.form(action = routes.Application.upload, 'enctype -> "multipart/form-data") {
-    
     <input type="file" name="picture">
-    
     <p>
         <input type="submit">
     </p>
-    
 }
 ```
 
-Now define the `upload` action using a `multipartFormData` body parser:
+现在使用一个`multipartFormData` body解析器定义`upload` action:
 
 ```scala
 def upload = Action(parse.multipartFormData) { request =>
@@ -37,21 +34,21 @@ def upload = Action(parse.multipartFormData) { request =>
 }
 ```
 
-The `ref` attribute give you a reference to a `TemporaryFile`. This is the default way the `mutipartFormData` parser handles file upload.
+`ref` 属性给你一个到`TemporaryFile`的参考。这是`mutipartFormData` 解析器处理文件上传的默认方式。
 
-> **Note**: As always, you can also use the `anyContent` body parser and retrieve it as `request.body.asMultipartFormData`.
+> **注意**: 你也可以使用`anyContent` body解析器，作为`request.body.asMultipartFormData`来检索。
 
-At last, add a `POST` router
+最后, 添加一个`POST` 路由：
 
 ```
 POST  /          controllers.Application.upload()
 ```
 
 
-##Direct file upload
-Another way to send files to the server is to use Ajax to upload the file asynchronously in a form. In this case the request body will not have been encoded as `multipart/form-data`, but will just contain the plain file content.
+##直接文件上传
+另一个上传文件到服务器的方式是在表单中使用Ajax来异步上传文件。在这种情况下请求体不再是`multipart/form-data`, 但纯粹只包含文件内容。
 
-In this case we can just use a body parser to store the request body content in a file. For this example, let’s use the `temporaryFile` body parser:
+在这种情况下我们可以只用一个body解析器来保存请求体内容到文件。例如, 使用`temporaryFile` body 解析器:
 
 ```scala
 def upload = Action(parse.temporaryFile) { request =>
@@ -61,7 +58,7 @@ def upload = Action(parse.temporaryFile) { request =>
 ```
 
 
-##Writing your own body parser
-If you want to handle the file upload directly without buffering it in a temporary file, you can just write your own `BodyParser`. In this case, you will receive chunks of data that you are free to push anywhere you want.
+##编写你自己的body解析器
+如果你不想经过临时文件缓存而是直接处理上传的文件, 你可以自己写一个`BodyParser`。在这种情况下，你可以接收数据块，自由决定如何处理。
 
-If you want to use `multipart/form-data` encoding, you can still use the default `mutipartFormData` parser by providing your own `PartHandler[FilePart[A]]`. You receive the part headers, and you have to provide an `Iteratee[Array[Byte]`, `FilePart[A]]` that will produce the right FilePart.
+如果你想使用`multipart/form-data` 编码, 你仍可以使用默认的`mutipartFormData` 解析器，通过提供你自己的`PartHandler[FilePart[A]]`，接收部分标头, 然后提供一个`Iteratee[Array[Byte]`, `FilePart[A]]` 来生成正确的FilePart。

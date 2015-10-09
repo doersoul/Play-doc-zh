@@ -1,8 +1,8 @@
 #JSON Macro Inception
 
-> Please note this documentation was initially published as an article by Pascal Voitot ([@mandubian](https://github.com/mandubian) ) on [mandubian.com](http://mandubian.com/2012/11/11/JSON-inception/) 
+> 请注意本文最初由Pascal Voitot ([@mandubian](https://github.com/mandubian) ) 发表在[mandubian.com](http://mandubian.com/2012/11/11/JSON-inception/) 
 >
-> **This feature is still experimental because Scala Macros are still experimental in Scala 2.10. If you prefer not using an experimental feature from Scala, please use hand-written Reads/Writes/Format which are strictly equivalent.**
+> **这个特性仍处理实验中，因为Scala 宏（Macros）在Scala 2.10中仍是实验性的。如果你不想使用Scala中的实验特性, 请手写 Reads/Writes/Format，可有一样的效果。**
 
 
 ##Writing a default case class Reads/Writes/Format is so boring!

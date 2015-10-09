@@ -1,10 +1,10 @@
-#Handling and serving XML requests
+#处理和提供XML
 
 
-##Handling an XML request
-An XML request is an HTTP request using a valid XML payload as the request body. It must specify the `application/xml` or `text/xml` MIME type in its `Content-Type` header.
+##处理XML请求
+一个XML请求是指使用一个有效的XML载体作为请求体的HTTP请求。必须在它的`Content-Type` 标头中指定`application/xml` 或`text/xml` MIME 类型。
 
-By default an `Action` uses a **any content** body parser, which lets you retrieve the body as XML (actually as a `NodeSeq`):
+`Action` 默认使用 **any content** body解析器, 这让你可以接受XML格式的请求体 (实际是作为`NodeSeq`):
 
 ```scala
 def sayHello = Action { request =>
@@ -20,7 +20,7 @@ def sayHello = Action { request =>
 }
 ```
 
-It’s way better (and simpler) to specify our own `BodyParser` to ask Play to parse the content body directly as XML:
+更好(也更简单)的方法是指定我们自己的`BodyParser` 来告诉Play直接解析请求体内容为XML:
 
 ```scala
 def sayHello = Action(parse.xml) { request =>
@@ -32,9 +32,9 @@ def sayHello = Action(parse.xml) { request =>
 }
 ```
 
-> **Note**: When using an XML body parser, the `request.body` value is directly a valid `NodeSeq`. 
+> **注意**: 当使用一个XML body解析器, `request.body`值直接就是一个有效的 `NodeSeq`。 
 
-You can test it with [cURL](http://curl.haxx.se/)  from a command line:
+你可以从命令行用[cURL](http://curl.haxx.se/) 测试它:
 
 ```shell
 curl 
@@ -44,7 +44,7 @@ curl
   http://localhost:9000/sayHello
 ```
 
-It replies with:
+它返回:
 
 ```
 HTTP/1.1 200 OK
@@ -55,8 +55,8 @@ Hello Guillaume
 ```
 
 
-##Serving an XML response
-In our previous example we handle an XML request, but we reply with a `text/plain` response. Let’s change that to send back a valid XML HTTP response:
+##提供XML响应
+在之前的例子中，我们处理XML请求, 但回复的是`text/plain` 响应。让我们改变它，发送一个有效的XML HTTP响应:
 
 ```scala
 def sayHello = Action(parse.xml) { request =>
@@ -68,7 +68,7 @@ def sayHello = Action(parse.xml) { request =>
 }
 ```
 
-Now it replies with:
+现在它返回:
 
 ```
 HTTP/1.1 200 OK

@@ -1,7 +1,7 @@
-#JSON Reads/Writes/Format Combinators
-[JSON basics](https://www.playframework.com/documentation/2.4.x/ScalaJson) introduced [`Reads`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/libs/json/Reads.html) and [`Writes`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/libs/json/Writes.html) converters which are used to convert between [`JsValue`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/libs/json/JsValue.html) structures and other data types. This page covers in greater detail how to build these converters and how to use validation during conversion.
+#JSON Reads/Writes/Format 组合子（Combinators）
+[JSON 基础](01_JSON_basics.md) 中介绍了[`Reads`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/libs/json/Reads.html) 和[`Writes`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/libs/json/Writes.html) 转换器，可以在[`JsValue`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/libs/json/JsValue.html) 结构和其它数据类型之间转换。本节更详细地介绍如何构建这些转换器，以及在转换过程中如何进行验证。
 
-The examples on this page will use this `JsValue` structure and corresponding model:
+本节示例会用到这个`JsValue` 结构和相应的模型:
 
 ```scala
 import play.api.libs.json._
@@ -31,7 +31,7 @@ case class Place(name: String, location: Location, residents: Seq[Resident])
 
 
 ##JsPath
-[`JsPath`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/libs/json/JsPath.html) is a core building block for creating `Reads`/`Writes`. `JsPath` represents the location of data in a `JsValue` structure. You can use the `JsPath` object (root path) to define a `JsPath` child instance by using syntax similar to traversing `JsValue`:
+[`JsPath`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/libs/json/JsPath.html) 是构建`Reads`/`Writes` 的核心。`JsPath` 表明了数据在`JsValue` 结构中的位置。你可以使用`JsPath` 对象(在根路径) 来定义一个`JsPath` 子实例，语法类似于遍历`JsValue`:
 
 ```scala
 import play.api.libs.json._
@@ -48,7 +48,7 @@ val namesPath = JsPath \\ "name"
 val firstResidentPath = (JsPath \ "residents")(0)
 ```
 
-The [`play.api.libs.json`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/libs/json/package.html) package defines an alias for `JsPath`: `__` (double underscore). You can use this if you prefer:
+[`play.api.libs.json`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/libs/json/package.html) 包中为`JsPath` 定义了一个别名: `__` (两个下划线)。如果你喜欢也可以使用它:
 
 ```scala
 val longPath = __ \ "location" \ "long"
@@ -56,34 +56,34 @@ val longPath = __ \ "location" \ "long"
 
 
 ##Reads
-[`Reads`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/libs/json/Reads.html) converters are used to convert from a `JsValue` to another type. You can combine and nest `Reads` to create more complex `Reads`.
+[`Reads`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/libs/json/Reads.html) 转换器用于将`JsValue` 转换到其它类型。你可以组合与嵌套`Reads` 来构造更复杂的`Reads`。
 
-You will require these imports to create `Reads`:
+你需要导入这些内容以创建`Reads`:
 
 ```scala
-import play.api.libs.json._ // JSON library
-import play.api.libs.json.Reads._ // Custom validation helpers
-import play.api.libs.functional.syntax._ // Combinator syntax
+import play.api.libs.json._ // JSON 库
+import play.api.libs.json.Reads._ // 自定义 验证助手
+import play.api.libs.functional.syntax._ // Combinator 语法
 ```
 
 ###Path Reads
-`JsPath` has methods to create special `Reads` that apply another `Reads` to a `JsValue` at a specified path:
+`JsPath` 包含方法来创建特定的`Reads`，它应用另一个`Reads` 到特定路径的`JsValue` :
 
-* `JsPath.read[T](implicit r: Reads[T]): Reads[T]` - Creates a `Reads[T]` that will apply the implicit argument `r` to the `JsValue` at this path.
-* `JsPath.readNullable[T](implicit r: Reads[T]): Reads[Option[T]]readNullable` - Use for paths that may be missing or can contain a null value.
+* `JsPath.read[T](implicit r: Reads[T]): Reads[T]` - 创建一个`Reads[T]`，它将应用隐式参数`r` 到该路径的`JsValue` 。
+* `JsPath.readNullable[T](implicit r: Reads[T]): Reads[Option[T]]readNullable` - 该路径可能缺失，或包含空值时使用。
 
-> Note: The JSON library provides implicit `Reads` for basic types such as `String`, `Int`, `Double`, etc.
+> 注意: JSON库为基本类型提供了隐式`Reads` ，如`String`, `Int`, `Double`, 等。
 
-Defining an individual path `Reads` looks like this:
+定义一个具体路径的`Reads` 如下:
 
 ```scala
 val nameReads: Reads[String] = (JsPath \ "name").read[String]
 ```
 
-###Complex Reads
-You can combine individual path `Reads` to form more complex `Reads` which can be used to convert to complex models.
+###复合 Reads
+你可以组合单个路径`Reads` 成复合`Reads` ，这样可以用来转换复杂模型。
 
-For easier understanding, we’ll break down the combine functionality into two statements. First combine `Reads` objects using the `and` combinator:
+为容易理解, 我们先分解成两条语句。首先使用`and` 组合子来组合`Reads` 对象:
 
 ```scala
 val locationReadsBuilder =
@@ -91,15 +91,15 @@ val locationReadsBuilder =
   (JsPath \ "long").read[Double]
 ```
 
-This will yield a type of `FunctionalBuilder[Reads]#CanBuild2[Double, Double]`. This is an intermediary object and you don’t need to worry too much about it, just know that it’s used to create a complex `Reads`. 
+上面产生的结果类型为`FunctionalBuilder[Reads]#CanBuild2[Double, Double]`。这是一个中间对象，你不需要担心太多，只需要知道它会被用来创建一个复合`Reads`。 
 
-Second call the `apply` method of `CanBuildX` with a function to translate individual values to your model, this will return your complex `Reads`. If you have a case class with a matching constructor signature, you can just use its `apply` method:
+第二步是调用`CanBuildX`的`apply` 方法，它有一个功能是转换单个值到你的模型, 这会返回你的复合`Reads`。如果你有一个带有构造器签名的样例类, 你可以只使用它的`apply` 方法:
 
 ```scala
 implicit val locationReads = locationReadsBuilder.apply(Location.apply _)
 ```
 
-Here’s the same code in a single statement:
+上述代码合成一条语句:
 
 ```scala
 implicit val locationReads: Reads[Location] = (
@@ -108,8 +108,8 @@ implicit val locationReads: Reads[Location] = (
 )(Location.apply _)
 ```
 
-###Validation with Reads
-The `JsValue.validate` method was introduced in [JSON basics](https://www.playframework.com/documentation/2.4.x/ScalaJson) as the preferred way to perform validation and conversion from a `JsValue` to another type. Here’s the basic pattern:
+###验证 Reads
+`JsValue.validate` 方法在 [JSON 基础](01_JSON_basics.md)中介绍过， 推荐用它进行验证和转换`JsValue` 到其它类型。这里是基本模式:
 
 ```scala
 val json = { ... }
@@ -124,25 +124,25 @@ nameResult match {
 }
 ```
 
-Default validation for `Reads` is minimal, such as checking for type conversion errors. You can define custom validation rules by using `Reads` validation helpers. Here are some that are commonly used: 
+`Reads` 的默认验证是最简单的, 如检查类型转换错误。你可以通过使用`Reads` 验证助手定义自定义验证规则。这里是一些常用的: 
 
-* `Reads.email` - Validates a String has email format.
-* `Reads.minLength(nb)` - Validates the minimum length of a String.
-* `Reads.min` - Validates a minimum numeric value.
-* `Reads.max` - Validates a maximum numeric value.
-* `Reads[A] keepAnd Reads[B] => Reads[A]` - Operator that tries `Reads[A]` and `Reads[B]` but only keeps the result of `Reads[A]` (For those who know Scala parser combinators `keepAnd == <~` ).
-* `Reads[A] andKeep Reads[B] => Reads[B]` - Operator that tries `Reads[A]` and `Reads[B]` but only keeps the result of `Reads[B]` (For those who know Scala parser combinators `andKeep == ~>` ).
-* `Reads[A] or Reads[B] => Reads` - Operator that performs a logical OR and keeps the result of the last `Reads` checked.
+* `Reads.email` - 验证字符串是否电子邮箱格式。
+* `Reads.minLength(nb)` - 验证一个字符串的最小长度。
+* `Reads.min` - 验证最小数值。
+* `Reads.max` - 验证最大数值。
+* `Reads[A] keepAnd Reads[B] => Reads[A]` - 尝试`Reads[A]` 和`Reads[B]` ，但只保留`Reads[A]`结果的运算符 (如果你知道Scala 解析组命子 `keepAnd == <~` )。
+* `Reads[A] andKeep Reads[B] => Reads[B]` - 尝试`Reads[A]` 和`Reads[B]` ，但只保留`Reads[B]`结果的运算符 (如果你知道Scala 解析组合子`andKeep == ~>` )。
+* `Reads[A] or Reads[B] => Reads` - 执行逻辑或，并保留最后选中的`Reads` 的结果的运算符。
 
-To add validation, apply helpers as arguments to the `JsPath.read` method:
+要添加验证, 应用助手作为`JsPath.read` 方法的参数:
 
 ```scala
 val improvedNameReads =
   (JsPath \ "name").read[String](minLength[String](2))
 ```
 
-###Putting it all together
-By using complex `Reads` and custom validation we can define a set of effective `Reads` for our example model and apply them:
+###全部合并到一起
+通过使用复合`Reads` 和自定义验证，我们可以为示例模型定义一组有效的`Reads` 并应用他们:
 
 ```scala
 import play.api.libs.json._
@@ -180,13 +180,13 @@ json.validate[Place] match {
 }
 ```
 
-Note that complex `Reads` can be nested. In this case, `placeReads` uses the previously defined implicit `locationReads` and `residentReads` at specific paths in the structure.
+注意复合`Reads` 可以嵌套。在本例, `placeReads` 使用前面定义的隐式`locationReads` 和`residentReads` 在结果的特定路径。
 
 
 ##Writes
-[`Writes`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/libs/json/Writes.html) converters are used to convert from some type to a `JsValue`.
+[`Writes`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/libs/json/Writes.html) 用于转换一些类型到`JsValue`。
 
-You can build complex `Writes` using `JsPath` and combinators very similar to `Reads`. Here’s the `Writes` for our example model:
+你可以使用和`Reads`非常类似的`JsPath` 和组合子构建复合`Writes`。这里是我们示例模型的`Writes`:
 
 ```scala
 import play.api.libs.json._
@@ -222,15 +222,15 @@ val place = Place(
 val json = Json.toJson(place)
 ```
 
-There are a few differences between complex `Writes` and `Reads`:
+在复合`Writes` 和`Reads`之间有一点点不同:
 
-* The individual path `Writes` are created using the `JsPath.write` method.
-* There is no validation on conversion to `JsValue` which makes the structure simpler and you won’t need any validation helpers.
-* The intermediary `FunctionalBuilder#CanBuildX` (created by `and` combinators) takes a function that translates a complex type `T` to a tuple matching the individual path `Writes`. Although this is symmetrical to the `Reads` case, the `unapply` method of a case class returns an `Option` of a tuple of properties and must be used with `unlift` to extract the tuple.
+* 单个路径`Writes` 是使用`JsPath.write` 方法创建。
+* 转换到`JsValue`无需验证，这让结构简单些，并且也不需要任何验证助手。
+* 中间结果`FunctionalBuilder#CanBuildX` (由`and` 组合子创建) 接收一个函数为参数，该函数转换复合类型`T`到一个元组，该元组与单个路径`Writes`匹配。虽然看起来和`Reads` 对称, 样例类的`unapply` 方法返回的是属性元组的`Option`类型，必须使用`unlift` 方法将元组提取出来。
 
 
-##Recursive Types
-One special case that our example model doesn’t demonstrate is how to handle `Reads` and `Writes` for recursive types. `JsPath` provides `lazyRead` and `lazyWrite` methods that take call-by-name parameters to handle this:
+##递归类型
+有一种特殊情况是上面的例子未讲到的，是如何处理递归类型的`Reads` 和`Writes`。`JsPath` 提供`lazyRead` 和`lazyWrite` 方法，带有call-by-name 参数来处理这种情况:
 
 ```scala
 case class User(name: String, friends: Seq[User])
@@ -248,10 +248,10 @@ implicit lazy val userWrites: Writes[User] = (
 
 
 ##Format
-[`Format[T]`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/libs/json/Format.html) is just a mix of the `Reads` and `Writes` traits and can be used for implicit conversion in place of its components.
+[`Format[T]`](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/libs/json/Format.html) 只是一个`Reads` 和`Writes` 混合的特质，可以代替这二个进行隐式转换。
 
-###Creating Format from Reads and Writes
-You can define a `Format` by constructing it from `Reads` and `Writes` of the same type:
+###从Reads和Writes创建Format
+你可以通过`Reads` and `Writes`为同一类型构建它的`Format` :
 
 ```scala
 val locationReads: Reads[Location] = (
@@ -268,8 +268,8 @@ implicit val locationFormat: Format[Location] =
   Format(locationReads, locationWrites)
 ```
 
-###Creating Format using combinators
-In the case where your `Reads` and `Writes` are symmetrical (which may not be the case in real applications), you can define a `Format` directly from combinators:
+###使用组合子创建 Format 
+对于`Reads` 和`Writes` 对称的情况(真实应用程序中不一定是这样), 你可以直接从组合子定义一个`Format` :
 
 ```scala
 implicit val locationFormat: Format[Location] = (
