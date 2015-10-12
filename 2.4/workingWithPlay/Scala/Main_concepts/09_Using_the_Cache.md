@@ -1,15 +1,15 @@
-#The Play cache API
-Caching data is a typical optimization in modern applications, and so Play provides a global cache.
+#Play 缓存 API
+缓存数据在现代应用程序中是一个典型的优化, 因此Play提供一个全局缓存。
 
-> An important point about the cache is that it behaves just like a cache should: the data you just stored may just go missing.
+> 关于缓存，重要的一点是它的行为就像缓存应该做的: 你只保存可能会丢失的数据。
 
-For any data stored in the cache, a regeneration strategy needs to be put in place in case the data goes missing. This philosophy is one of the fundamentals behind Play, and is different from Java EE, where the session is expected to retain values throughout its lifetime. 
+为在缓存中保存任何数据, 要有再生策略以防止数据丢失。这是Play背后的基本哲学之一, 不同于Java EE, 会话被期望贯穿它的整个生命周期保留值。 
 
-The default implementation of the Cache API uses [EHCache](http://ehcache.org/) .
+Cache API默认实现使用[EHCache](http://ehcache.org/)。
 
 
-##Importing the Cache API
-Add `cache` into your dependencies list. For example, in `build.sbt`:
+##导入缓存 API
+添加 `cache` 到你的依赖列表。例如在`build.sbt`:
 
 ```sbt
 libraryDependencies ++= Seq(
@@ -19,8 +19,8 @@ libraryDependencies ++= Seq(
 ```
 
 
-##Accessing the Cache API
-The cache API is provided by the [CacheApi](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/cache/CacheApi.html) object, and can be injected into your component like any other dependency. For example:
+##访问缓存API
+缓存 API 由 [CacheApi](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/cache/CacheApi.html) 对象提供, 并且可以像任何其它依赖一样注入到你的组件中。举例:
 
 ```scala
 import play.api.cache._
@@ -32,21 +32,21 @@ class Application @Inject() (cache: CacheApi) extends Controller {
 }
 ```
 
-> **Note**: The API is intentionally minimal to allow several implementation to be plugged in. If you need a more specific API, use the one provided by your Cache plugin.
+> **注意**: 这个API特意最小化，来允许几个实现可被嵌入。如果你需要更多具体的API, 使用由你的缓存插件提供的那个。
 
-Using this simple API you can either store data in cache:
+使用这个简单API你既可以存储数据在缓存中:
 
 ```scala
 cache.set("item.key", connectedUser)
 ```
 
-And then retrieve it later:
+然后在不久后还可以获取它:
 
 ```scala
 val maybeUser: Option[User] = cache.get[User]("item.key")
 ```
 
-There is also a convenient helper to retrieve from cache or set the value in cache if it was missing:
+当其不存在时，还有一个简便的助手方法来从缓存中获取值或在缓存中设置值:
 
 ```scala
 val user: User = cache.getOrElse[User]("item.key") {
@@ -54,7 +54,7 @@ val user: User = cache.getOrElse[User]("item.key") {
 }
 ```
 
-You can specify an expiry duration by passing a duration, by default the duration is infinite:
+你可以通过传递一个duration来指定一个持续期间, 默认下duration是内联的:
 
 ```scala
 import scala.concurrent.duration._
@@ -62,23 +62,23 @@ import scala.concurrent.duration._
 cache.set("item.key", connectedUser, 5.minutes)
 ```
 
-To remove an item from the cache use the `remove` method:
+要从缓存移除物品，使用`remove` 方法:
 
 ```scala
 cache.remove("item.key")
 ```
 
 
-##Accessing different caches
-It is possible to access different caches. The default cache is called `play`, and can be configured by creating a file called `ehcache.xml`. Additional caches may be configured with different configurations, or even implementations.
+##访问不同的缓存
+可以使用不同的缓存。默认缓存叫`play`, 并可以通过创建一个叫`ehcache.xml`的文件来配置。附加缓存可以用不同的配置文件来配置，甚至实现。
 
-If you want to access multiple different ehcache caches, then you’ll need to tell Play to bind them in `application.conf`, like so:
+如果你想要访问多个不同的ehcache缓存, 那么你需要告诉Play在`application.conf`中绑定他们, 如:
 
 ```scala
 play.cache.bindCaches = ["db-cache", "user-cache", "session-cache"]
 ```
 
-Now to access these different caches, when you inject them, use the [NamedCache](https://www.playframework.com/documentation/2.4.x/api/java/play/cache/NamedCache.html) qualifier on your dependency, for example:
+现在访问这些不同的缓存, 当你注入他们后, 在你的依赖上使用 [NamedCache](https://www.playframework.com/documentation/2.4.x/api/java/play/cache/NamedCache.html) 限定符, 例如:
 
 ```scala
 import play.api.cache._
@@ -93,12 +93,12 @@ class Application @Inject()(
 ```
 
 
-##Caching HTTP responses
-You can easily create smart cached actions using standard Action composition.
+##缓存 HTTP 响应
+你可以使用标准的Action组合轻松创建智能缓存actions。
 
-> **Note**: Play HTTP `Result` instances are safe to cache and reuse later.
+> **注意**: Play HTTP `Result` 实例对缓存是安全并可重用的。
 
-The [Cached](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/cache/Cached.html) class helps you build cached actions.
+[Cached](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/cache/Cached.html) 类可以帮助你创建缓存actions。
 
 ```scala
 import play.api.cache.Cached
@@ -109,7 +109,7 @@ class Application @Inject() (cached: Cached) extends Controller {
 }
 ```
 
-You can cache the result of an action using a fixed key like `"homePage"`.
+你可以使用一个fixed key如`"homePage"`来缓存action的result。
 
 ```scala
 def index = cached("homePage") {
@@ -119,7 +119,7 @@ def index = cached("homePage") {
 }
 ```
 
-If results vary, you can cache each result using a different key. In this example, each user has a different cached result.
+如果results多变, 你可以使用不同的key来缓存每个result。在本例, 每个用户有不同的缓存result。
 
 ```scala
 def userProfile = Authenticated {
@@ -132,10 +132,10 @@ def userProfile = Authenticated {
 }
 ```
 
-###Control caching
-You can easily control what you want to cache or what you want to exclude from the cache.
+###缓存控制
+你可以很容易的控制什么是你想缓存的或什么是你想从缓存中排除的。
 
-You may want to only cache 200 Ok results.
+你可能只想缓存返回 "200 Ok" 的 results。
 
 ```scala
 def get(index: Int) = cached.status(_ => "/resource/"+ index, 200) {
@@ -149,7 +149,7 @@ def get(index: Int) = cached.status(_ => "/resource/"+ index, 200) {
 }
 ```
 
-Or cache 404 Not Found only for a couple of minutes
+或缓存 “404 Not Found”,仅存在几分钟
 
 ```scala
 def get(index: Int) = {
@@ -170,15 +170,15 @@ def get(index: Int) = {
 ```
 
 
-##Custom implementations
-It is possible to provide a custom implementation of the [CacheApi](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/cache/CacheApi.html) that either replaces, or sits along side the default implementation.
+##自定义实现
+可以提供一个[CacheApi](https://www.playframework.com/documentation/2.4.x/api/scala/play/api/cache/CacheApi.html) 的自定义实现，要么替换它,或和默认实现一起使用。
 
-To replace the default implementation, you’ll need to disable the default implementation by setting the following in `application.conf`:
+要替换默认实现, 你需要通过以下在`application.conf` 中的设置禁用默认实现:
 
 ```scala
 play.modules.disabled += "play.api.cache.EhCacheModule"
 ```
 
-Then simply implement `CacheApi` and bind it in the [DI container](https://www.playframework.com/documentation/2.4.x/ScalaDependencyInjection).
+然后简单的实现`CacheApi` 并在[DI container](https://www.playframework.com/documentation/2.4.x/ScalaDependencyInjection)中绑定它。
 
-To provide an implementation of the cache API in addition to the default implementation, you can either create a custom qualifier, or reuse the `NamedCache` qualifier to bind the implementation.
+要提供一个cache API实现，并附加到默认实现中, 你可以创建一个自定义限定符, 或重用`NamedCache` 限定符来绑定实现。
