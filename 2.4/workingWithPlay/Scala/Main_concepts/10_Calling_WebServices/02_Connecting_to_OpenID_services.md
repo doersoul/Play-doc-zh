@@ -1,20 +1,20 @@
-#OpenID Support in Play
+#Play的OpenID支持
 
-OpenID is a protocol for users to access several services with a single account. As a web developer, you can use OpenID to offer users a way to log in using an account they already have, such as their [Google account](https://developers.google.com/accounts/docs/OpenID). In the enterprise, you may be able to use OpenID to connect to a company’s SSO server.
-
-
-##The OpenID flow in a nutshell
-
-1. The user gives you his OpenID (a URL).
-2. Your server inspects the content behind the URL to produce a URL where you need to redirect the user.
-3. The user confirms the authorization on his OpenID provider, and gets redirected back to your server.
-4. Your server receives information from that redirect, and checks with the provider that the information is correct.
-
-Step 1 may be omitted if all your users are using the same OpenID provider (for example if you decide to rely completely on Google accounts).
+OpenID 是一种使用一个账号访问多个服务的协议。作为一个web开发者, 你可以使用OpenID来让用户用他们已有的账号, 如他们的[Google 账号](https://developers.google.com/accounts/docs/OpenID)。在企业中, 你可以使用OpenID来连接公司的SSO服务器。
 
 
-##Usage
-To use OpenID, first add `ws` to your `build.sbt` file:
+##OpenID工作流简述
+
+1. 用户给你他的OpenID (一个URL)。
+2. 你的服务器检查URL后面的内容，然后产生一个URL，再将用户重定向到那里。
+3. 用户在他的OpenID提供方那里确认授权, 然后重定向回你的服务器。
+4. 你的服务器接收重定向信息, 然后检查提供方信息是否正确。
+
+如果你的用户使用的都是同一个OpenID提供方，那么第一步可以忽略(例如你决定全部都使用Google账号)。
+
+
+##用例
+要使用OpenID, 首先添加 `ws` 到你的`build.sbt` 文件:
 
 ```scala
 libraryDependencies ++= Seq(
@@ -22,7 +22,7 @@ libraryDependencies ++= Seq(
 )
 ```
 
-Now any controller or component that wants to use OpenID will have to declare a dependency on the [OpenIdClient](https://playframework.com/documentation/2.4.x/api/scala/play/api/libs/openid/OpenIdClient.html):
+现在任何想要使用OpenID的控制器和组件需要在[OpenIdClient](https://playframework.com/documentation/2.4.x/api/scala/play/api/libs/openid/OpenIdClient.html)声明依赖:
 
 ```scala
 import javax.inject.Inject
@@ -40,18 +40,18 @@ class Application @Inject() (openIdClient: OpenIdClient) extends Controller {
 }
 ```
 
-We’ve called the `OpenIdClient` instance `openIdClient`, all the following examples will assume this name.
+我们调用`OpenIdClient` 的实例`openIdClient`, 所有下面的示例将假定使用此名称。
 
 
-##OpenID in Play
-The OpenID API has two important functions:
+##Play中使用OpenID
+OpenID API 有二个重要函数:
 
-* `OpenIdClient.redirectURL` calculates the URL where you should redirect the user. It involves fetching the user’s OpenID page asynchronously, this is why it returns a `Future[String]`. If the OpenID is invalid, the returned `Future` will fail.
-* `OpenIdClient.verifiedId` needs a `RequestHeader` and inspects it to establish the user information, including his verified OpenID. It will do a call to the OpenID server asynchronously to check the authenticity of the information, returning a future of [UserInfo](https://playframework.com/documentation/2.4.x/api/scala/play/api/libs/openid/UserInfo.html). If the information is not correct or if the server check is false (for example if the redirect URL has been forged), the returned `Future` will fail.
+* `OpenIdClient.redirectURL` 计算用户应该重定向的URL。它包括异步获取用户的OpenID页面, 这就是为什么它返回一个`Future[String]`。如果OpenID无效, 返回的`Future` 就会失败。
+* `OpenIdClient.verifiedId` 需要一个`RequestHeader` 并检查它来建立用户的信息, 包括它验证过的OpenID。它会异步调用一下OpenID服务器以检查信息的真实性, 返回一个[UserInfo](https://playframework.com/documentation/2.4.x/api/scala/play/api/libs/openid/UserInfo.html) future。如果信息不正确或服务器的检查结果不正确(例如重定向URL是伪造的), 则返回的`Future` 会失败。
 
-If the `Future` fails, you can define a fallback, which redirects back the user to the login page or return a `BadRequest`.
+如果`Future` 失败, 你可以定义一个回退将用户重定向回登录页面或返回`BadRequest`。
 
-Here is an example of usage (from a controller):
+这里是一个用例(从controller):
 
 ```scala
 def login = Action {
@@ -82,12 +82,12 @@ def openIdCallback = Action.async { implicit request =>
 ```
 
 
-##Extended Attributes
-The OpenID of a user gives you his identity. The protocol also supports getting [extended attributes](http://openid.net/specs/openid-attribute-exchange-1_0.html) such as the e-mail address, the first name, or the last name.
+##扩展属性
+用户的OpenID给你的是身份标识。协议也支持获取[扩展属性](http://openid.net/specs/openid-attribute-exchange-1_0.html) 如e-mail地址, 姓或名。
 
-You may request optional attributes and/or required attributes from the OpenID server. Asking for required attributes means the user cannot login to your service if he doesn’t provides them.
+你可以从OpenID服务器请求一些可选属性或必需属性。要求提供的必需属性意味着如果用户没有提供的话，其将无法登录你的服务。
 
-Extended attributes are requested in the redirect URL:
+在重定向URL中请求扩展属性:
 
 ```scala
 openIdClient.redirectURL(
@@ -97,4 +97,4 @@ openIdClient.redirectURL(
 )
 ```
 
-Attributes will then be available in the `UserInfo` provided by the OpenID server.
+这样OpenID服务器提供的`UserInfo` 中就会有这个属性了。

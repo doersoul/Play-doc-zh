@@ -1,32 +1,32 @@
-#Testing your application with specs2
+#用specs2测试你的应用程序
 
-Writing tests for your application can be an involved process. Play provides a default test framework for you, and provides helpers and application stubs to make testing your application as easy as possible.
-
-
-##Overview
-The location for tests is in the “test” folder. There are two sample test files created in the test folder which can be used as templates.
-
-You can run tests from the Play console.
-
-* To run all tests, run `test`.
-* To run only one test class, run `test-only` followed by the name of the class i.e. `test-only my.namespace.MySpec`.
-* To run only the tests that have failed, run `test-quick`.
-* To run tests continually, run a command with a tilde in front, i.e. `~test-quick`.
-* To access test helpers such as `FakeApplication` in console, run `test:console`.
-
-Testing in Play is based on SBT, and a full description is available in the [testing SBT](http://www.scala-sbt.org/0.13.0/docs/Detailed-Topics/Testing) chapter.
+为你的应用程序编写测试是一个很耗时的过程。Play为你提供一个默认的测试框架, 并提供助手和应用程序存根来让测试你的应用程序尽可能的简单。
 
 
-##Using specs2
-To use Play’s specs2 support, add the Play specs2 dependency to your build as a test scoped dependency:
+##概述
+测试文件的位置在 “test” 文件夹。测试文件夹中有二个简单的测试文件，可以用做模板。
+
+你可以从Play控制台运行测试。
+
+* 要运行所有测试，运行`test`。
+* 要仅运行某个测试类, 运行`test-only` 并在后面加上类名，例如`test-only my.namespace.MySpec`。
+* 要仅运行会失败的测试类, 运行`test-quick`。
+* 要持续运行测试, 在运行命令前面加上波浪线, 如`~test-quick` 。
+* 要访问测试助手，如在控制台访问`FakeApplication` , 运行`test:console`。
+
+Play中的测试是基本SBT的, 完整的描述请参阅 [测试 SBT](http://www.scala-sbt.org/0.13.0/docs/Detailed-Topics/Testing)章节。
+
+
+##使用 specs2
+要使用Play的 specs2支持, 添加 Play specs2 依赖到你的构建文件中，作为测试作用域依赖:
 
 ```scala
 libraryDependencies += specs2 % Test
 ```
 
-In [specs2](https://etorreborre.github.io/specs2/), tests are organized into specifications, which contain examples which run the system under test through various different code paths.
+在 [specs2](https://etorreborre.github.io/specs2/), 测试被组织到Specifications中, 其包含运行基于不同代码路径测试的系统的示例。
 
-Specifications extend the [`Specification`](https://etorreborre.github.io/specs2/api/SPECS2-3.4/index.html#org.specs2.mutable.Specification) trait and are using the should/in format:
+Specifications扩展了[`Specification`](https://etorreborre.github.io/specs2/api/SPECS2-3.4/index.html#org.specs2.mutable.Specification) 特质，并使用 should/in 格式:
 
 ```scala
 import org.specs2.mutable._
@@ -47,17 +47,17 @@ class HelloWorldSpec extends Specification {
 }
 ```
 
-Specifications can be run in either IntelliJ IDEA (using the [Scala plugin](https://blog.jetbrains.com/scala/)) or in Eclipse (using the [Scala IDE](http://scala-ide.org/)). Please see the [IDE page](https://playframework.com/documentation/2.4.x/IDE) for more details.
+Specifications 可以在 IntelliJ IDEA (使用[Scala 插件](https://blog.jetbrains.com/scala/)) 或 Eclipse (使用 [Scala IDE](http://scala-ide.org/))中运行。请参阅 [IDE 页面](https://playframework.com/documentation/2.4.x/IDE) 详细了解。
 
-NOTE: Due to a bug in the [presentation compiler](https://scala-ide-portfolio.assembla.com/spaces/scala-ide/support/tickets/1001843-specs2-tests-with-junit-runner-are-not-recognized-if-there-is-package-directory-mismatch#/activity/ticket:), tests must be defined in a specific format to work with Eclipse:
+注意: 基于[presentation compiler](https://scala-ide-portfolio.assembla.com/spaces/scala-ide/support/tickets/1001843-specs2-tests-with-junit-runner-are-not-recognized-if-there-is-package-directory-mismatch#/activity/ticket:)中的一个BUG, 在Eclipse中测试必须被定义为一个特定的格式:
 
-* The package must be exactly the same as the directory path.
-* The specification must be annotated with `@RunWith(classOf[JUnitRunner])`.
+* 包名字必须和目录路径完全一致。
+* specification 必须用`@RunWith(classOf[JUnitRunner])`注解。
 
-Here is a valid specification for Eclipse:
+这里是一个在Eclipse中有效的specification:
 
 ```scala
-package models // this file must be in a directory called "models"
+package models // 这个文件必须存在于叫"models"的目录中
 
 import org.specs2.mutable._
 import org.specs2.runner._
@@ -70,30 +70,30 @@ class ApplicationSpec extends Specification {
 ```
 
 ###Matchers
-When you use an example, you must return an example result. Usually, you will see a statement containing a `must`:
+当你使用一个示例, 你必须返回一个示例结果。通常, 你会看到一个包含`must` 的声明:
 
 ```scala
 "Hello world" must endWith("world")
 ```
 
-The expression that follows the `must` keyword are known as [`matchers`](https://etorreborre.github.io/specs2/guide/SPECS2-3.4/org.specs2.guide.Matchers.html). Matchers return an example result, typically Success or Failure. The example will not compile if it does not return a result.
+尾随着`must` 关键词的表达式被叫做 [`matchers`](https://etorreborre.github.io/specs2/guide/SPECS2-3.4/org.specs2.guide.Matchers.html)。Matchers返回示例结果, 通常是成功或失败。如果它不能返回结果则这个示例不会被编译。
 
-The most useful matchers are the [match results](https://etorreborre.github.io/specs2/guide/SPECS2-3.4/org.specs2.guide.Matchers.html#out-of-the-box). These are used to check for equality, determine the result of Option and Either, and even check if exceptions are thrown.
+最有用的 matchers 是[match results](https://etorreborre.github.io/specs2/guide/SPECS2-3.4/org.specs2.guide.Matchers.html#out-of-the-box)。这些用来检查相等性, 判断部分和两者其一的结果, 甚至检测是否抛出异常。
 
-There are also [optional matchers](https://etorreborre.github.io/specs2/guide/SPECS2-3.4/org.specs2.guide.Matchers.html#optional) that allow for XML and JSON matching in tests.
+还有[optional matchers](https://etorreborre.github.io/specs2/guide/SPECS2-3.4/org.specs2.guide.Matchers.html#optional) 允许在测试中使用XML和JSON匹配。
 
 ###Mockito
-Mocks are used to isolate unit tests against external dependencies. For example, if your class depends on an external `DataService` class, you can feed appropriate data to your class without instantiating a `DataService` object.
+Mocks 用来隔离单元测试和外部依赖。例如, 如果你的类依赖于一个外部的 `DataService` 类, 你可以填充适当的数据到你的类，而无须实例化一个`DataService` 对象。
 
-[Mockito](https://github.com/mockito/mockito) is integrated into specs2 as the default [mocking library](https://etorreborre.github.io/specs2/guide/SPECS2-3.4/org.specs2.guide.UseMockito.html).
+[Mockito](https://github.com/mockito/mockito) 已经集成到specs2中作为默认的[mocking 库](https://etorreborre.github.io/specs2/guide/SPECS2-3.4/org.specs2.guide.UseMockito.html)。
 
-To use Mockito, add the following import:
+要使用Mockito, 添加以下import:
 
 ```scala
 import org.specs2.mock._
 ```
 
-You can mock out references to classes like so:
+你可以先模拟出引用类，如:
 
 ```scala
 trait DataService {
@@ -125,11 +125,11 @@ class ExampleMockitoSpec extends Specification with Mockito {
 }
 ```
 
-Mocking is especially useful for testing the public methods of classes. Mocking objects and private methods is possible, but considerably harder.
+Mocking在测试类的公共方法是尤其有用。Mocking对象和私有方法也可以，但是非常困难。
 
 
-##Unit Testing Models
-Play does not require models to use a particular database data access layer. However, if the application uses Anorm or Slick, then frequently the Model will have a reference to database access internally.
+##单元测试模块
+Play不需要模块来使用特定的数据库数据访问层。然而，如果应用程序使用Anorm或Slick, 那么模型内部将有一个针对数据库访问的引用。
 
 ```scala
 import anorm._
@@ -142,9 +142,9 @@ case class User(id: String, name: String, email: String) {
 }
 ```
 
-For unit testing, this approach can make mocking out the `roles` method tricky.
+为单元测试, 这个方法可以有技巧的模拟出`roles` 方法。
 
-A common approach is to keep the models isolated from the database and as much logic as possible, and abstract database access behind a repository layer.
+一个通用的方法是保持模块从数据库中分离出来，并尽可能逻辑化，以及抽象出一个库层后的数据库访问。
 
 ```scala
 case class Role(name:String)
@@ -163,7 +163,7 @@ class AnormUserRepository extends UserRepository {
 }
 ```
 
-and then access them through services:
+然后通过服务访问他们:
 
 ```scala
 class UserService(userRepository : UserRepository) {
@@ -174,7 +174,7 @@ class UserService(userRepository : UserRepository) {
 }
 ```
 
-In this way, the `isAdmin` method can be tested by mocking out the `UserRepository` reference and passing it into the service:
+以这种方式, `isAdmin` 方法可以通过模拟出`UserRepository` 引用并传递其到服务中来测试：
 
 ```scala
 object UserServiceSpec extends Specification with Mockito {
@@ -193,8 +193,8 @@ object UserServiceSpec extends Specification with Mockito {
 ```
 
 
-##Unit Testing Controllers
-When defining controllers as objects, they can be trickier to unit test. In Play this can be alleviated by [dependency injection](https://playframework.com/documentation/2.4.x/ScalaDependencyInjection). Another way to finesse unit testing with a controller declared as a object is to use a trait with an [explicitly typed self reference](http://www.naildrivin5.com/scalatour/wiki_pages/ExplcitlyTypedSelfReferences) to the controller:
+##单元测试控制器
+当定义控制器为对象, 他们会更难以被单元测试。在Play这个可以通过[依赖注入](https://playframework.com/documentation/2.4.x/ScalaDependencyInjection)来缓解。另一种方式处理有控制器的单元测试，是这个控制器使用一个有[显式类型的自我引用](http://www.naildrivin5.com/scalatour/wiki_pages/ExplcitlyTypedSelfReferences)的特质:
 
 ```scala
 trait ExampleController {
@@ -208,7 +208,7 @@ trait ExampleController {
 object ExampleController extends Controller with ExampleController
 ```
 
-and then test the trait:
+然后测试特质:
 
 ```scala
 import play.api.mvc._
@@ -231,10 +231,10 @@ object ExampleControllerSpec extends PlaySpecification with Results {
 ```
 
 
-##Unit Testing EssentialAction
-Testing [`Action`](https://playframework.com/documentation/2.4.x/api/scala/play/api/mvc/Action.html) or [`Filter`](https://playframework.com/documentation/2.4.x/api/scala/play/api/mvc/Filter.html) can require to test an [`EssentialAction`](https://playframework.com/documentation/2.4.x/api/scala/play/api/mvc/EssentialAction.html) ([more information about what an EssentialAction is](https://playframework.com/documentation/2.4.x/HttpApi))
+##单元测试 EssentialAction
+测试 [`Action`](https://playframework.com/documentation/2.4.x/api/scala/play/api/mvc/Action.html) 或 [`Filter`](https://playframework.com/documentation/2.4.x/api/scala/play/api/mvc/Filter.html) 需要测试一个[`EssentialAction`](https://playframework.com/documentation/2.4.x/api/scala/play/api/mvc/EssentialAction.html) ([关于什么是EssentialAction的更多信息](https://playframework.com/documentation/2.4.x/HttpApi))
 
-For this, the test [`Helpers.call`](https://playframework.com/documentation/2.4.x/api/scala/play/api/test/Helpers$.html#call) can be used like that:
+对此, 这个测试[`Helpers.call`](https://playframework.com/documentation/2.4.x/api/scala/play/api/test/Helpers$.html#call) 可以像这样使用:
 
 ```scala
 object ExampleEssentialActionSpec extends PlaySpecification {

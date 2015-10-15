@@ -1,12 +1,12 @@
 #OAuth
 
-[OAuth](http://oauth.net/) is a simple way to publish and interact with protected data. It’s also a safer and more secure way for people to give you access. For example, it can be used to access your users’ data on [Twitter](https://dev.twitter.com/docs/auth/using-oauth).
+[OAuth](http://oauth.net/) 是发布受保护数据及与之交互的一种简单方式。它授权访问的更安全可靠的方式。例如， 可以用它访问你在[Twitter](https://dev.twitter.com/docs/auth/using-oauth)上的用户数据。
 
-There are 2 very different versions of OAuth: [OAuth 1.0](http://tools.ietf.org/html/rfc5849) and [OAuth 2.0](http://oauth.net/2/). Version 2 is simple enough to be implemented easily without library or helpers, so Play only provides support for OAuth 1.0.
+有二种不同版本的OAuth: [OAuth 1.0](http://tools.ietf.org/html/rfc5849) 和 [OAuth 2.0](http://oauth.net/2/)。版本 2 非常简单，无需库和助手, 所以Play仅提供 OAuth 1.0支持。
 
 
-##Usage
-To use OAuth, first add `ws` to your `build.sbt` file:
+##用法
+要使用OAuth, 首先添加`ws` 到你的`build.sbt` 文件:
 
 ```scala
 libraryDependencies ++= Seq(
@@ -15,30 +15,30 @@ libraryDependencies ++= Seq(
 ```
 
 
-##Required Information
-OAuth requires you to register your application to the service provider. Make sure to check the callback URL that you provide, because the service provider may reject your calls if they don’t match. When working locally, you can use `/etc/hosts` to fake a domain on your local machine.
+##需要的信息
+OAuth 需要你注册你的应用程序到服务提供方。确保检查了你提供的回调URL, 因为如果不匹配的话，服务提供方可能会拒绝你的调用。在本地使用时，你可以在 `/etc/hosts` 中为本机伪造一个域名。
 
-The service provider will give you:
+服务提供方会给你:
 
-* Application ID
-* Secret key
-* Request Token URL
-* Access Token URL
-* Authorize URL
-
-
-##Authentication Flow
-Most of the flow will be done by the Play library.
-
-1. Get a request token from the server (in a server-to-server call)
-2. Redirect the user to the service provider, where he will grant your application rights to use his data
-3. The service provider will redirect the user back, giving you a /verifier/
-4. With that verifier, exchange the /request token/ for an /access token/ (server-to-server call)
-
-Now the /access token/ can be passed to any call to access protected data.
+* 应用程序 ID
+* 安全密钥
+* 请求令牌 URL
+* 访问令牌 URL
+* 授权 URL
 
 
-##Example
+##验证流程
+大部分工作流由Play库完成。
+
+1. 从服务器获取请求令牌 (服务器之间调用)
+2. 将用户重定向到服务提供方, 在那里他会授权你的应用可以使用他的数据。
+3. 服务提供方会将用户重定向回去, 并给你一个检验器
+4. 用这个检验器, 你就可以将请求令牌换成访问令牌 (服务器之间调用)
+
+现在用访问令牌可以去访问受保护的数据了。
+
+
+##示例
 
 ```scala
 object Twitter extends Controller {
