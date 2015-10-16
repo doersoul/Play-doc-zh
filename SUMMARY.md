@@ -90,21 +90,21 @@
 * 详细主题
     * 构建系统
         * [构建系统](2.4/detailedTopics/01_The_build_system/01_The_Build_System.md)
-        * [About sbt settings](2.4/detailedTopics/01_The_build_system/02_About_sbt_settings.md)
-        * [Manage application dependencies](2.4/detailedTopics/01_The_build_system/03_Manage_application_dependencies.md)
-        * [Working with sub-projects](2.4/detailedTopics/01_The_build_system/04_Working_with_sub-projects.md)
-        * [Play enhancer](2.4/detailedTopics/01_The_build_system/05_Play_enhancer.md)
-        * [Aggregating reverse routers](2.4/detailedTopics/01_The_build_system/06_Aggregating_reverse_routers.md)
-        * [Improving Compilation Times](2.4/detailedTopics/01_The_build_system/07_Improving_Compilation_Times.md)
+        * [关于sbt设置](2.4/detailedTopics/01_The_build_system/02_About_sbt_settings.md)
+        * [管理库依赖](2.4/detailedTopics/01_The_build_system/03_Manage_application_dependencies.md)
+        * [用子项目工作](2.4/detailedTopics/01_The_build_system/04_Working_with_sub-projects.md)
+        * [Play增强器](2.4/detailedTopics/01_The_build_system/05_Play_enhancer.md)
+        * [聚合反向路由](2.4/detailedTopics/01_The_build_system/06_Aggregating_reverse_routers.md)
+        * [改善编译时间](2.4/detailedTopics/01_The_build_system/07_Improving_Compilation_Times.md)
         * [Cookbook](2.4/detailedTopics/01_The_build_system/08_Cookbook.md)
-        * [Debugging your build](2.4/detailedTopics/01_The_build_system/09_Debugging_your_build.md)
-    * Working with public assets
-        * [Working with public assets](2.4/detailedTopics/02_Working_with_public_assets/01_Working_with_public_assets.md)
-        * [Using CoffeeScript](2.4/detailedTopics/02_Working_with_public_assets/02_Using_CoffeeScript.md)
-        * [Using LESS CSS](2.4/detailedTopics/02_Working_with_public_assets/03_Using_LESS_CSS.md)
-        * [Using JSHint](2.4/detailedTopics/02_Working_with_public_assets/04_Using_JSHint.md)
-        * [Using RequireJs](2.4/detailedTopics/02_Working_with_public_assets/05_Using_RequireJs.md)
-    * Configuration
+        * [调试你的构建](2.4/detailedTopics/01_The_build_system/09_Debugging_your_build.md)
+    * 公共资产
+        * [用公共资产工作](2.4/detailedTopics/02_Working_with_public_assets/01_Working_with_public_assets.md)
+        * [使用CoffeeScript](2.4/detailedTopics/02_Working_with_public_assets/02_Using_CoffeeScript.md)
+        * [使用LESS CSS](2.4/detailedTopics/02_Working_with_public_assets/03_Using_LESS_CSS.md)
+        * [使用JSHint](2.4/detailedTopics/02_Working_with_public_assets/04_Using_JSHint.md)
+        * [使用RequireJs](2.4/detailedTopics/02_Working_with_public_assets/05_Using_RequireJs.md)
+    * 配置
         * [Configuration file syntax and features](2.4/detailedTopics/03_Configuration/01_Configuration_file_syntax_and_features.md)
         * [Configuring the application secret](2.4/detailedTopics/03_Configuration/02_Configuring_the_application_secret.md)
         * [Configuring the JDBC connection pool](2.4/detailedTopics/03_Configuration/03_Configuring_the_JDBC_connection_pool.md)
@@ -129,15 +129,15 @@
             * [Debugging SSL](2.4/detailedTopics/03_Configuration/07_Configuring_WS_SSL/12_Debugging_SSL.md)
             * [Loose Options](2.4/detailedTopics/03_Configuration/07_Configuring_WS_SSL/13_Loose_Options.md)
             * [Testing SSL](2.4/detailedTopics/03_Configuration/07_Configuring_WS_SSL/14_Testing_SSL.md)
-    * [Databases](2.4/detailedTopics/04_Databases.md)
-    * [Managing database evolutions](2.4/detailedTopics/05_Managing_database_evolutions.md)
-    * Deploying your application
-        * [Deploying your application](2.4/detailedTopics/06_Deploying_your_application/01_Deploying_your_application.md)
-        * [Production configuration](2.4/detailedTopics/06_Deploying_your_application/02_Production_configuration.md)
-        * [Setting up a front end HTTP server](2.4/detailedTopics/06_Deploying_your_application/03_Setting_up_a_front_end_HTTP_server.md)      
-        * [Configuring HTTPS](2.4/detailedTopics/06_Deploying_your_application/04_Configuring_HTTPS.md)
-        * Deploying to a cloud service
-            * [Deploying to a cloud service](2.4/detailedTopics/06_Deploying_your_application/05_Deploying_to_a_cloud_service/01_Deploying_to_a_cloud_service.md)
-            * [Deploying to Heroku](2.4/detailedTopics/06_Deploying_your_application/05_Deploying_to_a_cloud_service/02_Deploying_to_Heroku.md)
-            * [Deploying to Cloud Foundry](2.4/detailedTopics/06_Deploying_your_application/05_Deploying_to_a_cloud_service/03_Deploying_to_Cloud_Foundry.md)
-            * [Deploying to Clever Cloud](2.4/detailedTopics/06_Deploying_your_application/05_Deploying_to_a_cloud_service/04_Deploying_to_Clever_Cloud.md)
+    * [H2数据库](2.4/detailedTopics/04_Databases.md)
+    * [管理数据库evolutions](2.4/detailedTopics/05_Managing_database_evolutions.md)
+    * 部署你的应用程序
+        * [部署你的应用程序](2.4/detailedTopics/06_Deploying_your_application/01_Deploying_your_application.md)
+        * [生产配置](2.4/detailedTopics/06_Deploying_your_application/02_Production_configuration.md)
+        * [设置前端HTTP 服务器](2.4/detailedTopics/06_Deploying_your_application/03_Setting_up_a_front_end_HTTP_server.md)      
+        * [配置 HTTPS](2.4/detailedTopics/06_Deploying_your_application/04_Configuring_HTTPS.md)
+        * 部署到云服务
+            * [部署到云服务](2.4/detailedTopics/06_Deploying_your_application/05_Deploying_to_a_cloud_service/01_Deploying_to_a_cloud_service.md)
+            * [部署到Heroku](2.4/detailedTopics/06_Deploying_your_application/05_Deploying_to_a_cloud_service/02_Deploying_to_Heroku.md)
+            * [部署到Cloud Foundry](2.4/detailedTopics/06_Deploying_your_application/05_Deploying_to_a_cloud_service/03_Deploying_to_Cloud_Foundry.md)
+            * [部署到Clever Cloud](2.4/detailedTopics/06_Deploying_your_application/05_Deploying_to_a_cloud_service/04_Deploying_to_Clever_Cloud.md)
