@@ -1,4 +1,4 @@
-#Managing database evolutions
+#管理数据库 evolutions
 
 When you use a relational database, you need a way to track and organize your database schema evolutions. Typically there are several situations where you need a more sophisticated way to track your database schema changes:
 
@@ -7,7 +7,7 @@ When you use a relational database, you need a way to track and organize your da
 * If you work on several machines, you need to keep all database schemas synchronized.
 
 
-##Enable evolutions
+##启用 evolutions
 Add `evolutions` into your dependencies list. For example, in `build.sbt`:
 
 ```sbt
@@ -15,7 +15,7 @@ libraryDependencies += evolutions
 ````
 
 
-##Evolutions scripts
+##Evolutions 脚本
 Play tracks your database evolutions using several evolutions script. These scripts are written in plain old SQL and should be located in the `conf/evolutions/{database name}` directory of your application. If the evolutions apply to your default database, this path is `conf/evolutions/default`.
 
 The first script is named `1.sql`, the second script `2.sql`, and so on…
@@ -59,7 +59,7 @@ When evolutions are activated, Play will check your database schema state before
 If you agree with the SQL script, you can apply it directly by clicking on the ‘Apply evolutions’ button.
 
 
-##Evolutions configuration
+##Evolutions 配置
 Evolutions can be configured both globally and per datasource. For global configuration, keys should be prefixed with `play.evolutions`. For per datasource configuration, keys should be prefixed with `play.evolutions.db.<datasourcename>`, for example `play.evolutions.db.default`. The following configuration options are supported:
 
 * `enabled` - Whether evolutions are enabled. If configured globally to be false, it disables the evolutions module altogether. Defaults to true.
@@ -71,7 +71,7 @@ Evolutions can be configured both globally and per datasource. For global config
 For example, to enable `autoApply` for all evolutions, you might set `play.evolutions.autoApply=true` in `application.conf` or in a system property. To disable autocommit for a datasource named `default`, you set `play.evolutions.db.default.autocommit=false`.
 
 
-##Synchronizing concurrent changes
+##同步并发更改
 Now let’s imagine that we have two developers working on this project. Developer A will work on a feature that requires a new database table. So he will create the following `2.sql` evolution script:
 
 ```sql
@@ -173,7 +173,7 @@ This evolution script represents the new revision 2 of the database, that is dif
 So Play will detect it and ask developer A to synchronize his database by first reverting the old revision 2 already applied, and by applying the new revision 2 script:
 
 
-##Inconsistent states
+##不一致的状态
 Sometimes you will make a mistake in your evolution scripts, and they will fail. In this case, Play will mark your database schema as being in an inconsistent state and will ask you to manually resolve the problem before continuing.
 
 For example, the Ups script of this evolution has an error:
@@ -216,8 +216,8 @@ Play detects this new evolution that replaces the previous 3 one, and will run t
 
 > In development mode however it is often simpler to simply trash your development database and reapply all evolutions from the beginning.
 
-###Transactional DDL
+###事务性 DDL
 By default, each statement of each evolution script will be executed immediately. If your database supports [Transactional DDL](https://wiki.postgresql.org/wiki/Transactional_DDL_in_PostgreSQL:_A_Competitive_Analysis) you can set `evolutions.autocommit=false` in `application.conf` to change this behaviour, causing **all** statements to be executed in **one transaction** only. Now, when an evolution script fails to apply with autocommit disabled, the whole transaction gets rolled back and no changes will be applied at all. So your database stays “clean” and will not become inconsistent. This allows you to easily fix any DDL issues in the evolution scripts without having to modify the database by hand like described above.
 
-###Evolution storage and limitations
+###Evolution 存储和限制
 Evolutions are stored in your database in a table called `play_evolutions`. A Text column stores the actual evolution script. Your database probably has a 64kb size limit on a text column. To work around the 64kb limitation you could: manually alter the play_evolutions table structure changing the column type or (preferred) create multiple evolutions scripts less than 64kb in size.

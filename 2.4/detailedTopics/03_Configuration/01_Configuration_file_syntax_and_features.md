@@ -1,83 +1,100 @@
-Configuration file syntax and features
+#配置文件语法和特性
 
-The configuration file used by Play is based on the Typesafe config library.
+> Play使用的配置文件是基于 [Typesafe 配置库](https://github.com/typesafehub/config).
 
-The configuration file of a Play application must be defined in conf/application.conf. It uses the HOCON format.
+Play应用程序的配置文件必须定义在`conf/application.conf`。它使用[HOCON 格式](https://github.com/typesafehub/config/blob/master/HOCON.md)。
 
-As well as the application.conf file, configuration comes from a couple of other places.
+除`application.conf` 文件外, 配置也可以来自其它地方。
 
-Default settings are loaded from any reference.conf files found on the classpath. Most Play JARs include a reference.conf file with default settings. Settings in application.conf will override settings in reference.conf files.
-It’s also possible to set configuration using system properties. System properties override application.conf settings.
-Specifying an alternative configuration file
-At runtime, the default application.conf is loaded from the classpath. System properties can be used to force a different config source:
+* 从任何`reference.conf` 文件加载的默认设置都是建立在类路径之上。多数Play JARs 包含一个`reference.conf` 文件及其默认设置。在`application.conf`中的设置会覆盖`reference.conf` 文件中的设置。
+* 配置也可以使用系统属性。系统属性覆盖`application.conf` 设置。
 
-config.resource specifies a resource name including the extension, i.e. application.conf and not just application
-config.file specifies a filesystem path, again it should include the extension, not be a basename
-These system properties specify a replacement for application.conf, not an addition. If you still want to use some values from the application.conf file then you can include the application.conf in your other .conf file by writing include "application" at the top of that file. After you’ve included the application.conf’s settings in your new .conf file you can then specify any settings that you want override.
 
-Using with Akka
-Akka will use the same configuration file as the one defined for your Play application. Meaning that you can configure anything in Akka in the application.conf directory. In Play, Akka reads its settings from within the play.akka setting, not from the akka setting.
+##指定替换的配置文件
+在运行时, 默认的`application.conf` 从类路径加载。系统属性可用于强制不同的配置源:
 
-Using with the run command
-There are a couple of special things to know about configuration when running your application with the run command.
+* `config.resource` 指定源名称要包括扩展名, 如`application.conf` 而不是`application`
+* `config.file` 指定文件路径, 它应该包括扩展名, 不只是基本名称
 
-Extra devSettings
-You can configure extra settings for the run command in your build.sbt. These settings won’t be used when you deploy your application.
+这些系统属性为`application.conf`指定一个替代, 不是一个附加。如果你还想使用一些`application.conf` 文件中的值，那么你可以包含`application.conf` 到你的其它`.conf` 文件，通过在这个文件的顶部编写`include "application"` 。在你包含了`application.conf`的设置后，在你的新`.conf` 文件你可以指定任何你想要覆盖的设置。
 
+
+##使用Akka
+Akka 会使用和Play应用程序相同的配置文件，这意味着你可以在`application.conf`的目录中配置Akka中的任何东西。在Play, Akka 从`play.akka`内读取它的设置, 不是从`akka` 设置。
+
+
+##使用`run` 命令
+当用`run` 命令运行你的应用程序时，关于配置有几个特殊的东西要知道。
+
+###额外的`devSettings`
+你可以在`build.sbt`中为`run` 命令配置额外的设置。当你部署应用程序时这些设置不会被使用。
+
+```scala
 devSettings := Map("play.server.http.port" -> "8080")
-HTTP server settings in application.conf
-In run mode the HTTP server part of Play starts before the application has been compiled. This means that the HTTP server cannot access the application.conf file when it starts. If you want to override HTTP server settings while using the run command you cannot use the application.conf file. Instead, you need to either use system properties or the devSettings setting shown above. An example of a server setting is the HTTP port. Other server settings can be seen here.
+```
 
+###在`application.conf`中的 HTTP 服务设置
+在 `run` 模式，Play的HTTP 服务器部分在应用程序编译之前就已经启动了。这也就是说当启动时HTTP服务器不能访问`application.conf` 文件。如果你想要用run命令覆盖HTTP服务务器设置,你不用使用`application.conf` 文件。相反, 你需要使用系统属性或像上面说的 `devSettings` 设置。服务器设置的一个例子就是HTTP端口。其它服务器设置可以查阅[这里](https://playframework.com/documentation/2.4.x/ProductionConfiguration#Server-configuration-options)。
+
+```scala
 > run -Dhttp.port=1234
-HOCON Syntax
-HOCON has similarites to JSON; you can find the JSON spec at http://json.org/ of course.
+```
 
-Unchanged from JSON
-files must be valid UTF-8
-quoted strings are in the same format as JSON strings
-values have possible types: string, number, object, array, boolean, null
-allowed number formats matches JSON; as in JSON, some possible
-floating-point values are not represented, such as NaN
-Comments
-Anything between // or # and the next newline is considered a comment and ignored, unless the // or # is inside a quoted string.
 
-Omit root braces
-JSON documents must have an array or object at the root. Empty files are invalid documents, as are files containing only a non-array non-object value such as a string.
+##HOCON 语法
+HOCON 类似于 JSON; 当然你可以在[http://json.org/](http://json.org/) 找到JSON规范。
 
-In HOCON, if the file does not begin with a square bracket or curly brace, it is parsed as if it were enclosed with {} curly braces.
+###不改变JSON
+* 文件必须是有效的 UTF-8
+* 带引号的字符串和JSON字符串格式相同
+* 可用的值类型: string, number, object, array, boolean, null
+* 允许数字格式匹配JSON; 作为 JSON, 和其它
 
-A HOCON file is invalid if it omits the opening { but still has a closing }; the curly braces must be balanced.
+浮点值不能表示，如 `NaN`
 
-Key-value separator
-The = character can be used anywhere JSON allows :, i.e. to separate keys from values.
+###注释
+任何在`//` 或`#` 之间，并且下一行是新行的内容被看做注释和被忽略，除非`//` 或`#` 在是引号内部的字符串。
 
-If a key is followed by {, the : or = may be omitted. So "foo" {} means "foo" : {}"
+###省略根大括号
+JSON 文档必须有任何数组或对象作为根。空文件是无效的文档, 比如文件仅包含一个非数组非对象值，如一个字符串。
 
-Commas
-Values in arrays, and fields in objects, need not have a comma between them as long as they have at least one ASCII newline (\n, decimal value 10) between them.
+在 HOCON, 如果文件不是由一个方括号或大花括号开始, 它会解析为我们用`{}` 大括号包起来。
 
-The last element in an array or last field in an object may be followed by a single comma. This extra comma is ignored.
+一个 HOCON 文件如果它省略了打开的`{` 但是却有一个关闭的`}`，那它是无效的; 花括号必须平衡。
 
-[1,2,3,] and [1,2,3] are the same array.
-[1\n2\n3] and [1,2,3] are the same array.
-[1,2,3,,] is invalid because it has two trailing commas.
-[,1,2,3] is invalid because it has an initial comma.
-[1,,2,3] is invalid because it has two commas in a row.
-these same comma rules apply to fields in objects.
-Duplicate keys
-The JSON spec does not clarify how duplicate keys in the same object should be handled. In HOCON, duplicate keys that appear later override those that appear earlier, unless both values are objects. If both values are objects, then the objects are merged.
+###键-值 分隔符
+`=` 字符可以用在JSON允许`:` 的任何地方, 比如 分隔键和值。
 
-Note: this would make HOCON a non-superset of JSON if you assume that JSON requires duplicate keys to have a behavior. The assumption here is that duplicate keys are invalid JSON.
+如果键后面跟着`{`,  `:` 或`=` 可以省略。 所以 `"foo" {}` 的意思也是`"foo" : {}"`
 
-To merge objects:
+###逗号
+数组中的值, 和对象的字段, 如果他们至少之间有一个ASCII换行符(`\n`, decimal value 10)，那么他们之间就不需要逗号。
 
-add fields present in only one of the two objects to the merged object.
-for non-object-valued fields present in both objects, the field found in the second object must be used.
-for object-valued fields present in both objects, the object values should be recursively merged according to these same rules.
-Object merge can be prevented by setting the key to another value first. This is because merging is always done two values at a time; if you set a key to an object, a non-object, then an object, first the non-object falls back to the object (non-object always wins), and then the object falls back to the non-object (no merging, object is the new value). So the two objects never see each other.
+数组中的最后一个元素或对象中的最后一个字段可跟一个逗号。这个多余的逗号将被忽略。
 
-These two are equivalent:
+* `[1,2,3,]` 和 `[1,2,3]` 是相同的数组（多了一个逗号）。
+* `[1\n2\n3]` 和 `[1,2,3]` 是相同的数组。
+* `[1,2,3,,]` 是无效的，因为它尾部有二个逗号。
+* `[,1,2,3]` 是无效的，因为前部有一个逗号。
+* `[1,,2,3]` 是无效的，因为行内有二个逗号。
+* 这些逗号规则同时应用到对象中的字段。
 
+###重复的键
+JSON规范没有讲清在同一个对象中重复的键将被如何处理。在HOCON, 重复键中，后面出现的重写那些更早出现的, 除非两个值都是对象。如果两个值都是对象, 那么对象会合并。
+
+注意: 如果你假定JSON需要重复键来实现一个行为，这会让 HOCON无法扩展JSON。这里的假设是，重复键是无效的JSON。
+
+合并的对象:
+
+* 在两个对象中不同的字段合并到新对象中。
+* 对于在两个对象都有的非对象值字段，仅使用第二个对象中找到的。
+* 对于在两个对象都有的对象值, 根据这些相同的对象合并规则以递归方式合并。
+
+对象合并可以防止首先由设置键到另一个值。这是因为合并两个值总是做一次; 如果你设置一个键到一个对象, 一个非对象, 然后是一个对象, 每一个非对象回退到对象(非对象总是赢的), 然后对象回到非对象(不合并, 对象变成新值)。因此两个对象永远都看不到对方。
+
+这二个是等价的:
+
+```json
 {
     "foo" : { "a" : 42 },
     "foo" : { "b" : 43 }
@@ -86,8 +103,11 @@ These two are equivalent:
 {
     "foo" : { "a" : 42, "b" : 43 }
 }
-And these two are equivalent:
+```
 
+这二个也是等价的:
+
+```json
 {
     "foo" : { "a" : 42 },
     "foo" : null,
@@ -97,254 +117,279 @@ And these two are equivalent:
 {
     "foo" : { "b" : 43 }
 }
-The intermediate setting of "foo" to null prevents the object merge.
+```
 
-Paths as keys
-If a key is a path expression with multiple elements, it is expanded to create an object for each path element other than the last. The last path element, combined with the value, becomes a field in the most-nested object.
+中间设置为`null`的`"foo"` 值，是用来防止对象合并。
 
-In other words:
+###路径作为键
+如果一个键是一种多元素的路径表达式, 它会为展开，并为路径每个元素创建一个对象，除了最后一个。最后一个路径元素, 结合值, 成为最后的嵌套对象的一个字段。
 
+换言之:
+
+```scala
 foo.bar : 42
-is equivalent to:
+```
 
+等价于:
+
+```scala
 foo { bar : 42 }
-and:
+```
 
+以及:
+
+```scala
 foo.bar.baz : 42
-is equivalent to:
+```
 
+等价于:
+
+```scala
 foo { bar { baz : 42 } }
-and so on. These values are merged in the usual way; which implies that:
+```
 
+如此等等。这些值以通常的方式合并; 这意味着:
+
+```scala
 a.x : 42, a.y : 43
-is equivalent to:
+```
 
+等价于:
+
+```scala
 a { x : 42, y : 43 }
-Because path expressions work like value concatenations, you can have whitespace in keys:
+```
 
+因为路径表达式的工作方式就像值的串联, 你可以在值中留有空格:
+
+```scala
 a b c : 42
-is equivalent to:
+```
 
+等价于:
+
+```scala
 "a b c" : 42
-Because path expressions are always converted to strings, even single values that would normally have another type become strings.
+```
 
-true : 42 is "true" : 42
-3.14 : 42 is "3.14" : 42
-As a special rule, the unquoted string include may not begin a path expression in a key, because it has a special interpretation (see below).
+因为路径表达式总是转换为字符串, 甚至单个值，它通常会有另一种形式变成字符串。
 
-Substitutions
-Substitutions are a way of referring to other parts of the configuration tree.
+* `true : 42` 是 `"true" : 42`
+* `3.14 : 42` 是 `"3.14" : 42`
 
-The syntax is ${pathexpression} or ${?pathexpression} where the pathexpression is a path expression as described above. This path expression has the same syntax that you could use for an object key.
+作为一种特殊的规则, 不带引号的字符串 `include` 不能在键的路径表达式, 因为它有特殊的解释(下面讲到)。
 
-The ? in ${?pathexpression} must not have whitespace before it; the three characters ${? must be exactly like that, grouped together.
 
-For substitutions which are not found in the configuration tree, implementations may try to resolve them by looking at system environment variables or other external sources of configuration. (More detail on environment variables in a later section.)
+##代入
+代入是一个在配置树中引用其它部分的一种方式。
 
-Substitutions are not parsed inside quoted strings. To get a string containing a substitution, you must use value concatenation with the substitution in the unquoted portion:
+语法是`${pathexpression}` 或`${?pathexpression}` ，这里 `pathexpression` 就是上面讲到的路径表达式。这个路径表达式有相同的语法，你可以为对象键使用它。
 
+在`${?pathexpression}`中的`?` 前面必须没有空格; `${?`这三个字符必须就像一个组合一样在一起。
+
+在配置树中没有找到的代入, 执行时可能会尝试通过查找系统环境变量或其它外部配置源来解析他们。(关于环境变量的细节在后面章节讲到)
+
+代入不解析在引号里面的字符串。要想用一个字符串包含代入, 你必须使用代入和值串联并不加引号:
+
+```scala
 key : ${animal.favorite} is my favorite animal
-Or you could quote the non-substitution portion:
+```
 
+或者你可以在非代入部分加引号:
+
+```scala
 key : ${animal.favorite}" is my favorite animal"
-Substitutions are resolved by looking up the path in the configuration. The path begins with the root configuration object, i.e. it is “absolute” rather than “relative.”
+```
 
-Substitution processing is performed as the last parsing step, so a substitution can look forward in the configuration. If a configuration consists of multiple files, it may even end up retrieving a value from another file. If a key has been specified more than once, the substitution will always evaluate to its latest-assigned value (the merged object or the last non-object value that was set).
+代入是通过查找配置中的路径来解析。路径从根配置对象开始，比如它是 “绝对” 的而不是 “相对”的。
 
-If a configuration sets a value to null then it should not be looked up in the external source. Unfortunately there is no way to “undo” this in a later configuration file; if you have { "HOME" : null } in a root object, then ${HOME} will never look at the environment variable. There is no equivalent to JavaScript’s delete operation in other words.
+代入处理是作为最后一步来执行, 所以代入可以在配置向前查找。如果一个配置由多个文件组成, 它甚至可以最终从另一个文件中获取值。如果一个键被多次指定, 代入总是等于它最后一次分配的值 (设为合并对象或最后的非对象值)。
 
-If a substitution does not match any value present in the configuration and is not resolved by an external source, then it is undefined. An undefined substitution with the ${foo} syntax is invalid and should generate an error.
+如果一个配置设一个值为`null` ，那么它不会在外部源中查找。不幸的是这是最后的配置文件，没有“undo”的方式; 如果你在根对象中有`{ "HOME" : null }` , 然后`${HOME}` 永远不会去查找环境变量。换言之这不等同于JavaScript的`delete` 操作。
 
-If a substitution with the ${?foo} syntax is undefined:
+如果一个代入不匹配目前配置中的任何值和不从外部源解析, 那么它就是未定义的。一个未定义的代入用`${foo}` 语法是无效的，并且会产生一个错误。
 
-if it is the value of an object field then the field should not
-be created. If the field would have overridden a previously-set
-value for the same field, then the previous value remains.
-if it is an array element then the element should not be added.
-if it is part of a value concatenation then it should become an
-empty string.
-foo : ${?bar} would avoid creating field foo if bar is
-undefined, but foo : ${?bar} ${?baz} would be a value
-concatenation so if bar or baz are not defined, the result
-is an empty string.
-Substitutions are only allowed in object field values and array elements (value concatenations), they are not allowed in keys or nested inside other substitutions (path expressions).
+如果一个未定义的代入用`${?foo}` 语法:
 
-A substitution is replaced with any value type (number, object, string, array, true, false, null). If the substitution is the only part of a value, then the type is preserved. Otherwise, it is value-concatenated to form a string.
+* 如果它是一个对象字段的值，那么字段应该不会被创建。如果字段会覆盖之前相同字段设置的值, 那么原来的值仍然保留。
+* 如果它是一个数组元素，那么元素不会被添加。
+* 如果它是串联的值的一部分，那么它应该成为一个空字符串。
+* 如果`bar` 是未定义的，`foo : ${?bar}` 会避免创建字段`foo` ,但 `foo : ${?bar} ${?baz}` 会是一个值串联，因此如果 `bar` 或 `baz` 是未定义的, 结果会是空字符串。
 
-Circular substitutions are invalid and should generate an error.
+代入仅允许在对象字段值和数组元素(值串联)中使用, 他们不允许作为键或者在其它代入(路径表达式)中嵌套使用。
 
-Implementations must take care, however, to allow objects to refer to paths within themselves. For example, this must work:
+一个代入可以替换为任何类型的值(数字,对象,字符串, 数组, 布尔值, null)。如果代入是值仅有的一部分, 那么值类型会被保存。否则, 它是一个值串联，形成一个字符串。
 
+循环的代入是无效的，并会产生一个错误。
+
+实现时必须小心, 然而, 允许对象引用他们自己内部路径。举例, 这个可以工作:
+
+```scala
 bar : { foo : 42,
         baz : ${bar.foo}
       }
-Here, if an implementation resolved all substitutions in bar as part of resolving the substitution ${bar.foo}, there would be a cycle. The implementation must only resolve the foo field in bar, rather than recursing the entire bar object.
+```
 
-Includes
-Include syntax
-An include statement consists of the unquoted string include and a single quoted string immediately following it. An include statement can appear in place of an object field.
+这里, 如果一个实现解析所有在 `bar`中的代入作为解析代入`${bar.foo}`的一部分, 这会成为一个循环。实现必须仅解析`bar`中的字段`foo` , 而不是重复整个`bar` 对象。
 
-If the unquoted string include appears at the start of a path expression where an object key would be expected, then it is not interpreted as a path expression or a key.
 
-Instead, the next value must be a quoted string. The quoted string is interpreted as a filename or resource name to be included.
+##include
+###include的语法
+一个include语句用不带引号的字符串`include` 并在后面马上跟着一个单引号的字符串。一个include语句可以出现在一个对象的字段中。
 
-Together, the unquoted include and the quoted string substitute for an object field syntactically, and are separated from the following object fields or includes by the usual comma (and as usual the comma may be omitted if there’s a newline).
+如果不带引号的字符串`include` 出现在对象键期望的路径表达式的开头，那么它不解析为一个路径表达式或键。
 
-If an unquoted include at the start of a key is followed by anything other than a single quoted string, it is invalid and an error should be generated.
+相反, 下一个值必须是一个带引号的字符串。带引号的字符串被解释为一个文件名或包含资源的名称。
 
-There can be any amount of whitespace, including newlines, between the unquoted include and the quoted string.
+放在一起, 就是不带引号的`include`和带引号的字符串，而后者替换为对象字段, 以及从后面的对象字段隔开或者通过常用的逗号包含(如果有换行符，和往常一样可以省略逗号)。
 
-Value concatenation is NOT performed on the “argument” to include. The argument must be a single quoted string. No substitutions are allowed, and the argument may not be an unquoted string or any other kind of value.
+如果一个不带引号的`include` 在键的开头并且后面跟着任何不是加引号的字符串, 它是无效的并会产生错误。
 
-Unquoted include has no special meaning if it is not the start of a key’s path expression.
+在不带引号的`include`和带引号字符串之间，可以有任意数量的空格, 包括新行。
 
-It may appear later in the key:
+值串联不能作为`include`的 “参数”执行。参数必须是加引号的字符串。不允许代入, 并且参数不是能一个不带引号字符串或任何其它类型的值。
 
-# this is valid
+如果不是在键的路径表达式的开头部分，不带引号的 `include` 没有什么特殊含义。
+
+它可能在键的后面出现:
+
+```scala
+# 这是有效的
 { foo include : 42 }
-# equivalent to
+# 等价于
 { "foo include" : 42 }
-It may appear as an object or array value:
+```
 
-{ foo : include } # value is the string "include"
-[ include ]       # array of one string "include"
-You can quote "include" if you want a key that starts with the word "include", only unquoted include is special:
+它可能作为一个对象或数组值出现:
 
+```scala
+{ foo : include } # 值是字符串 "include"
+[ include ]       # 一个字符串"include"的数组
+```
+
+仅仅不带引号的`include` 才是特殊的，如果你想一个键以单词`"include"`开头，你可以用带引号的`"include"`:
+
+```scala
 { "include" : 42 }
-Include semantics: merging
-An including file contains the include statement and an included file is the one specified in the include statement. (They need not be regular files on a filesystem, but assume they are for the moment.)
+```
 
-An included file must contain an object, not an array. This is significant because both JSON and HOCON allow arrays as root values in a document.
+###include语义: 合并
+一个include的文件中有include语句，并且一个include的文件是include语句中指定的一个。(他们不需要是文件系统上常规的文件, 但假设此刻他们是。)
 
-If an included file contains an array as the root value, it is invalid and an error should be generated.
+一个include的文件必须有一个对象, 不是一个数组。这是很重要的，因为JSON和HOCON允许数组在文档中作为根值。
 
-The included file should be parsed, producing a root object. The keys from the root object are conceptually substituted for the include statement in the including file.
+如果任何include文件包含一个数组作为根值, 它是无效的，并且会产生一个错误。
 
-If a key in the included object occurred prior to the include
-statement in the including object, the included key’s value
-overrides or merges with the earlier value, exactly as with
-duplicate keys found in a single file.
-If the including file repeats a key from an earlier-included
-object, the including file’s value would override or merge
-with the one from the included file.
-Include semantics: substitution
-Substitutions in included files are looked up at two different paths; first, relative to the root of the included file; second, relative to the root of the including configuration.
+included文件应被解析, 产生一个根对象。从根来的键在概念上是在include的文件中代入include语句。
 
-Recall that substitution happens as a final step, after parsing. It should be done for the entire app’s configuration, not for single files in isolation.
+* 如果一个在包含的对象中的键是在包含对象中的include语句之前的, 包含进来的键的值会被重写，或合并早期的值, 正如与在单个文件中发现重复键。
+* 如果包含文件从先前包含的对象得到重复键, 包含文件的值会重写或和包含进来的文件合并。
 
-Therefore, if an included file contains substitutions, they must be “fixed up” to be relative to the app’s configuration root.
+###include语义: 代入
+在包含文件中的代入是按两个不同的路径查找; 第一种是相对于被包含文件的根; 第一种是相对于被包含的配置的根。
 
-Say for example that the root configuration is this:
+记得代入发生在最后一步, 是在解析后。它在整个app的配置解析后再做, 不是为分离的单个文件。
 
+因此, 如果一个included文件中有代入, 他们必须 “修复” 以相对于app的配置根。
+
+例如说，这是根配置:
+
+```scala
 { a : { include "foo.conf" } }
-And “foo.conf” might look like this:
+```
 
+而 “foo.conf” 会是这样的:
+
+```scala
 { x : 10, y : ${x} }
-If you parsed “foo.conf” in isolation, then ${x} would evaluate to 10, the value at the path x. If you include “foo.conf” in an object at key a, however, then it must be fixed up to be ${a.x} rather than ${x}.
+```
 
-Say that the root configuration redefines a.x, like this:
+如果你孤立地解析“foo.conf” , 那么`${x}` 会等于10, 即路径中的`x`的值。如果你include “foo.conf” 到另一个对象的键`a`, 然而, 它必须被修复的`${a.x}` 而不是`${x}`。
 
+假如根配置重定义`a.x`, 像这样:
+
+```scala
 {
     a : { include "foo.conf" }
     a : { x : 42 }
 }
-Then the ${x} in “foo.conf”, which has been fixed up to ${a.x}, would evaluate to 42 rather than to 10. Substitution happens after parsing the whole configuration.
+```
 
-However, there are plenty of cases where the included file might intend to refer to the application’s root config. For example, to get a value from a system property or from the reference configuration. So it’s not enough to only look up the “fixed up” path, it’s necessary to look up the original path as well.
+那么在 “foo.conf”中的`${x}`, 已修复到 `${a.x}`, 会等于`42` 而不是`10`。代入发生在解析整个配置之后。
 
-Include semantics: missing files
-If an included file does not exist, the include statement should be silently ignored (as if the included file contained only an empty object).
+然而, 很多情况下包含的文件可能打算引用应用程序的根配置。举例, 要从系统属性获得一个值或从参考配置。所以仅查找“修复”路径是不够的, 它还必须查找原始的路径。
 
-Include semantics: locating resources
-Conceptually speaking, the quoted string in an include statement identifies a file or other resource “adjacent to” the one being parsed and of the same type as the one being parsed. The meaning of “adjacent to”, and the string itself, has to be specified separately for each kind of resource.
+###Include语义: 丢失的文件
+如果一个包含的文件不存在, include语句会静默地忽略 (就当做包含文件仅包含一个空对象)。
 
-Implementations may vary in the kinds of resources they support including.
+###Include语义: 定位资源
+从概念上讲, 在include语句中加引号的字符串标识一个文件或其它资源 “adjacent to” 一个开始解析，以及作为一个相同类型的解析。 “adjacent to”的意思是, 加上字符串本身, 必须为每个资源的类型单独指定。
 
-On the Java Virtual Machine, if an include statement does not identify anything “adjacent to” the including resource, implementations may wish to fall back to a classpath resource. This allows configurations found in files or URLs to access classpath resources.
+支持includ的实现资源的种类可能会有所不同。
 
-For resources located on the Java classpath:
+在Java 虚拟机上, 如果一个include语句不能标识任何 “adjacent to” 包含资源, 实现时可能希望回退到类路径资源。这允许配置在文件或URLs中查找，以访问类路径资源。
 
-included resources are looked up by calling getResource() on
-the same class loader used to look up the including resource.
-if the included resource name is absolute (starts with ‘/’)
-then it should be passed to getResource() with the ‘/’
-removed.
-if the included resource name does not start with ‘/’ then it
-should have the “directory” of the including resource.
-prepended to it, before passing it to getResource(). If the
-including resource is not absolute (no ‘/’) and has no “parent
-directory” (is just a single path element), then the included
-relative resource name should be left as-is.
-it would be wrong to use getResource() to get a URL and then
-locate the included name relative to that URL, because a class
-loader is not required to have a one-to-one mapping between
-paths in its URLs and the paths it handles in getResource().
-In other words, the “adjacent to” computation should be done
-on the resource name not on the resource’s URL.
-For plain files on the filesystem:
+对于资源定位到Java类路径:
 
-if the included file is an absolute path then it should be kept
-absolute and loaded as such.
-if the included file is a relative path, then it should be
-located relative to the directory containing the including
-file. The current working directory of the process parsing a
-file must NOT be used when interpreting included paths.
-if the file is not found, fall back to the classpath resource.
-The classpath resource should not have any package name added
-in front, it should be relative to the “root”; which means any
-leading “/” should just be removed (absolute is the same as
-relative since it’s root-relative). The “/” is handled for
-consistency with including resources from inside other
-classpath resources, where the resource name may not be
-root-relative and “/” allows specifying relative to root.
-URLs:
+* 包含的资源通过调用 `getResource()` 查找，在同一个类加载器用于查找包含的资源。
+* 如果包含的资源名称是绝对的(以‘/’开始)，那么它应该被传递到`getResource()` 并移除‘/’。
+* 如果包含的资源的名称不是以‘/’开头，那么应该有包含资源的 “目录”。在传递到`getResource()` 中之前把它附加上去, 如果包含资源不是绝对的(没有 ‘/’) 和没有“父目录” (只是一个单路径元素), 那么包含相对的资源名称会保留原样。
+* 使用 `getResource()` 来获得一个URL然后定位包含文件名相对于这个URL是错误的, 因为一个类加载器不需要在它的URLs中的路径及它在`getResource()`中处理的路径之间有一对一的映射关系。换言之, “adjacent to”运算应该由资源的名称而不是资源的URL完成。
 
-for both filesystem files and Java resources, if the
-included name is a URL (begins with a protocol), it would
-be reasonable behavior to try to load the URL rather than
-treating the name as a filename or resource name.
-for files loaded from a URL, “adjacent to” should be based
-on parsing the URL’s path component, replacing the last
-path element with the included name.
-file: URLs should behave in exactly the same way as a plain
-filename
-Duration format
-The supported unit strings for duration are case sensitive and must be lowercase. Exactly these strings are supported:
+对于文件系统中的普通文件:
 
-ns, nanosecond, nanoseconds
-us, microsecond, microseconds
-ms, millisecond, milliseconds
-s, second, seconds
-m, minute, minutes
-h, hour, hours
-d, day, days
-Size in bytes format
-For single bytes, exactly these strings are supported:
+* 如果包含文件是一个绝对路径，那么它应保持绝对的，以这样的方式加载。
+* 如果包含文件是相对路径, 那么它应该相对定位到包含的文件的那个目录。当解析包含路径时，处理解析文件的当前工作目录必须不被使用。
+* 如果文件没有找到, 回退到类路径资源。类路径资源前面不能添加任何包名, 它应该相对到 “根”; 意思是任何 “/” 应该被删除 (绝对和相对是一样的，因为它是相对于根的)。 “/” 为处理包含从其它类路径资源内的资源的一致性, 资源名称不能是相对于根的，而 “/” 允许指定相对于根。
 
-B, b, byte, bytes
-For powers of ten, exactly these strings are supported:
+对于URLs:
 
-kB, kilobyte, kilobytes
-MB, megabyte, megabytes
-GB, gigabyte, gigabytes
-TB, terabyte, terabytes
-PB, petabyte, petabytes
-EB, exabyte, exabytes
-ZB, zettabyte, zettabytes
-YB, yottabyte, yottabytes
-For powers of two, exactly these strings are supported:
+* 对于文件系统和Java资源, 如果包含的名称是一个URL (以协议开头), 它是合理的行为，会尝试加载URL而不是作为文件或资源的名称处理。
+* 对于从URL加载一个文件, “adjacent to” 应该基于解析URL的路径组件, 替换最后一个路径元素为包含的名称。
+* file: URLs 这个应该行为和作为一个普通文件名一样
 
-K, k, Ki, KiB, kibibyte, kibibytes
-M, m, Mi, MiB, mebibyte, mebibytes
-G, g, Gi, GiB, gibibyte, gibibytes
-T, t, Ti, TiB, tebibyte, tebibytes
-P, p, Pi, PiB, pebibyte, pebibytes
-E, e, Ei, EiB, exbibyte, exbibytes
-Z, z, Zi, ZiB, zebibyte, zebibytes
-Y, y, Yi, YiB, yobibyte, yobibytes
-Conventional override by system properties
-Java system properties override settings found in the application.conf and reference.conf files. This supports specifying config options on the command line. ie. play -Dkey=value run
 
-Note : Play forks the JVM for tests - and so to use command line overrides in tests you must add Keys.fork in Test := false in build.sbt before you can use them for a test.
+##持续时间的格式
+受支持的持续时间的字符串单位是区分大小写的，并且必须是小写。完全支持这些字符串:
 
-Next: Configuring the application secret
+* `ns`, `nanosecond`, `nanoseconds`
+* `us`, `microsecond`, `microseconds`
+* `ms`, `millisecond`, `milliseconds`
+* `s`, `second`, `seconds`
+* `m`, `minute`, `minutes`
+* `h`, `hour`, `hours`
+* `d`, `day`, `days`
+
+
+##以字节表示的大小格式
+对于单字节, 完全支持这些字符串:
+
+* `B`, `b`, `byte`, `bytes`
+
+对于十次方的, 完全支持这些字符串:
+
+* `kB`, `kilobyte`, `kilobytes`
+* `MB`, `megabyte`, `megabytes`
+* `GB`, `gigabyte`, `gigabytes`
+* `TB`, `terabyte`, `terabytes`
+* `PB`, `petabyte`, `petabytes`
+* `EB`, `exabyte`, `exabytes`
+* `ZB`, `zettabyte`, `zettabytes`
+* `YB`, `yottabyte`, `yottabytes`
+
+对于二次方的, 完全支持这些字符串:
+
+* `K`, `k`, `Ki`, `KiB`, `kibibyte`, `kibibytes`
+* `M`, `m`, `Mi`, `MiB`, `mebibyte`, `mebibytes`
+* `G`, `g`, `Gi`, `GiB`, `gibibyte`, `gibibytes`
+* `T`, `t`, `Ti`, `TiB`, `tebibyte`, `tebibytes`
+* `P`, `p`, `Pi`, `PiB`, `pebibyte`, `pebibytes`
+* `E`, `e`, `Ei`, `EiB`, `exbibyte`, `exbibytes`
+* `Z`, `z`, `Zi`, `ZiB`, `zebibyte`, `zebibytes`
+* `Y`, `y`, `Yi`, `YiB`, `yobibyte`, `yobibytes`
+
+
+##通过系统属性的常规覆盖
+Java 系统属性重写在`application.conf`和`reference.conf` 文件中找到的设置。这支持在命令行上指定配置选项。比如 `play -Dkey=value run`
+
+注意 : Play forks JVM 以测试 - 因此在你可以使用他们测试之前，测试中使用命令行重写你必须添加 `Keys.fork in Test := false` 到`build.sbt` 中。

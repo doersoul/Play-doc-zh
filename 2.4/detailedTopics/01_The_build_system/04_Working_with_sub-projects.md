@@ -5,8 +5,8 @@
 阅读[SBT文档的多项目构建](http://www.scala-sbt.org/release/docs/Getting-Started/Multi-Project)将很有用。子项目没有他们自己的构建文件, 但共享父项目的构建文件。
 
 
-##Adding a simple library sub-project
-You can make your application depend on a simple library project. Just add another sbt project definition in your `build.sbt` file:
+##添加一个简单的库子项目
+你可以让你的应用程序依赖一个简单的库项目。只需要在`build.sbt` 文件中添加另一个sbt项目定义:
 
 ```sbt
 name := "my-first-application"
@@ -21,11 +21,11 @@ lazy val myFirstApplication = (project in file("."))
 lazy val myLibrary = project
 ```
 
-The lowercased `project` on the last line is a Scala Macro which will use the name of the val it is being assigned to in order to determine the project’s name and folder.
+在最后一行这个小写的 `project` 是一个 Scala 宏，这是一个val 值，它在开始时分配以确定项目的名称和文件夹。
 
-The `myFirstApplication` project declares the base project. If you don’t have any sub projects, this is already implied, however when declaring sub projects, it’s usually required to declare it so that you can ensure that it aggregates (that is, runs things like compile/test etc on the sub projects when run in the base project) and depends on (that is, adds the sub projects to the main projects classpath) the sub projects.
+`myFirstApplication` 项目声明基础项目。如果你没有任何子项目, 这个已经隐含了。但是当声明子项目, 它通常是需要声明的，以确保它可以聚合 (也就是说, 当运行基础项目时，在子项目上运行像编译/测试等事情) 和依赖于(也就是说, 添加子项目到主项目的类路径) 子项目。
 
-The above example defines a sub-project in the application’s `myLibrary` folder. This sub-project is a standard sbt project, using the default layout:
+上述示例的子项目定义在应用程序的`myLibrary` 文件夹。这个子项目是一个标准sbt项目, 使用默认布局:
 
 ```
 myProject
@@ -41,9 +41,9 @@ myProject
        └ scala
 ```
 
-`myLibrary` has its own `build.sbt` file, this is where it can declare its own settings, dependencies etc.
+`myLibrary` 有它自己的`build.sbt` 文件, 它可以声明自己的设置、依赖项等。
 
-When you have a sub-project enabled in your build, you can focus on this project and compile, test or run it individually. Just use the `projects` command in the Play console prompt to display all projects:
+当你的构建中启用了子项目, 你可以单独把焦点放在这个项目，编译、测试及运行它。只需在Play控制台使用`projects` 命令来显示所有项目:
 
 ```shell
 [my-first-application] $ projects
@@ -52,7 +52,7 @@ When you have a sub-project enabled in your build, you can focus on this project
 [info] 	   my-library
 ```
 
-The default project is the one whose variable name comes first alphabetically. You may make your main project by making its variable name aaaMain. To change the current project use the `project` command:
+项目默认是按首字母排序。你可以让你的主要项目，使用aaaMain的变量名称。要切换当前项目，使用`project` 命令:
 
 ```shell
 [my-first-application] $ project my-library
@@ -60,7 +60,7 @@ The default project is the one whose variable name comes first alphabetically. Y
 >
 ```
 
-When you run your Play application in dev mode, the dependent projects are automatically recompiled, and if something cannot compile you will see the result in your browser:
+当你在开发模式运行你的 Play应用程序, 依赖项目会自动重新编译, 并且如果编译遇到问题会在浏览器显示结果:
 
 ![""](subprojectError.png)
 
