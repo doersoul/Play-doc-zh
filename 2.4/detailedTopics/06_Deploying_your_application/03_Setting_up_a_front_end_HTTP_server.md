@@ -1,19 +1,19 @@
 #设置前端HTTP服务器
 
-You can easily deploy your application as a stand-alone server by setting the application HTTP port to 80:
+你可以简单地通过设置应用程序HTTP端口到80，部署你的应用程序作为单独的服务器:
 
 ```shell
 $ /path/to/bin/<project-name> -Dhttp.port=80
 ```
 
-> Note that you probably need root permissions to bind a process on this port.
+> 注意你可能需要root权限，以绑定进程到这个端口。
 
-However, if you plan to host several applications in the same server or load balance several instances of your application for scalability or fault tolerance, you can use a front end HTTP server.
+然而, 如果你计划在同一个服务器主机运行几个应用程序或为了伸缩性和容错性而提供应用程序的几个负载均衡实例, 你可以使用前端HTTP服务器。
 
-Note that using a front end HTTP server will rarely give you better performance than using Play server directly. However, HTTP servers are very good at handling HTTPS, conditional GET requests and static assets, and many services assume a front end HTTP server is part of your architecture.
+注意使用前端HTTP服务器相对于直接使用Play服务器，不会给你多少性能的提升。但是, HTTP 服务器可以非常好的处理HTTPS, 条件 GET 请求和静态资产, 并且许多服务假定前端HTTP服务器是你的架构的一部分。
 
 
-##Set up with lighttpd
+##用 lighttpd设置
 This example shows you how to configure [lighttpd](http://www.lighttpd.net/) as a front end web server. Note that you can do the same with Apache, but if you only need virtual hosting or load balancing, lighttpd is a very good choice and much easier to configure!
 
 The `/etc/lighttpd/lighttpd.conf` file should define things like this:
@@ -39,7 +39,7 @@ $HTTP["host"] =~ "www.loadbalancedapp.com" {
 ```
 
 
-##Set up with nginx
+##用 nginx设置
 This example shows you how to configure [nginx](http://wiki.nginx.org/Main) as a front end web server. Note that you can do the same with Apache, but if you only need virtual hosting or load balancing, nginx is a very good choice and much easier to configure!
 
 The `/etc/nginx/nginx.conf` file should define things like this:
@@ -105,7 +105,7 @@ http {
 > Note Make sure you are using version 1.2 or greater of Nginx otherwise chunked responses won’t work properly.
 
 
-##Set up with Apache
+##用 Apache设置
 The example below shows a simple set up with [Apache httpd server](https://httpd.apache.org/) running in front of a standard Play configuration.
 
 ```xml
@@ -121,27 +121,27 @@ LoadModule proxy_module modules/mod_proxy.so
 ```
 
 
-##Advanced proxy settings
-When using an HTTP frontal server, request addresses are seen as coming from the HTTP server. In a usual set-up, where you both have the Play app and the proxy running on the same machine, the Play app will see the requests coming from 127.0.0.1.
+##高级代理设置
+当使用一个HTTP前端服务器, 请求地址将被视为来自HTTP服务器。在通常的设置, 当你的Play应用和代理服务器都同时运行在同一台机器上,  Play应用程序会看请求视为来自127.0.0.1。
 
-Proxy servers can add a specific header to the request to tell the proxied application where the request came from. Most web servers will add an `X-Forwarded-For` header with the remote client IP address as first argument. If the proxy server is running on localhost and connecting from 127.0.0.1, Play will trust its `X-Forwarded-For` header.
+代理服务器可以添加一个特殊标头到请求中，以告诉代理的应用程序请求来自哪里。多数web服务器会添加一个`X-Forwarded-For` 标头和远程客户端IP地址作为第一个参数。如果代理服务器是运行在本地并从127.0.0.1连接, Play会信任它的`X-Forwarded-For` 标头。
 
-However, the host header is untouched, it’ll remain issued by the proxy. If you use Apache 2.x, you can add a directive like:
+但是, 主机标头是未改变的, 它会继续代理发出。如果你使用Apache 2.x, 你可以添加这个指令:
 
 ```scala
 ProxyPreserveHost on
 ```
 
-The host: header will be the original host request header issued by the client. By combining theses two techniques, your app will appear to be directly exposed.
+主机: 标头会是由客户端发出原始主机的请求标头。通过结合这二种技术, 你的应用会直接暴露。
 
-If you don’t want this play app to occupy the whole root, add an exclusion directive to the proxy config:
+如果你不希望这个play应用程序占用整个根, 添加排除代理配置的指令:
 
 ```
 ProxyPass /excluded !
 ```
 
 
-##Apache as a front proxy to allow transparent upgrade of your application
+##Apache作为前端代理以允许应用程序透明升级
 The basic idea is to run two Play instances of your web application and let the front-end proxy load-balance them. In case one is not available, it will forward all the requests to the available one.
 
 Let’s start the same Play application two times: one on port 9999 and one on port 9998.
@@ -191,20 +191,19 @@ Note that [ProxyPassReverse might rewrite incorrectly headers](https://issues.ap
 `ProxyPassReverse / http://localhost:9999 ProxyPassReverse / http://localhost:9998`
 
 
-##Configure trusted proxies
-To determine the client IP address Play has to know which are the trusted proxies in your network.
+##配置受信任的代理
+为判断客户端IP地址Play必须知道在你的网络哪个是受信任的代理。
 
-Those can be configured with `play.http.forwarded.trustedProxies`. You can define a list of proxies
-and/or subnet masks that Play recognizes as belonging to your network.
+这些可以配置在`play.http.forwarded.trustedProxies`。你可以定义一个代理列表和/或网络掩码，Play 识别为属于您的网络。
 
-Default is `127.0.0.1` and `::FF`
+默认是`127.0.0.1` 和`::FF`
 
-There exists two possibilities how proxies are set in the HTTP-headers:
+在HTTP-标头中如何设置代理存在两种可能性:
 
-* the legacy method with X-Forwarded headers
-* the RFC 7239 with Forwarded headers
+* 早期方法用 X-Forwarded 标头
+* RFC 7239 用 Forwarded 标头
 
-The type of header to parse is set via `play.http.forwarded.version`. Valid values are `x-forwarded` or `rfc7239`.
-The default is `x-forwarded`.
+要解析的标头类型是通过`play.http.forwarded.version`设置。有效值是 `x-forwarded` 或0 `rfc7239`。
+默认是`x-forwarded`。
 
-For more information, please read the [RFC 7239](https://tools.ietf.org/html/rfc7239).
+要了解更多信息,请参阅[RFC 7239](https://tools.ietf.org/html/rfc7239)。

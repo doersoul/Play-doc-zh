@@ -1,49 +1,49 @@
 #生产配置
 
-There are a number of different types of configuration that you can configure in production. The three mains types are:
+你在生产模式可以有许多不同类型的配置。有三种主要类型:
 
-* [General configuration](https://playframework.com/documentation/2.4.x/ProductionConfiguration#General-configuration)
-* [Logging configuration](https://playframework.com/documentation/2.4.x/ProductionConfiguration#Logging-configuration)
-* [JVM configuration](https://playframework.com/documentation/2.4.x/ProductionConfiguration#JVM-configuration)
+* [一般配置](#General-configuration)
+* [日志配置](#Logging-configuration)
+* [JVM配置](#JVM-configuration)
 
-Each of these types have different methods to configure them.
+每个类型都具有不同的方法来配置它们。
 
 
-##General configuration
-Play has a number of configurable settings. You can configure database connection URLs, the application secret, the HTTP port, SSL configuration, and so on.
+##<a name="General-configuration"></a>一般配置
+Play有很多配置选项。你可以配置数据库连接URLs, 应用程序secret, HTTP端口, SSL配置, 如此等等。
 
-Most of Play’s configuration is defined in various `.conf` files, which use the [HOCON format](https://github.com/typesafehub/config/blob/master/HOCON.md). The main configuration file that you’ll use is the `application.conf` file. You can find this file at `conf/application.conf` within your project. The `application.conf` file is loaded from the classpath at runtime (or you can override where it is loaded from). There can only be one `application.conf` per project.
+多数Play的配置是定义在多种`.conf` 文件中, 使用[HOCON格式](https://github.com/typesafehub/config/blob/master/HOCON.md)。主配置文件是使用`application.conf` 文件。你可以在项目内的`conf/application.conf` 找到这个文件。`application.conf` 文件在运行从类路径中加载(或者你也可以重写它从哪里加载)。每个项目只能有一个`application.conf`。
 
-Other `.conf` files are loaded too. Libraries define default settings in `reference.conf` files. These files are stored in the libraries’ JARs—one `reference.conf` per JAR—and aggregated together at runtime. The `reference.conf` files provide defaults; they are overridden by any settings defined in the `application.conf` file.
+其它`.conf` 也是一样加载。库定义的默认设置在`reference.conf` 文件中。这些文件保存在库的JARs中 — 每个JAR只有一个`reference.conf` — 并且在运行时聚合在一起。`reference.conf` 文件提供默认设置; 他们可以通过在`application.conf` 文件中定义的设置重写。
 
-Play’s configuration can also be defined using system properties and environment variables. This can be handy when settings change between environments; you can use the `application.conf` for common settings, but use system properties and environment variables to change settings when you run the application in different environments.
+Play的配置也可以通过使用系统属性和环境变量来定义。当设置环境的变化时，这可以方便; 当你的应用程序运行在不同的环境时，你可以使用`application.conf` 作为公共设置, 但使用系统属性和环境变量来改变设置。
 
-System properties override settings in `application.conf`, and `application.conf` overrides the default settings in the various `reference.conf` files.
+系统属性重写在`application.conf` 中的设置, 并且`application.conf` 重写在各种`reference.conf` 文件中的默认设置。
 
-You can override runtime configuration in several ways. This can be handy when settings vary between environments; you can changing the configuration dynamically for each environment. Here are your choices for runtime configuration:
+你有几种方式可以在运行时重写配置。当在多变的环境中时这很方便；你可以为每个环境动态更改配置。这里是在运行时配置的几种选择:
 
-* Using an alternate `application.conf` file.
-* Overriding individual settings using system properties.
-* Injecting configuration values using environment variables.
+* 使用一个替换的`application.conf` 文件。
+* 使用系统属性重写单独的设置。
+* 使用环境变量注入配置值。
 
-###Specifying an alternate configuration file
-The default is to load the `application.conf` file from the classpath. You can specify an alternative configuration file if needed:
+###指定一个替换的配置文件
+默认情况下是从类路径加载`application.conf`文件。如果需要，你可以指定一个替换的配置文件:
 
-####Using `-Dconfig.resource`
-This will search for an alternative configuration file in the application classpath (you usually provide these alternative configuration files into your application `conf/` directory before packaging). Play will look into `conf/` so you don’t have to add `conf/`.
+####使用 `-Dconfig.resource`
+这会在应用程序类路径搜索一个替换配置文件(通常是在打包前把这些替换配置文件放到应用程序`conf/` 目录)。Play会查找`conf/` ，所以你不需要添加`conf/`。
 
 ```shell
 $ /path/to/bin/<project-name> -Dconfig.resource=prod.conf
 ```
 
-####Using `-Dconfig.file`
-You can also specify another local configuration file not packaged into the application artifacts:
+####使用 `-Dconfig.file`
+你也可以指定另一个本机其它位置的配置文件，不打包到你的应用程序中:
 
 ```shell
 $ /path/to/bin/<project-name> -Dconfig.file=/opt/conf/prod.conf
 ```
 
-> Note that you can always reference the original configuration file in a new `prod.conf` file using the `include` directive, such as:
+> 注意你总是可以在新的`prod.conf` 文件引用原始配置文件，使用`include` 指令, 如:
 >
 ```
 include "application.conf"
@@ -51,47 +51,47 @@ include "application.conf"
 key.to.override=blah
 ```
 
-###Overriding configuration with system properties
-Sometimes you don’t want to specify another complete configuration file, but just override a bunch of specific keys. You can do that by specifying then as Java System properties:
+###使用系统属性来重写配置
+有时候您不想指定一个完整的配置文件, 但只覆盖一堆的特定键。你可以通过指定他们作为Java系统属性:
 
 ```shell
 $ /path/to/bin/<project-name> -Dplay.crypto.secret=abcdefghijk -Ddb.default.password=toto
 ```
 
-####Specifying the HTTP server address and port using system properties
-You can provide both HTTP port and address easily using system properties. The default is to listen on port `9000` at the `0.0.0.0` address (all addresses).
+####使用系统属性指定HTTP服务器地址和端口
+你可以使用系统属性很容易的提供HTTP端口和地址。默认是在`0.0.0.0`地址的`9000` 端口(所有地址)。
 
 ```shell
 $ /path/to/bin/<project-name> -Dhttp.port=1234 -Dhttp.address=127.0.0.1
 ```
 
-####Changing the path of RUNNING_PID
-It is possible to change the path to the file that contains the process id of the started application. Normally this file is placed in the root directory of your play project, however it is advised that you put it somewhere where it will be automatically cleared on restart, such as `/var/run`:
+####更改RUNNING_PID的路径
+可以更改包含启动应用程序的进程id的文件路径。通常这个文件是放在你的play项目的根目录下, 但是建议你把它放在重新启动时它会自动清除的某个地方，如`/var/run`:
 
 ```shell
 $ /path/to/bin/<project-name> -Dpidfile.path=/var/run/play.pid
 ```
 
-> Make sure that the directory exists and that the user that runs the Play application has write permission for it.
+> 要确保这个目录是存在的，并且运行Play应用程序的用户有这个目录的写入权限。
 
-Using this file, you can stop your application using the `kill` command, for example:
+使用这个文件, 你可以使用`kill` 命令停止你的应用程序, 例如:
 
 ```shell
 $ kill $(cat /var/run/play.pid)
 ```
 
-###Using environment variables
-You can also reference environment variables from your `application.conf` file:
+###使用环境变量
+你可以从`application.conf` 文件引用环境变量:
 
 ```scala
 my.key = defaultvalue
 my.key = ${?MY_KEY_ENV}
 ```
 
-Here, the override field `my.key = ${?MY_KEY_ENV}` simply vanishes if there’s no value for `MY_KEY_ENV`, but if you set an environment variable `MY_KEY_ENV` for example, it would be used.
+这里, 如果没有`MY_KEY_ENV`这个环境变量的值，`my.key = ${?MY_KEY_ENV}` 字段就会忽略, 但如果你设置了环境变量`MY_KEY_ENV` , 它就会被使用。
 
-###Server configuration options
-A full list of server configuration options, including defaults, can be seen here:
+###服务器配置选项
+服务器配置选项的完整列表, 包括默认的, 就像下面看到的:
 
 ```scala
 play {
@@ -220,45 +220,44 @@ play {
 ```
 
 
-##Logging configuration
-Logging can be configured by creating a logback configuration file. This can be used by your application through the following means:
+##<a name="Logging-configuration"></a>日志配置
+可以通过创建一个logback配置文件来配置日志。您的应用程序通过以下方法使用日志：
 
-###Bundling a custom logback configuration file with your application
-Create an alternative logback config file called `logback.xml` and copy that to `<app>/conf`
+###绑定一个自定义logback配置文件到你的应用程序
+创建一个叫`logback.xml`的替换logback配置文件，并拷贝到`<app>/conf`
 
-You can also specify another logback configuration file via a System property. Please note that if the configuration file is not specified then play will use the default `logback.xml` that comes with play in the production mode. This means that any log level settings in `application.conf` file will be overridden. As a good practice always specify your `logback.xml`.
+你也可以通过系统属性指定另一个logback配置文件。请注意如果配置文件没有指定，那么play 会使用默认`logback.xml` ，它在play生产模式自带。这意味着在`application.conf` 文件中的任何日志级别设置会被重写。一个好的方式是总是指定你的`logback.xml`。
 
-###Using `-Dlogger.resource`
-Specify another logback configuration file to be loaded from the classpath:
+###使用 `-Dlogger.resource`
+指定另一个logback配置文件以从类路径中加载:
 
 ```shell
 $ /path/to/bin/<project-name> -Dlogger.resource=conf/prod-logger.xml
 ```
 
-###Using `-Dlogger.file`
-Specify another logback configuration file to be loaded from the file system:
+###使用 `-Dlogger.file`
+指定另一个logback配置文件以从文件系统加载:
 
 ```shell
 $ /path/to/bin/<project-name> -Dlogger.file=/opt/prod/prod-logger.xml
 ```
 
-###Using `-Dlogger.url`
-Specify another logback configuration file to be loaded from an URL:
+###使用 `-Dlogger.url`
+指定另一个logback配置文件以从一个URL加载:
 
 ```shell
 $ /path/to/bin/<project-name> -Dlogger.url=http://conf.mycompany.com/logger.xml
 ```
 
 
-##JVM configuration
-You can specify any JVM arguments to the application startup script. Otherwise the default JVM settings will be used:
+##<a name="JVM-configuration"></a>JVM 配置
+你可以指定任何JVM参数到应用程序启动脚本，否则就使用默认JVM设置:
 
 ```shell
 $ /path/to/bin/<project-name> -J-Xms128M -J-Xmx512m -J-server
 ```
 
-As a convenience you can also set memory min, max, permgen and the reserved code cache size in one go; a formula is used to
-determine these values given the supplied parameter (which represents maximum memory):
+为方便起见，你也可以一次性设置内存min, max, permgen 和保留代码缓存大小; 有一个计算公式用来确定这些值给定的支持参数(代表最大内存):
 
 ```shell
 $ /path/to/bin/<project-name> -mem 512 -J-server

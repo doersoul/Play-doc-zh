@@ -1,16 +1,16 @@
 #配置 gzip 编码
 
-Play provides a gzip filter that can be used to gzip responses.
+Play 提供一个gzip过滤器，可以用于gzip响应。
 
 
-##Enabling the gzip filter
-To enable the gzip filter, add the Play filters project to your `libraryDependencies` in `build.sbt`:
+##启用 gzip 过滤器
+要启用gzip过滤器, 添加Play 过滤器项目到你的`build.sbt` 中的`libraryDependencies` 项:
 
 ```scala
 libraryDependencies += filters
 ```
 
-Now add the gzip filter to your filters, which is typically done by creating a `Filters` class in the root of your project:
+现在添加gzip filter到你的过滤器, 通常是在你的项目根目录下创建一个`Filters` 类:
 
 ```scala
 import javax.inject.Inject
@@ -23,21 +23,21 @@ class Filters @Inject() (gzipFilter: GzipFilter) extends HttpFilters {
 }
 ```
 
-The `Filters` class can either be in the root package, or if it has another name or is in another package, needs to be configured using `play.http.filters` in `application.conf`:
+`Filters` 类可以放在根包或在其它位置，如果它有另一个名字或在其它包, 需要在`application.conf` 使用`play.http.filters` 配置:
 
 ```scala
 play.http.filters = "filters.MyFilters"
 ```
 
 
-##Configuring the gzip filter
-The gzip filter supports a small number of tuning configuration options, which can be configured from `application.conf`. To see the available configuration options, see the Play filters [`reference.conf`](https://playframework.com/documentation/2.4.x/resources/confs/filters-helpers/reference.conf).
+##配置 gzip 过滤器
+gzip过滤器支持少量的调整配置选项, 可以在`application.conf`配置。要查看有效的配置选项, 参阅 Play 过滤器[`reference.conf`](https://playframework.com/documentation/2.4.x/resources/confs/filters-helpers/reference.conf)。
 
 
-##Controlling which responses are gzipped
-To control which responses are and aren’t implemented, use the `shouldGzip` parameter, which accepts a function of a request header and a response header to a boolean.
+##控制哪个响应被 gzipped
+要控制哪个响应是否执行, 使用`shouldGzip` 参数, 接受一个请求标头函数和一个响应标头到一个布尔值。
 
-For example, the code below only gzips HTML responses:
+举例, 下面的代码是仅 gzips HTML 响应:
 
 ```scala
 new GzipFilter(shouldGzip = (request, response) =>

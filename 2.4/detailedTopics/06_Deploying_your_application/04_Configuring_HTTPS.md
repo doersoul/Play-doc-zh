@@ -7,12 +7,13 @@ Play can be configured to serve HTTPS. To enable this, simply tell Play which po
 ```
 
 
-##Providing configuration
+##提供配置
 HTTPS configuration can either be supplied using system properties or in `application.conf`. For more details see the [configuration](https://playframework.com/documentation/2.4.x/Configuration) and [production configuration](https://playframework.com/documentation/2.4.x/ProductionConfiguration) pages.
 
 
-##SSL Certificates
-###SSL Certificates from a keystore
+##SSL 证书
+
+###来自keystore的SSL 证书
 By default, Play will generate itself a self-signed certificate, however typically this will not be suitable for serving a website. Play uses Java key stores to configure SSL certificates and keys.
 
 Signing authorities often provide instructions on how to create a Java keystore (typically with reference to Tomcat configuration). The official Oracle documentation on how to generate keystores using the JDK keytool utility can be found [here](https://docs.oracle.com/javase/8/docs/technotes/tools/unix/keytool.html). There is also an example in the [Generating X.509 Certificates](https://playframework.com/documentation/2.4.x/CertificateGeneration) section.
@@ -24,10 +25,10 @@ Having created your keystore, the following configuration properties can be used
 * **play.server.https.keyStore.password** - The password, defaults to a blank password
 * **play.server.https.keyStore.algorithm** - The key store algorithm, defaults to the platforms default algorithm
 
-###SSL Certificates from a custom SSL Engine
+###来自自定义SSL引擎的SSL 证书
 Another alternative to configure the SSL certificates is to provide a custom [SSLEngine](https://docs.oracle.com/javase/8/docs/api/javax/net/ssl/SSLEngine.html). This is also useful in cases where a customized SSLEngine is required, such as in the case of client authentication.
 
-####in Java, an implementation must be provided for [`play.server.SSLEngineProvider`](https://playframework.com/documentation/2.4.x/api/java/play/server/SSLEngineProvider.html)
+####在 Java, 必须为[`play.server.SSLEngineProvider`](https://playframework.com/documentation/2.4.x/api/java/play/server/SSLEngineProvider.html)提供实现
 
 ```scala
 import play.server.ApplicationProvider;
@@ -55,7 +56,7 @@ public class CustomSSLEngineProvider implements SSLEngineProvider {
 }
 ```
 
-####in Scala, an implementation must be provided for [`play.server.api.SSLEngineProvider`](https://playframework.com/documentation/2.4.x/api/scala/play/server/api/SSLEngineProvider.html)
+####在 Scala, 必须为[`play.server.api.SSLEngineProvider`](https://playframework.com/documentation/2.4.x/api/scala/play/server/api/SSLEngineProvider.html)提供实现
 
 ```scala
 import javax.net.ssl._
@@ -82,7 +83,7 @@ Example:
 ```
 
 
-##Turning HTTP off
+##关闭 HTTP
 To disable binding on the HTTP port, set the `http.port` system property to be `disabled`, eg:
 
 ```shell
@@ -90,7 +91,7 @@ To disable binding on the HTTP port, set the `http.port` system property to be `
 ```
 
 
-##Production usage of HTTPS
+##HTTPS生产用例
 If Play is serving HTTPS in production, it should be running JDK 1.8. JDK 1.8 provides a number of new features that make JSSE feasible as a [TLS termination layer](http://blog.ivanristic.com/2014/03/ssl-tls-improvements-in-java-8.html). If not using JDK 1.8, using a [reverse proxy](https://playframework.com/documentation/2.4.x/HTTPServer) in front of Play will give better control and security of HTTPS.
 
 If you intend to use Play for TLS termination layer, please note the following settings:

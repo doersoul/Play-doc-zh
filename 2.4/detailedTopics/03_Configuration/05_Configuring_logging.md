@@ -4,7 +4,7 @@ Play 使用 [Logback](http://logback.qos.ch/) 作为它的日志引擎, 参阅 [
 
 
 ##默认配置
-Play uses the following default configuration in production:
+Play在生产模式使用以下默认配置:
 
 ```xml
 <!--
@@ -53,41 +53,41 @@ Play uses the following default configuration in production:
 </configuration>
 ```
 
-A few things to note about this configuration:
+有关此配置的要注意几点:
 
-* This specifies a file appender that writes to `logs/application.log`.
-* The file logger logs full exception stack traces, while the console logger only logs 10 lines of an exception stack trace.
-* Play uses ANSI color codes by default in level messages.
-* Play puts both the console and the file logger behind the logback [AsyncAppender](http://logback.qos.ch/manual/appenders.html#AsyncAppender). For details on the performance implications on this, see this [blog post](https://blog.takipi.com/how-to-instantly-improve-your-java-logging-with-7-logback-tweaks/).
+* 这个指定了一个文件输出到`logs/application.log`。
+* 这个文件记录完整的异常堆栈跟踪, 而控制台日志只记录10行的异常堆栈跟踪。
+* Play的级别消息默认使用 ANSI 颜色代码。
+* Play 将控制台和文件日志放在logback [AsyncAppender](http://logback.qos.ch/manual/appenders.html#AsyncAppender)后面。要了解这对性能影响的详细信息，参阅[博客文章](https://blog.takipi.com/how-to-instantly-improve-your-java-logging-with-7-logback-tweaks/)。
 
 
 ##自定义配置
-For any custom configuration, you will need to specify your own Logback configuration file.
+对于任何自定义配置, 你需要指定你自己的 Logback 配置文件。
 
 ###从项目源码使用配置文件
-You can provide a default logging configuration by providing a file `conf/logback.xml`.
+你可以通过提供一个`conf/logback.xml` 文件来提供默认日志配置。
 
 ###使用外部配置文件
-You can also specify a configuration file via a System property. This is particularly useful for production environments where the configuration file may be managed outside of your application source.
+你也可以能过系统属性来指定一个配置文件。这在生产环境是特别有用的，配置文件可以在应用程序源文件之外管理。
 
-> Note: The logging system gives top preference to configuration files specified by system properties, secondly to files in the `conf` directory, and lastly to the default. This allows you to customize your application’s logging configuration and still override it for specific environments or developer setups.
+> 注意: 对于由系统属性来指定配置文件，日志系统是给予最高优先级的, 其次是在`conf` 目录中的文件, 最后才是默认的。这允许你自定义你的应用程序的日志配置，并且还可为特定环境或开发配置而重写它。
 
 ####使用 `-Dlogger.resource`
-Specify a configuration file to be loaded from the classpath:
+指定一个配置文件以从类路径加载:
 
 ```shell
 $ start -Dlogger.resource=prod-logger.xml
 ```
 
 ####使用 `-Dlogger.file`
-Specify a configuration file to be loaded from the file system:
+指定一个配置文件以从文件系统加载:
 
 ```shell
 $ start -Dlogger.file=/opt/prod/logger.xml
 ```
 
 ###示例
-Here’s an example of configuration that uses a rolling file appender, as well as a seperate appender for outputting an access log:
+这里是一个配置示例，使用RollingFileAppender，以及分离的输出和访问记录:
 
 ```xml
 <configuration>
@@ -132,18 +132,18 @@ Here’s an example of configuration that uses a rolling file appender, as well 
 </configuration>
 ```
 
-This demonstrates a few useful features:
-- It uses `RollingFileAppender` which can help manage growing log files.
-- It writes log files to a directory external to the application so they aren’t affected by upgrades, etc.
-- The `FILE` appender uses an expanded message format that can be parsed by third party log analytics providers such as Sumo Logic.
-- The `access` logger is routed to a separate log file using the `ACCESS_FILE_APPENDER`.
-- All loggers are set to a threshold of `INFO` which is a common choice for production logging.
+这展示了几个有用的功能:
+- 使用`RollingFileAppender` ，可以帮助管理越来越多的日志文件。
+- 它把日志文件写到应用程序外部目录，因此他们不受升级的影响，等等。
+- `FILE` 输出使用扩展消息格式，可以被第三方日志分析提供者解析，如Sumo Logic。
+- `access` 记录路由到一个单独的日志文件，使用`ACCESS_FILE_APPENDER`。
+- 所有记录设置到一个 `INFO` 阈值，这是生产日志的一个公共选择。
 
 
 ##Akka 日志配置
-Akka has its own logging system which may or may not use Play’s underlying logging engine depending on how it is configured.
+Akka 有它自己的日志系统，可能用也可能不用 Play底层的日志引擎，这取决于如何配置。
 
-By default, Akka will ignore Play’s logging configuration and print log messages to STDOUT using its own format. You can configure the log level in `application.conf`:
+默认情况下, Akka会忽略Play的日志配置，并使用自己的格式打印日志消息到 STDOUT。你可以在`application.conf` 中配置日志级别:
 
 ```scala
 akka {
@@ -151,7 +151,7 @@ akka {
 }
 ```
 
-To direct Akka to use Play’s logging engine, you’ll need to do some careful configuration. First add the following config in `application.conf`:
+要让Akka直接使用Play的日志引擎, 你需要一些小心配置。首先添加下面的配置到`application.conf`:
 
 ```scala
 akka {
@@ -160,12 +160,12 @@ akka {
 }
 ```
 
-A couple things to note:
+有几个注意事项:
 
-* Setting `akka.loggers` to `["akka.event.slf4j.Slf4jLogger"]` will cause Akka to use Play’s underlying logging engine.
-* The `akka.loglevel` property sets the threshold at which Akka will forward log requests to the logging engine but does not control logging output. Once the log requests are forwarded, the Logback configuration controls log levels and appenders as normal. You should set `akka.loglevel` to the lowest threshold that you will use in Logback configuration for your Akka components.
+* 设置 `akka.loggers` 到 `["akka.event.slf4j.Slf4jLogger"]` 会引致 Akka 使用Play的底层日志引擎。
+* `akka.loglevel` 属性设置阈值到Akka会控制将记录请求转发到日志引擎但不控制日志输出。一旦记录请求被转发, Logback 配置控制日志级别并作为正常输出。你应该设置`akka.loglevel` 到最低阈值，这样可以为你的Akka组件使用Logback配置。
 
-Next, refine your Akka logging settings in your Logback configuration:
+然后, 在Logback配置中优化你的 Akka 日志设置:
 
 ```xml
 <!-- Set logging for all Akka library classes to INFO -->
@@ -174,6 +174,6 @@ Next, refine your Akka logging settings in your Logback configuration:
 <logger name="actors.MyActor" level="DEBUG" />
 ```
 
-You may also wish to configure an appender for the Akka loggers that includes useful properties such as thread and actor address.
+你也可能希望为Akka日志配置一个输出源，包括有用的属性，如线程和actor地址。
 
-For more information about configuring Akka’s logging, including details on Logback and Slf4j integration, see the [Akka documentation](http://doc.akka.io/docs/akka/current/scala/logging.html).
+关于配置Akka日志的配置信息, 包括Logback和Slf4j集成的细节，请参阅[Akka 文档](http://doc.akka.io/docs/akka/current/scala/logging.html)。
